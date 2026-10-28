@@ -1,21 +1,28 @@
 import Link from "next/link";
-import { SmartImage } from "@/components/ui/SmartImage";
+import Image from "next/image";
 import { SubPage } from "@/components/layout/SubPage";
 import { PhoneIcon } from "@/components/layout/Header";
 import { site } from "@/config/site";
 import { categoryLabel, programsBy, type Program } from "@/content/programs";
+import { photos } from "@/content/photos.generated";
 import { courseJsonLd, JsonLd } from "@/lib/seo";
 
 /** 교육활동·체험활동 공통 상세 템플릿 */
 export function ProgramPage({ program: p }: { program: Program }) {
   const path = `/${p.category}/${p.slug}`;
   const siblings = programsBy(p.category).filter((x) => x.slug !== p.slug);
+  const hero = photos[p.image];
   return (
     <SubPage path={path} title={p.title} description={p.summary}>
       <JsonLd data={courseJsonLd({ name: p.title, description: p.summary, path })} />
       <article className="space-y-12">
-        <div className="relative aspect-[16/8] overflow-hidden rounded-card">
-          <SmartImage src={p.image} alt={`${p.title} 활동 모습`} fill priority sizes="(min-width:1024px) 880px, 100vw" className="object-cover" />
+        <div className="relative aspect-[16/8] overflow-hidden rounded-card bg-surface">
+          <Image src={hero.src} alt={`${p.title} 활동 모습`} fill priority sizes="(min-width:1024px) 880px, 100vw" className="object-cover" />
+          {p.badge && (
+            <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3.5 py-1.5 text-[13px] font-bold text-primary shadow">
+              {p.badge}
+            </span>
+          )}
         </div>
 
         <section aria-labelledby="intro">
@@ -26,6 +33,18 @@ export function ProgramPage({ program: p }: { program: Program }) {
             ))}
           </div>
         </section>
+
+        {p.highlights && (
+          <dl className="grid gap-3 sm:grid-cols-3">
+            {p.highlights.map((h) => (
+              <div key={h.k} className="rounded-2xl bg-primary-50 p-5">
+                <dt className="sr-only">{h.v}</dt>
+                <dd className="text-[24px] font-bold text-primary">{h.k}</dd>
+                <dd className="mt-1 text-[14px] leading-snug text-body">{h.v}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
 
         <section aria-labelledby="features">
           <Heading id="features">{p.featuresTitle ?? "프로그램 특징"}</Heading>
@@ -52,32 +71,86 @@ export function ProgramPage({ program: p }: { program: Program }) {
           </ul>
         </section>
 
-        {p.details && (
-          <section aria-labelledby="details">
-            <Heading id="details">{p.detailsTitle}</Heading>
+        {p.sections?.map((s, si) => (
+          <section key={s.title} aria-labelledby={`section-${si}`}>
+            <Heading id={`section-${si}`}>{s.title}</Heading>
             <dl className="divide-y divide-line overflow-hidden rounded-2xl border border-line">
-              {p.details.map((d) => (
-                <div key={d.label} className="grid gap-1 px-5 py-4 sm:grid-cols-[160px_1fr] sm:gap-6">
+              {s.items.map((d) => (
+                <div key={d.label} className={`px-5 py-4 ${d.value ? "grid gap-1 sm:grid-cols-[200px_1fr] sm:gap-6" : ""}`}>
                   <dt className="font-bold text-ink">{d.label}</dt>
-                  <dd className="text-body">{d.value}</dd>
+                  {d.value && <dd className="leading-relaxed text-body">{d.value}</dd>}
                 </div>
               ))}
             </dl>
+          </section>
+        ))}
+
+        {p.table && (
+          <section aria-labelledby="table">
+            <Heading id="table">{p.table.caption}</Heading>
+            <div className="overflow-x-auto rounded-2xl border border-line">
+              <table className="w-full min-w-[560px] text-left text-[14.5px]">
+                <caption className="sr-only">{p.table.caption}</caption>
+                <thead className="bg-surface text-[13px] text-muted">
+                  <tr>
+                    {p.table.columns.map((c) => (
+                      <th key={c} scope="col" className="whitespace-nowrap px-4 py-3 font-bold">
+                        {c}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-line">
+                  {p.table.rows.map((r) => (
+                    <tr key={r.join("|")}>
+                      {r.map((cell, ci) => (
+                        <td key={ci} className={`px-4 py-3 align-top ${p.table!.columns[ci] === "자격명" ? "font-bold text-ink" : "text-body"}`}>
+                          {cell}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </section>
         )}
 
-        {p.schedule.length > 0 && (
-          <section aria-labelledby="schedule">
-            <Heading id="schedule">{p.scheduleTitle ?? "운영 일정"}</Heading>
-            <dl className="grid gap-3 sm:grid-cols-2">
-              {p.schedule.map((s) => (
-                <div key={s.label} className="rounded-2xl bg-surface p-5">
-                  <dt className="text-[13px] font-bold text-muted">{s.label}</dt>
-                  <dd className="mt-1 text-[16px] font-medium text-ink">{s.value}</dd>
-                </div>
-              ))}
-            </dl>
+        {p.photos && p.photos.length > 0 && (
+          <section aria-labelledby="photos">
+            <Heading id="photos">활동 사진</Heading>
+            <ul className="grid grid-cols-2 gap-3 md:grid-cols-3">
+              {p.photos.map((ph) => {
+                const img = photos[ph.name];
+                return (
+                  <li key={ph.name}>
+                    <figure>
+                      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-surface">
+                        <Image src={img.src} alt={`${p.title} 사진 — ${ph.alt}`} fill sizes="(min-width:1024px) 290px, 50vw" className="object-cover" />
+                      </div>
+                      <figcaption className="mt-2 text-[13px] text-muted">{ph.alt}</figcaption>
+                    </figure>
+                  </li>
+                );
+              })}
+            </ul>
           </section>
+        )}
+
+        {p.links && (
+          <ul className="flex flex-wrap gap-2">
+            {p.links.map((l) => (
+              <li key={l.href}>
+                <Link
+                  href={l.href}
+                  {...(l.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="inline-flex h-11 items-center gap-1 rounded-full border border-primary px-5 font-bold text-primary hover:bg-primary-50"
+                >
+                  {l.label} <span aria-hidden>→</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         )}
 
         <section aria-labelledby="contact" className="rounded-card bg-gradient-to-br from-primary to-[#3b82f6] p-7 text-white md:p-10">

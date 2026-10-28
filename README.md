@@ -3,8 +3,8 @@
 유한회사 상상마루(전북 익산 진로·직업체험 교육 기관) 공식 홈페이지입니다.
 기존 정적 HTML + PHP(미리넷 호스팅) 사이트를 **Next.js 16 + Vercel + Neon Postgres + AWS S3/CloudFront** 로 새로 만들었습니다.
 
-> **현재 버전: v1.0 — 디자인 방향 확정**
-> 공개 페이지·관리자 화면·로컬 DB까지 동작합니다. 운영 인프라(Neon·S3·Vercel) 연결과 실제 사진 교체는 아직입니다.
+> **현재 버전: v1.1 — 기업소개 자료 반영**
+> 회사 정보·연혁·사업 소개·사진을 클라이언트 기업소개 PDF/PPT 기준으로 교체했습니다. 운영 인프라(Neon·S3·Vercel) 연결은 아직입니다.
 > 남은 작업은 [로드맵](#로드맵--남은-작업)을 보세요. 변경 이력은 [CHANGELOG.md](CHANGELOG.md).
 
 - 클라이언트 최우선 요구: **구글·네이버 검색 노출(SEO)**
@@ -72,13 +72,13 @@ src/
 ├── app/
 │   ├── (site)/                  공개 페이지 (헤더·푸터 포함)
 │   │   ├── page.tsx             메인
-│   │   ├── about/               인사말·연혁·오시는 길
-│   │   ├── career/              진로·직업체험 소개
-│   │   ├── education/[slug]/    교육활동 6종 (content/programs.ts)
+│   │   ├── about/               인사말·연혁·조직·인증·오시는 길
+│   │   ├── career/              진로·직업체험 (교육기부 진로체험 인증기관)
+│   │   ├── education/[slug]/    교육활동 5종 (content/programs.ts)
 │   │   ├── experience/[slug]/   체험활동 4종
 │   │   ├── community/[board]/   공지(notice)·보도(press) 목록 / page/[page] / [id]
 │   │   ├── community/gallery/   포토갤러리 목록 / page/[page] / [id]
-│   │   └── store/               준비 중 안내
+│   │   └── store/               상상마루샵 소개 + 네이버 스마트스토어 링크
 │   ├── admin/
 │   │   ├── login/               관리자 로그인
 │   │   └── (panel)/             대시보드·게시글·갤러리 관리 (로그인 필요)
@@ -89,13 +89,13 @@ src/
 ├── actions/          Server Actions — admin.ts(관리자 쓰기), public.ts(조회수)
 ├── components/       layout/ home/ community/ admin/ ui/ ProgramPage.tsx
 ├── config/           site.ts(회사정보·SEO 기본값) · menu.ts(상단 메뉴)
-├── content/          정적 콘텐츠 — programs.ts · about.ts · career.ts
+├── content/          정적 콘텐츠 — programs.ts · about.ts · career.ts · photos.generated.ts(사진 목록, 자동 생성)
 ├── db/               schema.ts(Drizzle) · bootstrap.sql(테이블 DDL) · index.ts(연결)
 ├── lib/              data.ts(공개 조회·캐시) · admin-data.ts · auth.ts · session-token.ts
 │                     storage.ts(S3/로컬) · upload-client.ts · seo.tsx · html.ts · format.ts
 ├── fonts/            Spoqa Han Sans Neo (OFL)
 └── proxy.ts          /admin 접근 1차 보호 (Next 16 의 middleware)
-scripts/              local-db.mjs · db-init.mjs · hash-password.mjs · gen-mock.mjs
+scripts/              local-db.mjs · db-init.mjs · hash-password.mjs · import-photos.mjs
 docs/DEPLOY.md        운영 배포 절차
 old/                  기존 사이트 보관본
 ```
@@ -260,7 +260,7 @@ export async function saveSomething(input: {...}): Promise<ActionResult> {
 | `npm run lint` / `npm run typecheck` | 코드 검사 |
 | `npm run db:init` | 운영 DB 에 테이블 생성 (`DATABASE_URL` 필요, 여러 번 실행해도 안전) |
 | `npm run hash-password -- '비번'` | 관리자 비밀번호 해시 생성 |
-| `npm run gen-mock` | 목업 이미지(SVG) 재생성 |
+| `npm run import-photos -- <폴더>` | PPT 원본 이미지 → `public/photos/*.webp` 변환 (아래 참고) |
 
 로컬 DB 로 운영 빌드 확인: `node scripts/local-db.mjs --run next build` → `node scripts/local-db.mjs --run next start`
 
@@ -268,19 +268,27 @@ export async function saveSomething(input: {...}): Promise<ActionResult> {
 
 ## 콘텐츠 수정 위치
 
+회사 정보의 출처는 **[유한회사 상상마루] 2024 기업소개 PDF/PPT** 입니다 (저장소 루트에 두되 git 제외). `old/` 의 예전 문구는 실제 정보가 아니므로 참고하지 마세요.
+
 | 바꿀 것 | 파일 |
 |---|---|
 | 상단 메뉴 구성 | `src/config/menu.ts` |
-| 회사 정보·연락처·주소·SEO 기본 문구·키워드 | `src/config/site.ts` |
-| 교육활동·체험활동 10개 프로그램 | `src/content/programs.ts` |
-| 인사말·연혁·교통안내·협력기관 로고 | `src/content/about.ts` |
-| 진로·직업체험 6단계·카드 | `src/content/career.ts` |
+| 회사 정보·연락처·주소·인증 목록·스토어 주소·SEO 기본 문구 | `src/config/site.ts` |
+| 교육활동 5종·체험활동 4종 (표·사진·섹션 포함) | `src/content/programs.ts` |
+| 인사말·연혁·조직도·MOU·교통안내·협력기관 로고 | `src/content/about.ts` |
+| 진로체험 6개 스쿨·인증·사진 카드 | `src/content/career.ts` |
 | 메인 히어로·섹션 문구 | `src/components/home/*` |
-| 목업 이미지 → 실제 사진 | `public/mock/*` 교체 후 콘텐츠 파일의 `image` 경로 수정 |
 | 색상·라운드·폰트 | `src/app/globals.css` 의 `@theme` |
 | 공지·보도자료·포토갤러리 | 관리자 페이지 `/admin` |
 
----
+### 사진 교체·추가
+사진은 PPT 원본에서 추출해 `public/photos/*.webp` 로 변환했고, 코드는 `photos["이름"]` 으로 참조합니다(타입 체크됨).
+1. PPT 이미지 꺼내기: `unzip -o -q "[유한회사 상상마루] 2024_기업소개_PPT_New.pptx" "ppt/media/*" -d /tmp/smaru-ppt`
+2. `scripts/import-photos.mjs` 의 `map` 에 `"새이름": ["imageNN.jpg", 최대px]` 추가
+3. `npm run import-photos -- /tmp/smaru-ppt/ppt/media` → `public/photos/` 와 `src/content/photos.generated.ts` 갱신
+4. 콘텐츠 파일에서 `image: "새이름"` 또는 `photos: [{ name: "새이름", alt: "..." }]` 로 사용
+
+새 원본 사진(PPT 밖)은 같은 폴더에 넣고 2~3 단계를 따르면 됩니다. 활동 사진이 계속 쌓이는 경우는 관리자 포토갤러리를 쓰세요.
 
 ## 로드맵 / 남은 작업
 
@@ -292,11 +300,13 @@ export async function saveSomething(input: {...}): Promise<ActionResult> {
 - [ ] 미리넷 DB·관리자 비밀번호 교체 (예전 커밋 기록에 남아 있음) 후 호스팅 해지
 - 절차: [docs/DEPLOY.md](docs/DEPLOY.md)
 
-### 콘텐츠
-- [ ] 목업 이미지 → 실제 사진 (`public/mock/*`)
+### 콘텐츠 (클라이언트 확인 필요)
+- [ ] **우편번호**: 동서로49길 24-1 우편번호 미확인 → `site.ts` 의 `postalCode` (비어 있으면 JSON-LD 에서 제외)
+- [ ] **교통편**: 영등동 기준 버스 노선·주차 정보 → `about.ts` 의 `transport`
+- [ ] **스마트스토어 주소**: `https://smartstore.naver.com/sangnarae` (PDF 캡처 기준, 접속 확인 못 함) → `site.ts` 의 `store.url`
+- [ ] **MOU 8건 중 판독 못 한 4건** 기관명 → `about.ts` 의 `mous`
 - [ ] 오시는 길 지도: 네이버 지도 퍼가기 iframe 삽입 (`src/app/(site)/about/location/page.tsx`)
-- [ ] 주소 확인: `site.ts` 에 "익산대로 460", 우편번호 54538 추가함 — 클라이언트 확인 필요
-- [ ] 진로·직업체험 페이지 문구 확정 (현재 기획안 수준)
+- [ ] PPT 사진 중 화질 낮은 것(800px 안팎) 원본 확보 시 교체
 - [ ] 상단 메뉴 변경 시 `menu.ts` 반영
 
 ### 백엔드 개선 후보

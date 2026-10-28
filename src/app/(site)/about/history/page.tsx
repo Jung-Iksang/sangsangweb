@@ -4,13 +4,15 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "연혁",
-  description: "2020년 설립 이후 방과후·늘봄교육, 자유학년제, SW·AI 교육주간, 탑마루드론축구단까지 상상마루가 걸어온 길입니다.",
+  description:
+    "2012년 창의융합교육연구회 창립부터 2013년 법인 등록, 예비사회적기업 지정, 벤처기업·기업부설연구소, 교육부 진로체험 인증기관까지 상상마루가 걸어온 길입니다.",
   path: "/about/history",
+  keywords: ["상상마루 연혁", "창의융합교육연구회", "상상나래"],
 });
 
 export default function Page() {
   return (
-    <SubPage path="/about/history" title="연혁" description="학생들의 꿈과 함께 성장해 온 상상마루의 발자취">
+    <SubPage path="/about/history" title="연혁" description="2012년 창의융합교육연구회에서 시작해 학생·지역과 함께 성장해 온 발자취">
       <ol className="relative space-y-10 border-l-2 border-primary-100 pl-8 md:pl-12">
         {history.map((h, i) => (
           <li key={h.year} className="relative">

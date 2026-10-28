@@ -1,6 +1,6 @@
 {
   "name": "sangsangmaru-web",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "dev": "node scripts/local-db.mjs --run next dev",
@@ -12,8 +12,8 @@
     "typecheck": "tsc --noEmit",
     "db:push": "drizzle-kit push",
     "hash-password": "node scripts/hash-password.mjs",
-    "gen-mock": "node scripts/gen-mock.mjs",
-    "db:init": "node scripts/db-init.mjs"
+    "db:init": "node scripts/db-init.mjs",
+    "import-photos": "node scripts/import-photos.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1158.0",

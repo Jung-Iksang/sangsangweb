@@ -1,5 +1,6 @@
 import { Gate } from "@/components/home/Gate";
 import { AboutIntro } from "@/components/home/AboutIntro";
+import { Certifications } from "@/components/home/Certifications";
 import { BizGrid } from "@/components/home/BizGrid";
 import { CareerSection } from "@/components/home/CareerSection";
 import { NewsBoards } from "@/components/home/NewsBoards";
@@ -19,6 +20,7 @@ export default function HomePage() {
       <h1 className="sr-only">{site.title}</h1>
       <Gate />
       <AboutIntro />
+      <Certifications />
       <BizGrid />
       <CareerSection />
       <NewsBoards />

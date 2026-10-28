@@ -13,12 +13,16 @@ export function Footer() {
             <address className="space-y-1 text-[14px] not-italic leading-[22px] text-muted">
               <p>{site.address.full}</p>
               <p>
-                상호 : {site.name} ({site.nameEn}) / {site.business.center}
+                상호 : {site.legalName}
                 <span className="mx-2 text-line">|</span>대표 : {site.business.ceo}
               </p>
-              <p>사업자등록번호 : {site.business.registrationNo}</p>
               <p>
-                고객센터 : <a href={`tel:${site.contact.phone}`} className="hover:text-primary">{site.contact.phone}</a>
+                사업자등록번호 : {site.business.registrationNo}
+                <span className="mx-2 text-line">|</span>법인등록번호 : {site.business.corporateNo}
+                <span className="mx-2 text-line">|</span>통신판매업신고 : {site.business.mailOrderNo}
+              </p>
+              <p>
+                전화 : <a href={`tel:${site.contact.phone}`} className="hover:text-primary">{site.contact.phone}</a>
                 <span className="mx-2 text-line">|</span>팩스 : {site.contact.fax}
                 <span className="mx-2 text-line">|</span>이메일 :{" "}
                 <a href={`mailto:${site.contact.email}`} className="hover:text-primary">{site.contact.email}</a>

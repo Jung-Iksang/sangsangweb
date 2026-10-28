@@ -1,0 +1,178 @@
+{
+  "hero-education": {
+    "width": 1280,
+    "height": 960
+  },
+  "hero-experience": {
+    "width": 954,
+    "height": 636
+  },
+  "about": {
+    "width": 934,
+    "height": 700
+  },
+  "camp-group": {
+    "width": 960,
+    "height": 540
+  },
+  "afterschool": {
+    "width": 1280,
+    "height": 960
+  },
+  "neulbom": {
+    "width": 1280,
+    "height": 720
+  },
+  "freeyear": {
+    "width": 1280,
+    "height": 960
+  },
+  "instructor": {
+    "width": 934,
+    "height": 700
+  },
+  "instructor-lecture": {
+    "width": 960,
+    "height": 540
+  },
+  "certificate": {
+    "width": 960,
+    "height": 540
+  },
+  "school": {
+    "width": 960,
+    "height": 720
+  },
+  "culture": {
+    "width": 1313,
+    "height": 1012
+  },
+  "culture-stringart": {
+    "width": 1037,
+    "height": 504
+  },
+  "culture-hologram": {
+    "width": 776,
+    "height": 1200
+  },
+  "store": {
+    "width": 1250,
+    "height": 703
+  },
+  "drone-festival": {
+    "width": 963,
+    "height": 722
+  },
+  "drone-festival-2": {
+    "width": 779,
+    "height": 584
+  },
+  "drone-seonhwa": {
+    "width": 720,
+    "height": 960
+  },
+  "drone-class": {
+    "width": 1280,
+    "height": 640
+  },
+  "drone-iksan": {
+    "width": 1027,
+    "height": 770
+  },
+  "drone-iksan-2": {
+    "width": 954,
+    "height": 636
+  },
+  "drone-jeonju": {
+    "width": 749,
+    "height": 501
+  },
+  "drone-team": {
+    "width": 960,
+    "height": 480
+  },
+  "events-festival": {
+    "width": 806,
+    "height": 605
+  },
+  "events-festival-2": {
+    "width": 806,
+    "height": 604
+  },
+  "events-festival-3": {
+    "width": 806,
+    "height": 605
+  },
+  "events-festival-poster": {
+    "width": 1039,
+    "height": 742
+  },
+  "events-hanoi": {
+    "width": 1388,
+    "height": 781
+  },
+  "events-swfestival-poster": {
+    "width": 853,
+    "height": 1200
+  },
+  "events-swfestival-poster-2": {
+    "width": 849,
+    "height": 1200
+  },
+  "events-kids-1": {
+    "width": 829,
+    "height": 622
+  },
+  "events-kids-2": {
+    "width": 938,
+    "height": 703
+  },
+  "events-kids-3": {
+    "width": 926,
+    "height": 694
+  },
+  "career-startup": {
+    "width": 794,
+    "height": 543
+  },
+  "career-robot": {
+    "width": 960,
+    "height": 720
+  },
+  "career-mentoring": {
+    "width": 960,
+    "height": 540
+  },
+  "career-maker": {
+    "width": 1280,
+    "height": 720
+  },
+  "cert-iksan": {
+    "width": 756,
+    "height": 514
+  },
+  "cert-moe": {
+    "width": 807,
+    "height": 734
+  },
+  "cert-award": {
+    "width": 707,
+    "height": 1000
+  },
+  "cert-social": {
+    "width": 708,
+    "height": 1000
+  },
+  "cert-lab": {
+    "width": 848,
+    "height": 1200
+  },
+  "cert-venture": {
+    "width": 488,
+    "height": 690
+  },
+  "cert-plaque": {
+    "width": 870,
+    "height": 655
+  }
+}

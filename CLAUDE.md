@@ -10,6 +10,9 @@
 
 **클라이언트 최우선 요구: 구글·네이버 SEO.** 공개 페이지는 반드시 서버에서 완성된 HTML 로 나가야 한다.
 
+**회사 정보의 출처는 기업소개 PDF/PPT(저장소 루트, git 제외)다.** `old/` 의 예전 문구(2020년 설립, 원광대 프라임관, 1544-0634 등)는 사실이 아니므로 쓰지 말 것.
+사진은 `photos["이름"]`(`src/content/photos.generated.ts`, `npm run import-photos` 로 생성)으로만 참조.
+
 ## 핵심 규칙
 
 - **Next 16 은 학습 데이터와 다름** — 코드 작성 전 `node_modules/next/dist/docs/` 확인 (middleware → `src/proxy.ts`, `"use cache"`/`cacheTag`/`updateTag`, `instant`).

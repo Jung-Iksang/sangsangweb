@@ -7,10 +7,10 @@ export const metadata = pageMetadata({
   title: "오시는 길",
   description: `${site.address.full}. 상상마루 위치와 버스·KTX·자가용 교통 안내, 연락처를 확인하세요.`,
   path: "/about/location",
-  keywords: ["상상마루 위치", "원광대학교 프라임관", "익산 진로체험센터"],
+  keywords: ["상상마루 위치", "익산 영등동", "동서로49길", "익산 진로체험센터"],
 });
 
-const mapQuery = encodeURIComponent("원광대학교 프라임관");
+const mapQuery = encodeURIComponent("익산시 동서로49길 24-1");
 
 export default function Page() {
   const info = [
@@ -20,7 +20,7 @@ export default function Page() {
     { label: "이메일", value: site.contact.email, href: `mailto:${site.contact.email}` },
   ];
   return (
-    <SubPage path="/about/location" title="오시는 길" description="상상마루는 익산 원광대학교 프라임관에 있습니다.">
+    <SubPage path="/about/location" title="오시는 길" description="상상마루는 익산시 영등동 동서로49길에 있습니다.">
       <div className="space-y-12">
         <div className="overflow-hidden rounded-card border border-line">
           {/* 지도: 네이버 지도 퍼가기 iframe 코드를 받으면 이 영역을 교체 */}

@@ -24,12 +24,23 @@ const nextConfig: NextConfig = {
     const sections = [
       { source: "/about", destination: "/about/greeting" },
       { source: "/education", destination: "/education/afterschool" },
-      { source: "/experience", destination: "/experience/creative" },
+      { source: "/experience", destination: "/experience/school" },
       { source: "/community", destination: "/community/notice" },
-    ].map((r) => ({ ...r, statusCode: 301 as const }));
+    ];
+    // v1.0 에서 쓰던 주소 → 기업소개 PDF 기준으로 재구성한 새 주소
+    const renamed = [
+      ["/education/outside", "/education/neulbom"],
+      ["/education/hrd", "/education/instructor"],
+      ["/education/drone", "/experience/drone-soccer"],
+      ["/education/volunteer", "/career"],
+      ["/experience/creative", "/experience/school"],
+      ["/experience/swai", "/experience/school"],
+      ["/experience/science", "/experience/events"],
+    ];
     // 기존 사이트(정적 HTML) 주소 → 새 주소 (검색 노출 유지용 301 — 네이버 권장 상태코드)
     const legacy = [
       ["/index.html", "/"],
+      ...renamed.map(([from, to]) => [`/pages${from}.html`, to]),
       ["/pages/about/:page.html", "/about/:page"],
       ["/pages/education/:page.html", "/education/:page"],
       ["/pages/experience/:page.html", "/experience/:page"],
@@ -41,8 +52,8 @@ const nextConfig: NextConfig = {
       ["/pages/store/store.html", "/store"],
       ["/pages/login.html", "/"],
       ["/pages/signup.html", "/"],
-    ].map(([source, destination]) => ({ source, destination, statusCode: 301 as const }));
-    return [...sections, ...legacy];
+    ];
+    return [...sections.map((r) => ({ ...r, statusCode: 301 as const })), ...[...renamed, ...legacy].map(([source, destination]) => ({ source, destination, statusCode: 301 as const }))];
   },
 
   turbopack: {

@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { SmartImage } from "@/components/ui/SmartImage";
+import Image from "next/image";
+import { photos } from "@/content/photos.generated";
 import { site } from "@/config/site";
 
 const gates = [
@@ -7,30 +8,30 @@ const gates = [
     key: "education",
     eyebrow: `SINCE ${site.foundingYear}`,
     name: "교육활동",
-    tagline: "학교 안팎에서 만나는\n방과후·늘봄·자유학년제 교육",
+    tagline: "학교 밖에서도 이어지는 배움\n방과후마을학교·늘봄·자유학년제",
     href: "/education/afterschool",
-    image: "/mock/hero-education.svg",
+    image: photos["hero-education"].src,
     accent: "bg-primary",
     links: [
-      { label: "방과후/늘봄", href: "/education/afterschool" },
-      { label: "자유학년(기)제", href: "/education/freeyear" },
-      { label: "드론축구단", href: "/education/drone" },
-      { label: "강사양성과정", href: "/education/hrd" },
+      { label: "방과후마을학교", href: "/education/afterschool" },
+      { label: "늘봄학교", href: "/education/neulbom" },
+      { label: "강사양성과정", href: "/education/instructor" },
+      { label: "민간자격증", href: "/education/certificate" },
     ],
   },
   {
     key: "experience",
     eyebrow: "CAREER EXPERIENCE",
     name: "체험활동",
-    tagline: "직접 만들고 탐구하는\n창의·SW·AI·문화예술 체험",
-    href: "/experience/creative",
-    image: "/mock/hero-experience.svg",
+    tagline: "세상을 바꾸는 미래기술을 직접\n드론·코딩·로봇·문화예술 체험",
+    href: "/experience/school",
+    image: photos["hero-experience"].src,
     accent: "bg-brand-green",
     links: [
-      { label: "창의적체험활동", href: "/experience/creative" },
-      { label: "SW.AI교육주간", href: "/experience/swai" },
-      { label: "과학의날 지원", href: "/experience/science" },
+      { label: "진로체험 스쿨", href: "/experience/school" },
+      { label: "드론축구단", href: "/experience/drone-soccer" },
       { label: "문화예술체험", href: "/experience/culture" },
+      { label: "대회·행사", href: "/experience/events" },
     ],
   },
 ];
@@ -44,7 +45,7 @@ export function Gate() {
           key={g.key}
           className="group relative flex min-h-[420px] flex-1 items-end overflow-hidden text-white transition-[flex-grow] duration-700 ease-[cubic-bezier(.2,.7,.2,1)] md:min-h-0 md:hover:flex-grow-[1.35]"
         >
-          <SmartImage
+          <Image
             src={g.image}
             alt={`${g.name} 대표 이미지`}
             fill
