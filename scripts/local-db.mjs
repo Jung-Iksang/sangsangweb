@@ -51,29 +51,81 @@ console.log(
 );
 
 let child;
+let shuttingDown = false;
+
 const runIdx = process.argv.indexOf("--run");
+
 if (runIdx > -1) {
   const cmd = process.argv.slice(runIdx + 1);
-  child = spawn("npx", cmd, {
+
+  // Windows / macOS 공통 Next.js 실행
+  const nextCli = path.join(
+    root,
+    "node_modules",
+    "next",
+    "dist",
+    "bin",
+    "next",
+  );
+
+  child = spawn(process.execPath, [nextCli, ...cmd.slice(1)], {
     stdio: "inherit",
-    shell: process.platform === "win32",
     env: {
       ...process.env,
       LOCAL_DB_URL: url,
     },
   });
+
+  // Next.js 종료 시 로컬 DB 정리
+  child.once("exit", (code, signal) => {
+    void shutdown(code ?? (signal ? 0 : 1));
+  });
+
+  // Next.js 실행 오류 처리
+  child.once("error", (err) => {
+    console.error("Next.js 실행 오류:", err);
+    void shutdown(1);
+  });
 }
 
 async function shutdown(code = 0) {
+  if (shuttingDown) return;
+  shuttingDown = true;
+
   try {
-    server.close();
+    // HTTP 서버 종료 완료 대기
+    await new Promise((resolve, reject) => {
+      server.close((err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
+
+    // PGlite 종료
     await db.close();
+
+    console.log("▶ 로컬 DB 서버 종료 완료");
+  } catch (err) {
+    console.error("로컬 DB 종료 오류:", err);
+    code = 1;
   } finally {
     process.exit(code);
   }
 }
-process.on("SIGINT", () => (child ? child.kill("SIGINT") : shutdown()));
-process.on("SIGTERM", () => (child ? child.kill("SIGTERM") : shutdown()));
+
+// Ctrl + C 종료 처리
+function handleSignal(signal) {
+  if (child && child.exitCode === null && child.signalCode === null) {
+    if (!child.kill(signal)) {
+      void shutdown(1);
+    }
+  } else {
+    void shutdown();
+  }
+}
+
+process.on("SIGINT", () => handleSignal("SIGINT"));
+process.on("SIGTERM", () => handleSignal("SIGTERM"));
 
 /** 비어 있으면 화면 확인용 예시 데이터 입력 (로컬 전용) */
 async function seed(pg) {
