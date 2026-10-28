@@ -75,13 +75,13 @@ export function PostEditor({ initial }: { initial: Initial }) {
 
   return (
     <div className="space-y-5">
-      <div className="grid gap-4 rounded-card bg-white p-5 ring-1 ring-line sm:grid-cols-[180px_1fr]">
+      <div className="grid gap-4 rounded-md bg-white p-5 border border-line sm:grid-cols-[180px_1fr]">
         <label className="block">
           <span className="mb-1.5 block text-[13px] font-bold text-ink">게시판</span>
           <select
             value={boardType}
             onChange={(e) => setBoardType(e.target.value as BoardType)}
-            className="h-11 w-full rounded-input border border-line bg-white px-3 outline-none focus:border-primary"
+            className="h-11 w-full rounded-md border border-line bg-white px-3 outline-none focus:border-green"
           >
             <option value="notice">공지사항</option>
             <option value="press">보도자료</option>
@@ -94,12 +94,12 @@ export function PostEditor({ initial }: { initial: Initial }) {
             onChange={(e) => setTitle(e.target.value)}
             maxLength={200}
             placeholder="제목을 입력하세요 (검색 결과에 그대로 노출됩니다)"
-            className="h-11 w-full rounded-input border border-line px-4 outline-none focus:border-primary"
+            className="h-11 w-full rounded-md border border-line px-4 outline-none focus:border-green"
           />
         </label>
       </div>
 
-      <div className="overflow-hidden rounded-card bg-white ring-1 ring-line">
+      <div className="overflow-hidden rounded-md bg-white border border-line">
         <Toolbar editor={editor} onImage={() => fileRef.current?.click()} uploading={uploading} />
         <input
           ref={fileRef}
@@ -119,22 +119,22 @@ export function PostEditor({ initial }: { initial: Initial }) {
         팁: 이미지를 본문에 끌어다 놓거나 붙여넣을 수 있습니다. 본문 첫 이미지가 목록·검색 미리보기 이미지로 쓰입니다.
       </p>
 
-      {error && <p role="alert" className="rounded-lg bg-brand-red/10 px-4 py-3 text-[14px] text-brand-red-ink">{error}</p>}
+      {error && <p role="alert" className="rounded-lg bg-brand-red/10 px-4 py-3 text-[14px] text-red">{error}</p>}
 
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-card bg-white p-5 ring-1 ring-line">
+      <div className="flex flex-wrap items-center justify-between gap-4 rounded-md bg-white p-5 border border-line">
         <label className="flex items-center gap-2 text-[15px] text-ink">
-          <input type="checkbox" checked={isPublished} onChange={(e) => setIsPublished(e.target.checked)} className="h-5 w-5 accent-[var(--color-primary)]" />
+          <input type="checkbox" checked={isPublished} onChange={(e) => setIsPublished(e.target.checked)} className="h-5 w-5 accent-[var(--color-green)]" />
           홈페이지에 공개
         </label>
         <div className="flex gap-2">
-          <button type="button" onClick={() => router.back()} className="h-11 rounded-full border border-line px-6 font-bold text-body hover:border-ink">
+          <button type="button" onClick={() => router.back()} className="h-11 rounded-btn border border-line px-6 font-bold text-body hover:border-ink">
             취소
           </button>
           <button
             type="button"
             onClick={submit}
             disabled={pending || uploading || !editor}
-            className="h-11 rounded-full bg-primary px-8 font-bold text-white hover:bg-primary-dark disabled:opacity-60"
+            className="h-11 rounded-btn bg-green px-8 font-bold text-white hover:bg-green-dark disabled:opacity-60"
           >
             {pending ? "저장 중…" : initial.id ? "수정 완료" : "등록하기"}
           </button>
@@ -163,14 +163,14 @@ function Toolbar({ editor, onImage, uploading }: { editor: Editor | null; onImag
           }
         : null,
   });
-  if (!editor || !s) return <div className="h-12 border-b border-line bg-surface" />;
+  if (!editor || !s) return <div className="h-12 border-b border-line bg-cream" />;
 
   const btn = (active: boolean) =>
-    `h-9 min-w-9 rounded-lg px-2 text-[14px] font-medium transition ${active ? "bg-primary text-white" : "text-body hover:bg-white"}`;
+    `h-9 min-w-9 rounded-lg px-2 text-[14px] font-medium transition ${active ? "bg-green text-white" : "text-body hover:bg-white"}`;
   const c = () => editor.chain().focus();
 
   return (
-    <div className="flex flex-wrap items-center gap-1 border-b border-line bg-surface px-3 py-2" role="toolbar" aria-label="서식">
+    <div className="flex flex-wrap items-center gap-1 border-b border-line bg-cream px-3 py-2" role="toolbar" aria-label="서식">
       <button type="button" className={btn(s.h2)} onClick={() => c().toggleHeading({ level: 2 }).run()} title="큰 제목">H2</button>
       <button type="button" className={btn(s.h3)} onClick={() => c().toggleHeading({ level: 3 }).run()} title="작은 제목">H3</button>
       <span className="mx-1 h-5 w-px bg-line" />

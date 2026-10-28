@@ -15,23 +15,23 @@ export async function GalleryGrid({ page }: { page: number }) {
   return (
     <SubPage path={page === 1 ? base : `${base}/page/${page}`} title="포토갤러리" description={galleryDescription}>
       {data.items.length === 0 ? (
-        <p className="rounded-card border border-line py-20 text-center text-muted">등록된 사진이 없습니다.</p>
+        <p className="border-y border-line py-20 text-center text-muted">등록된 사진이 없습니다.</p>
       ) : (
         <ul className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3">
           {data.items.map((g, i) => (
             <li key={g.id}>
               <Link href={`${base}/${g.id}`} className="group block">
-                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-surface">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-md bg-line">
                   <SmartImage
                     src={g.imageUrl}
                     alt={g.title}
                     fill
                     priority={i < 3}
                     sizes="(min-width:1024px) 290px, (min-width:768px) 33vw, 50vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                   />
                 </div>
-                <h2 className="mt-3 truncate text-[15.5px] font-bold text-ink group-hover:text-primary">{g.title}</h2>
+                <h2 className="mt-4 truncate text-[15.5px] font-bold text-ink group-hover:underline group-hover:decoration-line-strong group-hover:underline-offset-4">{g.title}</h2>
                 <time dateTime={g.createdAt} className="text-[13px] text-muted">{formatDate(g.createdAt)}</time>
               </Link>
             </li>

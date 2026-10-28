@@ -13,11 +13,11 @@ export function PostRowActions({ id, board, isPublished }: { id: number; board: 
   return (
     <div className="flex justify-end gap-1.5">
       {isPublished && (
-        <Link href={`/community/${board}/${id}`} target="_blank" className={`${btn} hidden hover:border-primary hover:text-primary sm:inline-block`}>
+        <Link href={`/community/${board}/${id}`} target="_blank" className={`${btn} hidden hover:border-green hover:text-green sm:inline-block`}>
           보기
         </Link>
       )}
-      <Link href={`/admin/posts/${id}/edit`} className={`${btn} hover:border-primary hover:text-primary`}>수정</Link>
+      <Link href={`/admin/posts/${id}/edit`} className={`${btn} hover:border-green hover:text-green`}>수정</Link>
       <button
         type="button"
         disabled={pending}
@@ -33,7 +33,7 @@ export function PostRowActions({ id, board, isPublished }: { id: number; board: 
           if (!confirm("이 글을 삭제할까요? 삭제한 글은 되돌릴 수 없습니다.")) return;
           start(async () => { await deletePost(id); router.refresh(); });
         }}
-        className={`${btn} text-brand-red-ink hover:border-brand-red`}
+        className={`${btn} text-red hover:border-brand-red`}
       >
         삭제
       </button>

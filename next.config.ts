@@ -19,6 +19,15 @@ const nextConfig: NextConfig = {
     remotePatterns: cdnDomain ? [{ protocol: "https", hostname: cdnDomain }] : [],
   },
 
+  async headers() {
+    return [
+      {
+        source: "/fonts/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
+    ];
+  },
+
   async redirects() {
     // 섹션 루트 → 첫 하위 페이지
     const sections = [

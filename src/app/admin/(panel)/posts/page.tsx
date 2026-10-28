@@ -25,21 +25,21 @@ export default async function AdminPosts({ searchParams }: PageProps<"/admin/pos
           <p className="mt-1 text-muted">총 {total}건</p>
         </div>
         <div className="flex gap-2">
-          <Link href={`/community/${board}`} target="_blank" className="rounded-full border border-line bg-white px-5 py-2.5 text-[14px] font-bold text-ink hover:border-primary">
+          <Link href={`/community/${board}`} target="_blank" className="rounded-btn border border-line bg-white px-5 py-2.5 text-[14px] font-bold text-ink hover:border-green">
             홈페이지에서 보기
           </Link>
-          <Link href={`/admin/posts/new?board=${board}`} className="rounded-full bg-primary px-5 py-2.5 text-[14px] font-bold text-white hover:bg-primary-dark">
+          <Link href={`/admin/posts/new?board=${board}`} className="rounded-btn bg-green px-5 py-2.5 text-[14px] font-bold text-white hover:bg-green-dark">
             + 새 글 쓰기
           </Link>
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-card bg-white ring-1 ring-line">
+      <div className="overflow-hidden rounded-md bg-white border border-line">
         {items.length === 0 ? (
           <p className="py-16 text-center text-muted">등록된 글이 없습니다.</p>
         ) : (
           <table className="w-full text-[14.5px]">
-            <thead className="bg-surface text-left text-[13px] text-muted">
+            <thead className="bg-cream text-left text-[13px] text-muted">
               <tr>
                 <th className="px-5 py-3 font-medium">제목</th>
                 <th className="hidden w-28 px-3 py-3 font-medium md:table-cell">작성일</th>
@@ -52,8 +52,8 @@ export default async function AdminPosts({ searchParams }: PageProps<"/admin/pos
                 <tr key={p.id}>
                   <td className="max-w-0 px-5 py-3.5">
                     <div className="flex items-center gap-2">
-                      {!p.isPublished && <span className="shrink-0 rounded bg-brand-red/10 px-1.5 py-0.5 text-[11px] font-bold text-brand-red-ink">비공개</span>}
-                      <Link href={`/admin/posts/${p.id}/edit`} className="truncate text-ink hover:text-primary">{p.title}</Link>
+                      {!p.isPublished && <span className="shrink-0 rounded bg-brand-red/10 px-1.5 py-0.5 text-[11px] font-bold text-red">비공개</span>}
+                      <Link href={`/admin/posts/${p.id}/edit`} className="truncate text-ink hover:text-green">{p.title}</Link>
                     </div>
                   </td>
                   <td className="hidden px-3 text-muted md:table-cell">{formatDate(p.createdAt)}</td>
@@ -74,7 +74,7 @@ export default async function AdminPosts({ searchParams }: PageProps<"/admin/pos
             <Link
               key={n}
               href={`/admin/posts?board=${board}&page=${n}`}
-              className={`flex h-9 min-w-9 items-center justify-center rounded-full px-3 text-[14px] ${n === page ? "bg-primary text-white" : "bg-white text-body ring-1 ring-line"}`}
+              className={`flex h-9 min-w-9 items-center justify-center rounded-btn px-3 text-[14px] ${n === page ? "bg-green text-white" : "bg-white text-body border border-line"}`}
             >
               {n}
             </Link>

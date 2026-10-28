@@ -15,7 +15,7 @@ if (!src) {
 const out = path.join(process.cwd(), "public", "photos");
 mkdirSync(out, { recursive: true });
 
-/** 출력 이름 → [원본 파일, 최대 변 길이] */
+/** 출력 이름 → [원본 파일, 최대 변 길이, 옵션?] — 옵션: extract(잘라낼 영역), png(투명 배경 유지) */
 const map = {
   "hero-education": ["image90.jpg", 1600],
   "hero-experience": ["image68.jpeg", 1600],
@@ -61,19 +61,24 @@ const map = {
   "cert-lab": ["image35.png", 1200],
   "cert-venture": ["image34.png", 1000],
   "cert-plaque": ["image22.jpeg", 1000],
+  // 브랜드: '호기심 충전소' 캘리그라피 (image6.png 왼쪽 0~737px, 투명 배경)
+  "brand-calligraphy": ["image6.png", 1000, { extract: { left: 0, top: 0, width: 737, height: 289 }, png: true }],
 };
 
 const entries = [];
 const dims = {};
 let total = 0;
-for (const [name, [file, max]] of Object.entries(map)) {
-  const img = sharp(path.join(src, file)).rotate().resize(max, max, { fit: "inside", withoutEnlargement: true });
-  const target = path.join(out, `${name}.webp`);
-  const info = await img.webp({ quality: 82 }).toFile(target);
+for (const [name, [file, max, opts = {}]] of Object.entries(map)) {
+  let img = sharp(path.join(src, file)).rotate();
+  if (opts.extract) img = sharp(await img.extract(opts.extract).trim().toBuffer());
+  img = img.resize(max, max, { fit: "inside", withoutEnlargement: true });
+  const ext = opts.png ? "png" : "webp";
+  const target = path.join(out, `${name}.${ext}`);
+  const info = await (opts.png ? img.png({ compressionLevel: 9, palette: true }) : img.webp({ quality: 82 })).toFile(target);
   total += info.size;
   dims[name] = { width: info.width, height: info.height };
-  entries.push(`  "${name}": { src: "/photos/${name}.webp", width: ${info.width}, height: ${info.height} },`);
-  console.log(`${name}.webp ${info.width}x${info.height} ${Math.round(info.size / 1024)}KB  ← ${file}`);
+  entries.push(`  "${name}": { src: "/photos/${name}.${ext}", width: ${info.width}, height: ${info.height} },`);
+  console.log(`${name}.${ext} ${info.width}x${info.height} ${Math.round(info.size / 1024)}KB  ← ${file}`);
 }
 writeFileSync(
   path.join(process.cwd(), "src", "content", "photos.generated.ts"),

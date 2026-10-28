@@ -47,10 +47,19 @@ scripts/             local-db.mjs(로컬 PGlite HTTP 서버) db-init.mjs gen-moc
   (Next 개발 서버는 여러 워커/캐시 컨텍스트를 쓰므로 PGlite 파일을 직접 열면 손상됨 — 직접 열지 말 것)
 - 스키마 변경 시 `schema.ts` 와 `bootstrap.sql` 을 함께 수정.
 
-## 디자인 토큰
+## 디자인 — 웜 크림 에디토리얼 (v1.2)
 
-`src/app/globals.css` `@theme`: primary `#1F63C9`, 로고색 green/yellow/red (글자에는 `-ink` 변형 사용 — 명도 대비 4.5:1),
-컨테이너 1160px(`container-site`), 네비 75px, 라운드 20px(카드)/50px(버튼)/15px(입력). 폰트 Spoqa Han Sans Neo(`src/fonts`, 자체 호스팅).
+`src/app/globals.css` `@theme` 토큰만 사용 (임의 색 hex 금지 — 네이버/카카오 지도·스토어 버튼 브랜드색만 예외).
+- 바탕 `paper`(#FBFAF7 기본) / `cream`(#F6F3EC 교차 띠) / `white`(카드·표), 글자 `ink` `body` `muted`, 선 `line` `line-strong`
+- 주색 `green`(#2F6B23 — 링크·활성·주 버튼·번호), 노랑은 `hl` 형광펜 밑줄로만, `red` 는 NEW·에러, 로고 원색 `brand-*` 은 8px 이하 점에만
+- 푸터는 `ink` 바탕 + `on-ink*` 글자
+- 유틸리티: `t-display/t-h1/t-h2/t-h3/t-lead`(타입 스케일), `num`(섹션 번호 01·02), `hl`, `btn` + `btn-primary/btn-outline/btn-dark/btn-ghost/btn-sm`, `link-more`, `container-site`
+- 라운드 `rounded-sm`(6) / `rounded-md`(10) / `rounded-btn`(8)
+- **금지**: `rounded-full` 칩·버튼(8px 이하 점 제외), 그라데이션 박스, 대문자 영문 소제목(eyebrow), 제목 옆 세로 막대, 카드 그림자·hover 떠오름, 사진 위 글자 오버레이
+  (예외: 메인 첫 화면 `Gate` 분할 사진 패널 — 글자 가독성용 하단 스크림과 흰 글자 허용)
+- 섹션 머리는 `SectionHead`(번호 + 가는 선 + 전체보기 / 제목), 목록은 위 `border-ink` + 행 사이 `border-line`
+- 폰트 Pretendard Variable 동적 서브셋 자체 호스팅 (`public/fonts/pretendard/`, `scripts/fetch-pretendard.mjs`)
+- 컨테이너 1160px, 네비 75px
 
 ## 검증
 

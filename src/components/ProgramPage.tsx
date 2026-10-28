@@ -6,105 +6,108 @@ import { site } from "@/config/site";
 import { categoryLabel, programsBy, type Program } from "@/content/programs";
 import { photos } from "@/content/photos.generated";
 import { courseJsonLd, JsonLd } from "@/lib/seo";
+import { AnimatedStat } from "@/components/ui/CountUp";
 
 /** 교육활동·체험활동 공통 상세 템플릿 */
 export function ProgramPage({ program: p }: { program: Program }) {
   const path = `/${p.category}/${p.slug}`;
   const siblings = programsBy(p.category).filter((x) => x.slug !== p.slug);
   const hero = photos[p.image];
+  // 섹션 번호 01, 02 … (등장 순서대로)
+  let n = 0;
+  const next = () => String(++n).padStart(2, "0");
+
   return (
     <SubPage path={path} title={p.title} description={p.summary}>
       <JsonLd data={courseJsonLd({ name: p.title, description: p.summary, path })} />
-      <article className="space-y-12">
-        <div className="relative aspect-[16/8] overflow-hidden rounded-card bg-surface">
-          <Image src={hero.src} alt={`${p.title} 활동 모습`} fill priority sizes="(min-width:1024px) 880px, 100vw" className="object-cover" />
-          {p.badge && (
-            <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3.5 py-1.5 text-[13px] font-bold text-primary shadow">
-              {p.badge}
-            </span>
-          )}
-        </div>
+      <article className="space-y-20">
+        <div>
+          <div className="relative aspect-[16/8] overflow-hidden rounded-md bg-line">
+            <Image src={hero.src} alt={`${p.title} 활동 모습`} fill priority sizes="(min-width:1024px) 880px, 100vw" className="object-cover" />
+            {p.badge && (
+              <span className="absolute left-4 top-4 rounded-sm border border-line bg-white px-2.5 py-1 text-[12px] font-bold text-ink">
+                {p.badge}
+              </span>
+            )}
+          </div>
 
-        <section aria-labelledby="intro">
-          <h2 id="intro" className="sr-only">프로그램 소개</h2>
-          <div className="space-y-3 text-[17px] leading-[1.9] text-body">
+          <div className="mt-12 space-y-4 text-[17px] leading-[1.9] text-body">
             {p.intro.map((t) => (
               <p key={t}>{t}</p>
             ))}
           </div>
-        </section>
 
-        {p.highlights && (
-          <dl className="grid gap-3 sm:grid-cols-3">
-            {p.highlights.map((h) => (
-              <div key={h.k} className="rounded-2xl bg-primary-50 p-5">
-                <dt className="sr-only">{h.v}</dt>
-                <dd className="text-[24px] font-bold text-primary">{h.k}</dd>
-                <dd className="mt-1 text-[14px] leading-snug text-body">{h.v}</dd>
-              </div>
-            ))}
-          </dl>
-        )}
+          {p.highlights && (
+            <dl className="mt-12 grid divide-y divide-line border-y border-line sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+              {p.highlights.map((h) => (
+                <div key={h.k} className="py-6 sm:px-6 sm:first:pl-0">
+                  <dt className="sr-only">{h.v}</dt>
+                  <dd className="text-[28px] font-extrabold tracking-tight text-green">
+                    <AnimatedStat value={h.k} />
+                  </dd>
+                  <dd className="mt-1.5 text-[13.5px] leading-snug text-muted">{h.v}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+        </div>
 
-        <section aria-labelledby="features">
-          <Heading id="features">{p.featuresTitle ?? "프로그램 특징"}</Heading>
-          <ul className="grid gap-3 sm:grid-cols-2">
+        <Block id="features" no={next()} title={p.featuresTitle ?? "프로그램 특징"}>
+          <ol className="border-t border-ink">
             {p.features.map((f, i) => (
-              <li key={f} className="flex items-start gap-3 rounded-2xl border border-line bg-white p-5">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-50 text-[13px] font-bold text-primary">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="pt-1 text-[15.5px] font-medium text-ink">{f}</span>
+              <li key={f} className="flex gap-5 border-b border-line py-4">
+                <span className="num pt-1">{String(i + 1).padStart(2, "0")}.</span>
+                <span className="text-[16.5px] font-medium text-ink">{f}</span>
               </li>
             ))}
-          </ul>
-        </section>
+          </ol>
+        </Block>
 
-        <section aria-labelledby="targets">
-          <Heading id="targets">대상</Heading>
+        <Block id="targets" no={next()} title="대상">
           <ul className="flex flex-wrap gap-2">
             {p.targets.map((t) => (
-              <li key={t} className="rounded-full bg-primary-50 px-4 py-2 text-[15px] font-medium text-primary">
+              <li key={t} className="rounded-sm border border-line-strong bg-white px-3.5 py-2 text-[14.5px] font-medium text-ink">
                 {t}
               </li>
             ))}
           </ul>
-        </section>
+        </Block>
 
         {p.sections?.map((s, si) => (
-          <section key={s.title} aria-labelledby={`section-${si}`}>
-            <Heading id={`section-${si}`}>{s.title}</Heading>
-            <dl className="divide-y divide-line overflow-hidden rounded-2xl border border-line">
+          <Block key={s.title} id={`section-${si}`} no={next()} title={s.title}>
+            <dl className="border-t border-ink">
               {s.items.map((d) => (
-                <div key={d.label} className={`px-5 py-4 ${d.value ? "grid gap-1 sm:grid-cols-[200px_1fr] sm:gap-6" : ""}`}>
+                <div key={d.label} className={`border-b border-line py-4 ${d.value ? "grid gap-1 sm:grid-cols-[200px_1fr] sm:gap-8" : ""}`}>
                   <dt className="font-bold text-ink">{d.label}</dt>
                   {d.value && <dd className="leading-relaxed text-body">{d.value}</dd>}
                 </div>
               ))}
             </dl>
-          </section>
+          </Block>
         ))}
 
         {p.table && (
-          <section aria-labelledby="table">
-            <Heading id="table">{p.table.caption}</Heading>
-            <div className="overflow-x-auto rounded-2xl border border-line">
+          <Block id="table" no={next()} title={p.table.caption}>
+            <div className="overflow-x-auto border-t border-ink">
               <table className="w-full min-w-[560px] text-left text-[14.5px]">
                 <caption className="sr-only">{p.table.caption}</caption>
-                <thead className="bg-surface text-[13px] text-muted">
-                  <tr>
+                <thead className="text-[13px] text-muted">
+                  <tr className="border-b border-line-strong">
                     {p.table.columns.map((c) => (
-                      <th key={c} scope="col" className="whitespace-nowrap px-4 py-3 font-bold">
+                      <th key={c} scope="col" className="whitespace-nowrap py-3 pr-4 font-semibold">
                         {c}
                       </th>
                     ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-line">
+                <tbody>
                   {p.table.rows.map((r) => (
-                    <tr key={r.join("|")}>
+                    <tr key={r.join("|")} className="border-b border-line">
                       {r.map((cell, ci) => (
-                        <td key={ci} className={`px-4 py-3 align-top ${p.table!.columns[ci] === "자격명" ? "font-bold text-ink" : "text-body"}`}>
+                        <td
+                          key={ci}
+                          className={`py-3 pr-4 align-top ${p.table!.columns[ci] === "자격명" ? "font-bold text-ink" : ci === 0 ? "tabular-nums text-muted" : "text-body"}`}
+                        >
                           {cell}
                         </td>
                       ))}
@@ -113,39 +116,34 @@ export function ProgramPage({ program: p }: { program: Program }) {
                 </tbody>
               </table>
             </div>
-          </section>
+          </Block>
         )}
 
         {p.photos && p.photos.length > 0 && (
-          <section aria-labelledby="photos">
-            <Heading id="photos">활동 사진</Heading>
-            <ul className="grid grid-cols-2 gap-3 md:grid-cols-3">
+          <Block id="photos" no={next()} title="활동 사진">
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3">
               {p.photos.map((ph) => {
                 const img = photos[ph.name];
                 return (
                   <li key={ph.name}>
                     <figure>
-                      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-surface">
+                      <div className="relative aspect-[4/3] overflow-hidden rounded-md bg-line">
                         <Image src={img.src} alt={`${p.title} 사진 — ${ph.alt}`} fill sizes="(min-width:1024px) 290px, 50vw" className="object-cover" />
                       </div>
-                      <figcaption className="mt-2 text-[13px] text-muted">{ph.alt}</figcaption>
+                      <figcaption className="mt-3 text-[13px] leading-snug text-muted">{ph.alt}</figcaption>
                     </figure>
                   </li>
                 );
               })}
             </ul>
-          </section>
+          </Block>
         )}
 
         {p.links && (
-          <ul className="flex flex-wrap gap-2">
+          <ul className="flex flex-wrap gap-6">
             {p.links.map((l) => (
               <li key={l.href}>
-                <Link
-                  href={l.href}
-                  {...(l.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                  className="inline-flex h-11 items-center gap-1 rounded-full border border-primary px-5 font-bold text-primary hover:bg-primary-50"
-                >
+                <Link href={l.href} {...(l.external ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="btn btn-ghost text-[16px]">
                   {l.label} <span aria-hidden>→</span>
                 </Link>
               </li>
@@ -153,29 +151,34 @@ export function ProgramPage({ program: p }: { program: Program }) {
           </ul>
         )}
 
-        <section aria-labelledby="contact" className="rounded-card bg-gradient-to-br from-primary to-[#3b82f6] p-7 text-white md:p-10">
-          <h2 id="contact" className="text-[22px] font-bold">{p.title} 문의</h2>
-          <p className="mt-2 text-white/85">
+        <section aria-labelledby="contact" className="rounded-md border border-line bg-cream p-8 md:p-10">
+          <h2 id="contact" className="t-h3">{p.title} 문의</h2>
+          <p className="mt-2 text-muted">
             전화 {site.contact.phone} · 이메일 {site.contact.email}
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <a href={`tel:${site.contact.phone}`} className="inline-flex h-12 items-center gap-2 rounded-full bg-white px-6 font-bold text-primary hover:bg-primary-50">
+            <a href={`tel:${site.contact.phone}`} className="btn btn-primary">
               <PhoneIcon /> {p.ctaLabel}
             </a>
-            <a href={`mailto:${site.contact.email}?subject=${encodeURIComponent(`[${p.title}] 문의`)}`} className="inline-flex h-12 items-center rounded-full border border-white/60 px-6 font-bold hover:bg-white/10">
+            <a href={`mailto:${site.contact.email}?subject=${encodeURIComponent(`[${p.title}] 문의`)}`} className="btn btn-outline">
               이메일 문의
             </a>
           </div>
         </section>
 
         <nav aria-labelledby="related">
-          <Heading id="related">다른 {categoryLabel[p.category]}</Heading>
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <h2 id="related" className="border-b border-ink pb-4 text-[17px] font-bold text-ink">
+            다른 {categoryLabel[p.category]}
+          </h2>
+          <ul>
             {siblings.map((s) => (
-              <li key={s.slug}>
-                <Link href={`/${s.category}/${s.slug}`} className="group block rounded-2xl border border-line p-5 transition hover:border-primary/50 hover:shadow-card">
-                  <p className="font-bold text-ink group-hover:text-primary">{s.title}</p>
-                  <p className="mt-1 line-clamp-2 text-[13.5px] leading-relaxed text-muted">{s.summary}</p>
+              <li key={s.slug} className="border-b border-line">
+                <Link href={`/${s.category}/${s.slug}`} className="group flex items-center gap-6 py-5">
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[17px] font-bold text-ink group-hover:underline group-hover:decoration-line-strong group-hover:underline-offset-4">{s.title}</span>
+                    <span className="mt-1 block truncate text-[14px] text-muted">{s.summary}</span>
+                  </span>
+                  <span aria-hidden className="text-muted transition-transform group-hover:translate-x-0.5">→</span>
                 </Link>
               </li>
             ))}
@@ -186,11 +189,14 @@ export function ProgramPage({ program: p }: { program: Program }) {
   );
 }
 
-function Heading({ id, children }: { id: string; children: React.ReactNode }) {
+function Block({ id, no, title, children }: { id: string; no: string; title: string; children: React.ReactNode }) {
   return (
-    <h2 id={id} className="mb-5 flex items-center gap-2 text-[22px] font-bold text-ink">
-      <span aria-hidden className="h-5 w-1.5 rounded-full bg-primary" />
+    <section aria-labelledby={id}>
+      <p className="num">{no}</p>
+      <h2 id={id} className="mb-6 mt-2 text-[24px] font-bold tracking-tight text-ink">
+        {title}
+      </h2>
       {children}
-    </h2>
+    </section>
   );
 }

@@ -57,7 +57,7 @@ export function GalleryUploader() {
   }
 
   return (
-    <section className="rounded-card bg-white p-5 ring-1 ring-line">
+    <section className="rounded-md bg-white p-5 border border-line">
       <div
         onDragOver={(e) => { e.preventDefault(); setDrag(true); }}
         onDragLeave={() => setDrag(false)}
@@ -66,7 +66,7 @@ export function GalleryUploader() {
         onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && inputRef.current?.click()}
         role="button"
         tabIndex={0}
-        className={`flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-10 text-center transition ${drag ? "border-primary bg-primary-50" : "border-line hover:border-primary/60"}`}
+        className={`flex cursor-pointer flex-col items-center justify-center rounded-md border-2 border-dashed px-6 py-10 text-center transition ${drag ? "border-green bg-green-soft" : "border-line hover:border-green/60"}`}
       >
         <p className="text-[16px] font-bold text-ink">사진을 끌어다 놓거나 클릭해서 선택하세요</p>
         <p className="mt-1 text-[13px] text-muted">JPG · PNG · WEBP · GIF, 여러 장 동시 선택 가능 (자동으로 최적화되어 업로드됩니다)</p>
@@ -77,7 +77,7 @@ export function GalleryUploader() {
         <>
           <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {items.map((it) => (
-              <li key={it.id} className="flex gap-3 rounded-xl border border-line p-3">
+              <li key={it.id} className="flex gap-3 rounded-md border border-line p-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={it.preview} alt="" className="h-20 w-20 shrink-0 rounded-lg object-cover" />
                 <div className="min-w-0 flex-1">
@@ -86,9 +86,9 @@ export function GalleryUploader() {
                     onChange={(e) => update(it.id, { title: e.target.value })}
                     disabled={busy}
                     aria-label="사진 제목"
-                    className="w-full rounded-lg border border-line px-2.5 py-1.5 text-[14px] outline-none focus:border-primary"
+                    className="w-full rounded-lg border border-line px-2.5 py-1.5 text-[14px] outline-none focus:border-green"
                   />
-                  <p className={`mt-1.5 text-[12.5px] ${it.status === "error" ? "text-brand-red-ink" : "text-muted"}`}>
+                  <p className={`mt-1.5 text-[12.5px] ${it.status === "error" ? "text-red" : "text-muted"}`}>
                     {{ ready: "대기", uploading: "업로드 중…", done: "완료", error: it.error }[it.status]}
                   </p>
                   {!busy && (
@@ -101,13 +101,13 @@ export function GalleryUploader() {
             ))}
           </ul>
           <div className="mt-4 flex justify-end">
-            <button type="button" onClick={uploadAll} disabled={busy} className="h-11 rounded-full bg-primary px-7 font-bold text-white hover:bg-primary-dark disabled:opacity-60">
+            <button type="button" onClick={uploadAll} disabled={busy} className="h-11 rounded-btn bg-green px-7 font-bold text-white hover:bg-green-dark disabled:opacity-60">
               {busy ? "업로드 중…" : `${items.length}장 등록하기`}
             </button>
           </div>
         </>
       )}
-      {message && <p role="status" className="mt-4 rounded-lg bg-primary-50 px-4 py-3 text-[14px] text-primary">{message}</p>}
+      {message && <p role="status" className="mt-4 rounded-lg bg-green-soft px-4 py-3 text-[14px] text-green">{message}</p>}
     </section>
   );
 }

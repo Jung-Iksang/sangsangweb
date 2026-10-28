@@ -10,7 +10,7 @@ export const metadata = { title: "로그인" };
 export default function LoginPage() {
   return (
     <div className="flex min-h-dvh items-center justify-center px-5 py-16">
-      <div className="w-full max-w-[400px] rounded-card bg-white p-8 shadow-card ring-1 ring-line md:p-10">
+      <div className="w-full max-w-[400px] rounded-md bg-white p-8 border border-line md:p-10">
         <div className="mb-8 text-center">
           <Image src="/logo.png" alt="상상마루" width={150} height={48} className="mx-auto h-12 w-auto" priority />
           <h1 className="mt-5 text-[20px] font-bold text-ink">관리자 로그인</h1>
@@ -18,7 +18,7 @@ export default function LoginPage() {
         </div>
         <LoginForm />
         <p className="mt-6 text-center text-[13px]">
-          <Link href="/" className="text-muted hover:text-primary">← 홈페이지로 돌아가기</Link>
+          <Link href="/" className="text-muted hover:text-green">← 홈페이지로 돌아가기</Link>
         </p>
       </div>
     </div>

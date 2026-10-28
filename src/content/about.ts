@@ -195,3 +195,9 @@ export const partners = [
   { name: "익산시", src: "/partners/iksan-city.png", width: 400, height: 120 },
   { name: "전북과학문화거점센터", src: "/partners/jb-science-hub.png", width: 594, height: 120 },
 ];
+
+/** 메인 연도 티커용: 연도별 대표 한 줄 (연혁 첫 항목, 날짜·번호가 든 괄호만 제거 — "(예비)" 등은 유지), 2012 → 최근 순 */
+export const historyHighlights = [...history]
+  .sort((a, b) => a.year - b.year)
+  .map((h) => ({ year: h.year, text: h.items[0].replace(/\s*\([^)]*\d[^)]*\)/g, "").trim() }));
+

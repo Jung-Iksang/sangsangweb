@@ -24,11 +24,11 @@ export default async function PanelLayout({ children }: { children: React.ReactN
             <strong className="text-ink">{admin.id}</strong> 님 로그인 중
           </p>
           <div className="flex gap-2">
-            <Link href="/" target="_blank" className="flex-1 rounded-lg border border-line py-2 text-center hover:border-primary hover:text-primary">
+            <Link href="/" target="_blank" className="flex-1 rounded-lg border border-line py-2 text-center hover:border-green hover:text-green">
               사이트 보기
             </Link>
             <form action={logoutAction} className="flex-1">
-              <button className="w-full rounded-lg border border-line py-2 hover:border-brand-red hover:text-brand-red-ink">로그아웃</button>
+              <button className="w-full rounded-lg border border-line py-2 hover:border-brand-red hover:text-red">로그아웃</button>
             </form>
           </div>
         </div>

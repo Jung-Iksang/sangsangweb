@@ -30,13 +30,13 @@ export default async function Dashboard() {
           <p className="mt-1 text-muted">게시글과 사진을 등록하면 홈페이지에 바로 반영됩니다.</p>
         </div>
         <div className="flex gap-2">
-          <Link href="/admin/posts/new?board=notice" className="rounded-full bg-primary px-5 py-2.5 text-[14px] font-bold text-white hover:bg-primary-dark">+ 새 글 쓰기</Link>
-          <Link href="/admin/gallery" className="rounded-full border border-line bg-white px-5 py-2.5 text-[14px] font-bold text-ink hover:border-primary">+ 사진 올리기</Link>
+          <Link href="/admin/posts/new?board=notice" className="rounded-btn bg-green px-5 py-2.5 text-[14px] font-bold text-white hover:bg-green-dark">+ 새 글 쓰기</Link>
+          <Link href="/admin/gallery" className="rounded-btn border border-line bg-white px-5 py-2.5 text-[14px] font-bold text-ink hover:border-green">+ 사진 올리기</Link>
         </div>
       </div>
 
       {warnings.length > 0 && (
-        <ul className="space-y-1 rounded-2xl bg-brand-yellow/15 px-5 py-4 text-[13.5px] text-[#7a5b00]">
+        <ul className="space-y-1 rounded-md bg-brand-yellow/15 px-5 py-4 text-[13.5px] text-[#7a5b00]">
           {warnings.map((w) => <li key={w}>⚠ {w}</li>)}
         </ul>
       )}
@@ -44,7 +44,7 @@ export default async function Dashboard() {
       <ul className="grid gap-4 sm:grid-cols-3">
         {cards.map((c) => (
           <li key={c.label}>
-            <Link href={c.href} className="block rounded-card bg-white p-6 ring-1 ring-line hover:ring-primary">
+            <Link href={c.href} className="block rounded-md bg-white p-6 border border-line hover:border-green">
               <p className="text-[14px] text-muted">{c.label}</p>
               <p className="mt-2 text-[32px] font-bold text-ink">{c.value}</p>
             </Link>
@@ -52,7 +52,7 @@ export default async function Dashboard() {
         ))}
       </ul>
 
-      <section className="rounded-card bg-white p-6 ring-1 ring-line">
+      <section className="rounded-md bg-white p-6 border border-line">
         <h2 className="mb-4 text-[18px] font-bold text-ink">최근 게시글</h2>
         {recent.length === 0 ? (
           <p className="py-8 text-center text-muted">아직 게시글이 없습니다.</p>
@@ -60,9 +60,9 @@ export default async function Dashboard() {
           <ul className="divide-y divide-line">
             {recent.map((p) => (
               <li key={p.id} className="flex items-center gap-3 py-3 text-[14.5px]">
-                <span className="shrink-0 rounded-full bg-surface px-2.5 py-1 text-[12px] text-muted">{boardLabel[p.boardType]}</span>
-                <Link href={`/admin/posts/${p.id}/edit`} className="min-w-0 flex-1 truncate text-ink hover:text-primary">{p.title}</Link>
-                {!p.isPublished && <span className="shrink-0 text-[12px] text-brand-red-ink">비공개</span>}
+                <span className="shrink-0 rounded-btn bg-cream px-2.5 py-1 text-[12px] text-muted">{boardLabel[p.boardType]}</span>
+                <Link href={`/admin/posts/${p.id}/edit`} className="min-w-0 flex-1 truncate text-ink hover:text-green">{p.title}</Link>
+                {!p.isPublished && <span className="shrink-0 text-[12px] text-red">비공개</span>}
                 <span className="shrink-0 text-muted">조회 {p.views}</span>
                 <span className="hidden shrink-0 text-muted sm:inline">{formatDate(p.createdAt)}</span>
               </li>

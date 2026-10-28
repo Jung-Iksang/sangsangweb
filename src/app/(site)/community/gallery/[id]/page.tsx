@@ -37,7 +37,7 @@ export default async function Page({ params }: PageProps<"/community/gallery/[id
   return (
     <SubPage path={`${base}/${g.id}`} title={g.title}>
       <figure>
-        <div className="overflow-hidden rounded-card bg-surface">
+        <div className="overflow-hidden rounded-md bg-cream">
           <SmartImage
             src={g.imageUrl}
             alt={g.title}
@@ -55,20 +55,20 @@ export default async function Page({ params }: PageProps<"/community/gallery/[id
       </figure>
       <nav aria-label="이전·다음 사진" className="mt-10 grid grid-cols-2 gap-3">
         {g.prev ? (
-          <Link href={`${base}/${g.prev.id}`} className="rounded-2xl border border-line p-4 hover:border-primary">
+          <Link href={`${base}/${g.prev.id}`} className="group border-t border-ink py-4">
             <span className="text-[13px] text-muted">‹ 이전 사진</span>
-            <p className="truncate font-medium text-ink">{g.prev.title}</p>
+            <p className="truncate font-semibold text-ink group-hover:underline group-hover:decoration-line-strong group-hover:underline-offset-4">{g.prev.title}</p>
           </Link>
         ) : <span />}
         {g.next ? (
-          <Link href={`${base}/${g.next.id}`} className="rounded-2xl border border-line p-4 text-right hover:border-primary">
+          <Link href={`${base}/${g.next.id}`} className="group border-t border-ink py-4 text-right">
             <span className="text-[13px] text-muted">다음 사진 ›</span>
-            <p className="truncate font-medium text-ink">{g.next.title}</p>
+            <p className="truncate font-semibold text-ink group-hover:underline group-hover:decoration-line-strong group-hover:underline-offset-4">{g.next.title}</p>
           </Link>
         ) : <span />}
       </nav>
       <div className="mt-8 flex justify-center">
-        <Link href={base} className="inline-flex h-12 items-center rounded-full border border-line px-8 font-bold text-ink hover:border-primary hover:text-primary">
+        <Link href={base} className="btn btn-outline px-10">
           목록으로
         </Link>
       </div>

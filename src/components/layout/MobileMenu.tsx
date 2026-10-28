@@ -27,55 +27,57 @@ export function MobileMenu() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex h-11 w-11 items-center justify-center rounded-full text-ink hover:bg-surface"
+        className="flex h-11 w-11 items-center justify-center rounded-sm text-ink hover:bg-cream"
         aria-label="전체 메뉴 열기"
         aria-expanded={open}
         aria-controls="mobile-menu"
       >
-        <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden>
+        <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden>
           <path strokeLinecap="round" d="M4 7h16M4 12h16M4 17h16" />
         </svg>
       </button>
 
       <div
-        className={`fixed inset-0 z-[60] bg-black/40 transition-opacity ${open ? "opacity-100" : "pointer-events-none opacity-0"}`}
+        className={`fixed inset-0 z-[60] bg-ink/40 transition-opacity ${open ? "opacity-100" : "pointer-events-none opacity-0"}`}
         onClick={close}
         aria-hidden
       />
       <nav
         id="mobile-menu"
         aria-label="모바일 메뉴"
-        className={`fixed inset-y-0 right-0 z-[70] flex w-[86%] max-w-[360px] flex-col bg-white shadow-2xl transition-transform duration-300 ${open ? "translate-x-0" : "translate-x-full"}`}
+        className={`fixed inset-y-0 right-0 z-[70] flex w-[86%] max-w-[380px] flex-col bg-paper transition-transform duration-300 ${open ? "translate-x-0" : "translate-x-full"}`}
         inert={!open}
       >
         <div className="flex h-[75px] items-center justify-between border-b border-line px-5">
-          <span className="text-lg font-bold text-ink">전체 메뉴</span>
+          <span className="text-[17px] font-bold text-ink">전체 메뉴</span>
           <button
             type="button"
             onClick={close}
-            className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-surface"
+            className="flex h-11 w-11 items-center justify-center rounded-sm hover:bg-cream"
             aria-label="메뉴 닫기"
           >
-            <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden>
+            <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden>
               <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
             </svg>
           </button>
         </div>
-        <ul className="flex-1 overflow-y-auto px-2 py-2">
-          {mainMenu.map((item) => {
+        <ul className="flex-1 overflow-y-auto px-5">
+          {mainMenu.map((item, i) => {
             const isOpen = expanded === item.href;
+            const no = String(i + 1).padStart(2, "0");
             return (
-              <li key={item.href} className="border-b border-[#f3f4f6]">
+              <li key={item.href} className="border-b border-line">
                 {item.children ? (
                   <>
                     <button
                       type="button"
                       onClick={() => setExpanded(isOpen ? null : item.href)}
-                      className="flex w-full items-center justify-between px-3 py-4 text-left text-[16px] font-bold text-ink"
+                      className="flex w-full items-center gap-3 py-4 text-left"
                       aria-expanded={isOpen}
                     >
-                      {item.label}
-                      <svg viewBox="0 0 24 24" className={`h-5 w-5 transition-transform ${isOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" strokeWidth={2} aria-hidden>
+                      <span className="num">{no}</span>
+                      <span className="flex-1 text-[18px] font-bold text-ink">{item.label}</span>
+                      <svg viewBox="0 0 24 24" className={`h-5 w-5 text-muted transition-transform ${isOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
                       </svg>
                     </button>
@@ -83,7 +85,7 @@ export function MobileMenu() {
                       <div className="min-h-0">
                         {item.children.map((child) => (
                           <li key={child.href}>
-                            <Link href={child.href} onClick={close} className="block rounded-lg px-5 py-2.5 text-[15px] text-body hover:bg-primary-50 hover:text-primary">
+                            <Link href={child.href} onClick={close} className="block py-2.5 pl-9 text-[15px] text-body hover:text-green">
                               {child.label}
                             </Link>
                           </li>
@@ -92,8 +94,9 @@ export function MobileMenu() {
                     </ul>
                   </>
                 ) : (
-                  <Link href={item.href} onClick={close} className="block px-3 py-4 text-[16px] font-bold text-ink">
-                    {item.label}
+                  <Link href={item.href} onClick={close} className="flex items-center gap-3 py-4">
+                    <span className="num">{no}</span>
+                    <span className="text-[18px] font-bold text-ink">{item.label}</span>
                   </Link>
                 )}
               </li>
@@ -101,7 +104,7 @@ export function MobileMenu() {
           })}
         </ul>
         <div className="border-t border-line p-5">
-          <a href={`tel:${site.contact.phone}`} className="flex h-12 items-center justify-center rounded-full bg-primary font-bold text-white">
+          <a href={`tel:${site.contact.phone}`} className="btn btn-primary w-full">
             교육문의 {site.contact.phone}
           </a>
         </div>

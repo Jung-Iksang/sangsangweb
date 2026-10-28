@@ -21,30 +21,29 @@ export default function Page() {
   ];
   return (
     <SubPage path="/about/location" title="오시는 길" description="상상마루는 익산시 영등동 동서로49길에 있습니다.">
-      <div className="space-y-12">
-        <div className="overflow-hidden rounded-card border border-line">
-          {/* 지도: 네이버 지도 퍼가기 iframe 코드를 받으면 이 영역을 교체 */}
-          <div className="flex aspect-[16/8] flex-col items-center justify-center gap-4 bg-gradient-to-br from-primary-50 to-surface p-6 text-center">
-            <p className="text-[18px] font-bold text-ink">{site.address.full}</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <a href={`https://map.naver.com/p/search/${mapQuery}`} target="_blank" rel="noopener noreferrer" className="rounded-full bg-[#03c75a] px-5 py-2.5 text-[14px] font-bold text-[#06210f]">
-                네이버 지도에서 보기
-              </a>
-              <a href={`https://map.kakao.com/?q=${mapQuery}`} target="_blank" rel="noopener noreferrer" className="rounded-full bg-[#fee500] px-5 py-2.5 text-[14px] font-bold text-[#191919]">
-                카카오맵에서 보기
-              </a>
-            </div>
+      <div className="space-y-20">
+        {/* 지도: 네이버 지도 퍼가기 iframe 코드를 받으면 이 영역을 교체 */}
+        <div className="flex aspect-[16/8] flex-col items-center justify-center gap-5 rounded-md border border-line bg-cream p-6 text-center">
+          <p className="t-h3">{site.address.full}</p>
+          <div className="flex flex-wrap justify-center gap-2">
+            <a href={`https://map.naver.com/p/search/${mapQuery}`} target="_blank" rel="noopener noreferrer" className="btn btn-sm bg-[#03c75a] text-[#06210f] hover:brightness-95">
+              네이버 지도에서 보기
+            </a>
+            <a href={`https://map.kakao.com/?q=${mapQuery}`} target="_blank" rel="noopener noreferrer" className="btn btn-sm bg-[#fee500] text-[#191919] hover:brightness-95">
+              카카오맵에서 보기
+            </a>
           </div>
         </div>
 
         <section aria-labelledby="contact-info">
-          <h2 id="contact-info" className="mb-5 text-[22px] font-bold text-ink">연락처</h2>
-          <dl className="grid gap-3 sm:grid-cols-2">
+          <p className="num">01</p>
+          <h2 id="contact-info" className="mb-6 mt-2 text-[24px] font-bold tracking-tight text-ink">연락처</h2>
+          <dl className="border-t border-ink">
             {info.map((i) => (
-              <div key={i.label} className="rounded-2xl bg-surface p-5">
-                <dt className="text-[13px] font-bold text-muted">{i.label}</dt>
-                <dd className="mt-1 text-[16px] font-medium text-ink">
-                  {i.href ? <a href={i.href} className="hover:text-primary">{i.value}</a> : i.value}
+              <div key={i.label} className="grid gap-1 border-b border-line py-4 sm:grid-cols-[120px_1fr] sm:gap-8">
+                <dt className="font-bold text-ink">{i.label}</dt>
+                <dd className="text-body">
+                  {i.href ? <a href={i.href} className="underline decoration-line-strong underline-offset-4 hover:text-green">{i.value}</a> : i.value}
                 </dd>
               </div>
             ))}
@@ -52,11 +51,12 @@ export default function Page() {
         </section>
 
         <section aria-labelledby="transport">
-          <h2 id="transport" className="mb-5 text-[22px] font-bold text-ink">교통 안내</h2>
-          <dl className="divide-y divide-line overflow-hidden rounded-2xl border border-line">
+          <p className="num">02</p>
+          <h2 id="transport" className="mb-6 mt-2 text-[24px] font-bold tracking-tight text-ink">교통 안내</h2>
+          <dl className="border-t border-ink">
             {transport.map((t) => (
-              <div key={t.label} className="grid gap-1 px-5 py-4 sm:grid-cols-[120px_1fr]">
-                <dt className="font-bold text-primary">{t.label}</dt>
+              <div key={t.label} className="grid gap-1 border-b border-line py-4 sm:grid-cols-[120px_1fr] sm:gap-8">
+                <dt className="font-bold text-ink">{t.label}</dt>
                 <dd className="text-body">{t.value}</dd>
               </div>
             ))}

@@ -1,19 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import localFont from "next/font/local";
 import { site } from "@/config/site";
 import "./globals.css";
-
-// Spoqa Han Sans Neo (SIL OFL 1.1) — 자체 호스팅 + font-display: swap 으로 글자가 즉시 보이도록
-const spoqa = localFont({
-  src: [
-    { path: "../fonts/SpoqaHanSansNeo-Regular.woff2", weight: "400", style: "normal" },
-    { path: "../fonts/SpoqaHanSansNeo-Medium.woff2", weight: "500", style: "normal" },
-    { path: "../fonts/SpoqaHanSansNeo-Bold.woff2", weight: "700", style: "normal" },
-  ],
-  display: "swap",
-  variable: "--font-spoqa",
-  fallback: ["Apple SD Gothic Neo", "Malgun Gothic", "system-ui", "sans-serif"],
-});
 
 const naver = process.env.NAVER_SITE_VERIFICATION;
 const google = process.env.GOOGLE_SITE_VERIFICATION;
@@ -57,8 +44,12 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ko" className={spoqa.variable}>
+    <html lang="ko">
       <head>
+        {/* Pretendard Variable (OFL) 자체 호스팅 · 동적 서브셋 — 화면에 쓰인 글자 범위만 내려받음.
+            unicode-range 서브셋 92개는 next/font 가 지원하지 않아 public 의 CSS 를 직접 연결 */}
+        {/* eslint-disable-next-line @next/next/no-css-tags */}
+        <link rel="stylesheet" href="/fonts/pretendard/pretendard.css" />
         <link rel="alternate" type="application/rss+xml" title={`${site.name} 소식`} href="/rss.xml" />
       </head>
       <body className="min-h-dvh antialiased">{children}</body>

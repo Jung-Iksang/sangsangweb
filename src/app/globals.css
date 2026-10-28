@@ -1,35 +1,46 @@
 @import "tailwindcss";
 
-/* ───────── 디자인 토큰 ─────────
-   Primary 블루(#1F63C9)는 기존 사이트, 그린/옐로/레드는 상상마루 로고 큐브 색상 */
+/* ───────── 디자인 토큰 — 웜 크림 에디토리얼 (v1.2) ─────────
+   크림·종이 바탕은 기업소개 PPT 표지 색, 초록·노랑·빨강은 상상마루 로고 큐브 색.
+   규칙: 알약(rounded-full) 칩·버튼, 그라데이션 박스, 대문자 영문 소제목, 제목 옆 세로 막대 금지.
+   명도 대비는 크림(#F6F3EC) 바탕 기준 모두 4.5:1 이상 (README 디자인 절 참고). */
 @theme {
-  --font-sans: var(--font-spoqa), "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-sans: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
 
-  --color-primary: #1f63c9;
-  --color-primary-dark: #1a54ab;
-  --color-primary-50: #eef4fd;
-  --color-primary-100: #dbe7fa;
+  /* 바탕 */
+  --color-cream: #f6f3ec;
+  --color-paper: #fbfaf7;
+  --color-white: #ffffff;
 
+  /* 글자·선 */
+  --color-ink: #1f1e1c;
+  --color-body: #44423d;
+  --color-muted: #6f6b63;
+  --color-line: #e3ded3;
+  --color-line-strong: #cfc9bc;
+
+  /* 브랜드 */
+  --color-green: #2f6b23;
+  --color-green-dark: #275a1d;
+  --color-green-soft: #e6efdf;
+  --color-yellow: #f5b800;
+  --color-yellow-ink: #8a6400;
+  --color-red: #b8323d;
+  /* 로고 원색 — 점·장식 전용 (글자색 금지) */
   --color-brand-green: #7abd47;
   --color-brand-yellow: #f5b800;
   --color-brand-red: #d64550;
-  /* 글자색용 (흰 배경 대비 4.5:1 이상) */
-  --color-brand-green-ink: #467a1f;
-  --color-brand-yellow-ink: #8a6400;
-  --color-brand-red-ink: #c03844;
 
-  --color-ink: #111827;
-  --color-body: #374151;
-  --color-muted: #6b7280;
-  --color-line: #e5e7eb;
-  --color-surface: #f8fafc;
-  --color-footer: #f9fbff;
+  /* 먹색(푸터) 바탕 전용 */
+  --color-on-ink: #f6f3ec;
+  --color-on-ink-muted: #b8b3a8;
+  --color-on-ink-green: #9bd36a;
 
-  --radius-card: 20px;
-  --radius-input: 15px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-btn: 8px;
 
-  --shadow-card: 0 10px 30px -12px rgb(17 24 39 / 0.18);
-  --shadow-dropdown: 0 4px 12px rgb(0 0 0 / 0.08);
+  --shadow-dropdown: 0 8px 24px rgb(31 30 28 / 0.1);
 }
 
 @utility container-site {
@@ -39,21 +50,158 @@
   padding-inline: 20px;
 }
 
+/* 타입 스케일 — Pretendard 굵기와 음수 자간으로 위계 */
+@utility t-display {
+  font-size: clamp(2.25rem, 1.4rem + 3vw, 3.5rem);
+  line-height: 1.12;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+}
+@utility t-h1 {
+  font-size: clamp(2rem, 1.5rem + 1.8vw, 2.75rem);
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--color-ink);
+}
+@utility t-h2 {
+  font-size: clamp(1.625rem, 1.3rem + 1.2vw, 2.125rem);
+  line-height: 1.22;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+}
+@utility t-h3 {
+  font-size: 1.375rem;
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+}
+@utility t-lead {
+  font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  line-height: 1.7;
+  font-weight: 500;
+  color: var(--color-body);
+}
+
+/* 형광펜 밑줄 — 제목 속 핵심 단어 */
+@utility hl {
+  background-image: linear-gradient(transparent 62%, rgb(245 184 0 / 0.55) 62%);
+  padding-inline: 0.05em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* 섹션 번호 (01, 02 …) */
+@utility num {
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-green);
+}
+
+/* 버튼 — 모서리 8px, 알약 금지 */
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 3rem;
+  padding-inline: 1.375rem;
+  border-radius: var(--radius-btn);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+@utility btn-sm {
+  height: 2.5rem;
+  padding-inline: 1rem;
+  font-size: 14px;
+}
+@utility btn-primary {
+  background: var(--color-green);
+  color: #fff;
+  &:hover {
+    background: var(--color-green-dark);
+  }
+}
+@utility btn-dark {
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+  &:hover {
+    background: #000;
+  }
+}
+@utility btn-outline {
+  border: 1px solid var(--color-line-strong);
+  background: transparent;
+  color: var(--color-ink);
+  &:hover {
+    background: var(--color-cream);
+    border-color: var(--color-ink);
+  }
+}
+@utility btn-ghost {
+  height: auto;
+  padding-inline: 0;
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-line-strong);
+  text-underline-offset: 5px;
+  &:hover {
+    color: var(--color-green);
+    text-decoration-color: currentColor;
+  }
+}
+
+/* 텍스트 링크 (전체보기 등) */
+@utility link-more {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-line-strong);
+  text-underline-offset: 5px;
+  white-space: nowrap;
+  &:hover {
+    color: var(--color-green);
+    text-decoration-color: currentColor;
+  }
+}
+
+/* 연도·문구가 아래에서 한 줄 올라오는 효과 (YearTicker) */
+@keyframes tick-up {
+  from { transform: translateY(70%); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+@utility tick-up {
+  animation: tick-up 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
   }
   body {
-    background: #fff;
+    background: var(--color-paper);
     color: var(--color-body);
     font-family: var(--font-sans);
+    letter-spacing: -0.01em;
     word-break: keep-all;
     overflow-wrap: anywhere;
     overflow-x: clip;
   }
+  ::selection {
+    background: rgb(245 184 0 / 0.35);
+  }
   :focus-visible {
-    outline: 2px solid var(--color-primary);
+    outline: 2px solid var(--color-green);
     outline-offset: 2px;
   }
 }
@@ -65,15 +213,15 @@
   color: var(--color-body);
 }
 .prose-post > * + * { margin-top: 1em; }
-.prose-post h2 { font-size: 1.5rem; font-weight: 700; color: var(--color-ink); margin-top: 1.8em; }
+.prose-post h2 { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; color: var(--color-ink); margin-top: 1.8em; }
 .prose-post h3 { font-size: 1.25rem; font-weight: 700; color: var(--color-ink); margin-top: 1.5em; }
-.prose-post a { color: var(--color-primary); text-decoration: underline; text-underline-offset: 3px; }
+.prose-post a { color: var(--color-green); text-decoration: underline; text-underline-offset: 3px; }
 .prose-post ul { list-style: disc; padding-left: 1.4em; }
 .prose-post ol { list-style: decimal; padding-left: 1.4em; }
-.prose-post blockquote { border-left: 4px solid var(--color-primary-100); padding-left: 1em; color: var(--color-muted); }
-.prose-post img { max-width: 100%; height: auto; border-radius: 12px; margin-inline: auto; }
+.prose-post blockquote { border-left: 2px solid var(--color-line-strong); padding-left: 1em; color: var(--color-muted); }
+.prose-post img { max-width: 100%; height: auto; border-radius: var(--radius-md); margin-inline: auto; }
 .prose-post hr { border-color: var(--color-line); }
-.prose-post pre { background: var(--color-surface); padding: 1em; border-radius: 10px; overflow-x: auto; }
+.prose-post pre { background: var(--color-cream); padding: 1em; border-radius: var(--radius-md); overflow-x: auto; }
 
 /* Tiptap 에디터 */
 .tiptap { outline: none; min-height: 320px; }

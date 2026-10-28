@@ -3,8 +3,8 @@
 유한회사 상상마루(전북 익산 진로·직업체험 교육 기관) 공식 홈페이지입니다.
 기존 정적 HTML + PHP(미리넷 호스팅) 사이트를 **Next.js 16 + Vercel + Neon Postgres + AWS S3/CloudFront** 로 새로 만들었습니다.
 
-> **현재 버전: v1.1 — 기업소개 자료 반영**
-> 회사 정보·연혁·사업 소개·사진을 클라이언트 기업소개 PDF/PPT 기준으로 교체했습니다. 운영 인프라(Neon·S3·Vercel) 연결은 아직입니다.
+> **현재 버전: v1.2 — 디자인 리파인 (웜 크림 에디토리얼 · Pretendard)**
+> 회사 정보·사진은 기업소개 PDF/PPT 기준(v1.1), 디자인은 크림 바탕·로고 초록 주색·번호 매긴 섹션으로 정리했습니다. 운영 인프라(Neon·S3·Vercel) 연결은 아직입니다.
 > 남은 작업은 [로드맵](#로드맵--남은-작업)을 보세요. 변경 이력은 [CHANGELOG.md](CHANGELOG.md).
 
 - 클라이언트 최우선 요구: **구글·네이버 검색 노출(SEO)**
@@ -35,7 +35,7 @@
 | 영역 | 사용 기술 | 비고 |
 |---|---|---|
 | 프레임워크 | Next.js 16.4 (App Router, **Cache Components**), React 19 | 학습 자료와 API가 다름 → 아래 [주의사항](#주의사항) |
-| 스타일 | Tailwind CSS 4 + 디자인 토큰(`src/app/globals.css`) | 폰트 Spoqa Han Sans Neo 자체 호스팅 |
+| 스타일 | Tailwind CSS 4 + 디자인 토큰(`src/app/globals.css`) | 폰트 Pretendard Variable 동적 서브셋 자체 호스팅 |
 | DB | Postgres — 운영 Neon / 로컬 PGlite | ORM: Drizzle |
 | 이미지 | AWS S3 + CloudFront — 로컬은 `.data/uploads` | 브라우저 → S3 직접 업로드(presigned URL) |
 | 인증 | 단일 관리자, 환경변수 + JWT 쿠키(jose) | 일반 회원 기능 없음 |
@@ -93,9 +93,9 @@ src/
 ├── db/               schema.ts(Drizzle) · bootstrap.sql(테이블 DDL) · index.ts(연결)
 ├── lib/              data.ts(공개 조회·캐시) · admin-data.ts · auth.ts · session-token.ts
 │                     storage.ts(S3/로컬) · upload-client.ts · seo.tsx · html.ts · format.ts
-├── fonts/            Spoqa Han Sans Neo (OFL)
 └── proxy.ts          /admin 접근 1차 보호 (Next 16 의 middleware)
-scripts/              local-db.mjs · db-init.mjs · hash-password.mjs · import-photos.mjs
+scripts/              local-db.mjs · db-init.mjs · hash-password.mjs · import-photos.mjs · fetch-pretendard.mjs
+public/fonts/pretendard/  Pretendard Variable 동적 서브셋 (OFL)
 docs/DEPLOY.md        운영 배포 절차
 old/                  기존 사이트 보관본
 ```
@@ -278,7 +278,7 @@ export async function saveSomething(input: {...}): Promise<ActionResult> {
 | 인사말·연혁·조직도·MOU·교통안내·협력기관 로고 | `src/content/about.ts` |
 | 진로체험 6개 스쿨·인증·사진 카드 | `src/content/career.ts` |
 | 메인 히어로·섹션 문구 | `src/components/home/*` |
-| 색상·라운드·폰트 | `src/app/globals.css` 의 `@theme` |
+| 색상·라운드·폰트·버튼·타입 스케일 | `src/app/globals.css` 의 `@theme` 와 `@utility` (규칙은 아래 디자인 절) |
 | 공지·보도자료·포토갤러리 | 관리자 페이지 `/admin` |
 
 ### 사진 교체·추가
@@ -321,10 +321,27 @@ export async function saveSomething(input: {...}): Promise<ActionResult> {
 - [ ] DB 백업 정책 (Neon 무료 플랜 복구 기간 확인)
 
 ### 성능 (Lighthouse, 모바일 시뮬레이션 기준)
-- SEO 100 · 접근성 100 · 권장사항 100 · 성능 82~83
-- 성능 감점 원인: 한글 웹폰트 용량(약 180KB × 3). 실제 사진 교체 후 이미지 용량도 재측정 필요
+- SEO 100 · 접근성 100 · 권장사항 100 · 성능 77~87 (v1.2, 로컬 측정)
+- 성능 감점 원인: 메인 히어로 사진 2장(LCP)과 한글 웹폰트. 고화질 원본 확보 시 히어로 사진 용량 재조정 필요
 
 ---
+
+## 디자인 규칙 (v1.2)
+
+웜 크림 에디토리얼 — 기업소개 PPT 표지의 크림색 바탕, 로고의 초록을 주색으로, 노랑은 형광펜 밑줄로만 씁니다.
+
+| 토큰 | 값 | 용도 |
+|---|---|---|
+| `paper` / `cream` | #FBFAF7 / #F6F3EC | 기본 바탕 / 교차 띠·상단 타이틀 |
+| `ink` / `body` / `muted` | #1F1E1C / #44423D / #6F6B63 | 제목·푸터 바탕 / 본문 / 보조 |
+| `line` / `line-strong` | #E3DED3 / #CFC9BC | 가는 선 / 테두리 |
+| `green` | #2F6B23 | 링크·활성·주 버튼·섹션 번호 |
+| `hl` (노랑) | #F5B800 55% | 제목 속 핵심 단어 형광펜 |
+| `red` | #B8323D | NEW 표시·에러 |
+
+- 버튼은 `btn btn-primary|btn-outline|btn-ghost` (모서리 8px), 섹션 머리는 `SectionHead`
+- 쓰지 않는 것: 알약 모양(`rounded-full`) 칩·버튼, 그라데이션 박스, 대문자 영문 소제목, 제목 옆 세로 막대, 카드 그림자, 사진 위 글자 오버레이 (예외: 메인 첫 화면 분할 사진 패널의 하단 스크림)
+- 명도 대비는 크림 바탕 기준 모두 4.5:1 이상으로 맞춰 두었습니다. 새 색을 넣을 때도 확인하세요.
 
 ## 주의사항
 

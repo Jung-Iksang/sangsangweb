@@ -58,10 +58,11 @@ export default async function Page({ params }: PageProps<"/community/[board]/[id
       <ViewCounter id={post.id} />
       <article>
         <header className="flex flex-wrap items-center gap-3 border-b-2 border-ink pb-4 text-[14px] text-muted">
-          <Link href={base} className="rounded-full bg-primary-50 px-3 py-1 font-bold text-primary">
+          <Link href={base} className="num hover:underline">
             {boardLabel[post.boardType]}
           </Link>
-          <time dateTime={post.createdAt}>{formatDate(post.createdAt)}</time>
+          <span aria-hidden className="text-line-strong">/</span>
+          <time dateTime={post.createdAt} className="tabular-nums">{formatDate(post.createdAt)}</time>
         </header>
         <div className="prose-post py-10" dangerouslySetInnerHTML={{ __html: post.content }} />
       </article>
@@ -70,7 +71,7 @@ export default async function Page({ params }: PageProps<"/community/[board]/[id
         <Neighbor label="이전 글" item={post.prev} base={base} />
       </nav>
       <div className="mt-8 flex justify-center">
-        <Link href={base} className="inline-flex h-12 items-center rounded-full border border-line px-8 font-bold text-ink hover:border-primary hover:text-primary">
+        <Link href={base} className="btn btn-outline px-10">
           목록으로
         </Link>
       </div>
@@ -83,7 +84,7 @@ function Neighbor({ label, item, base }: { label: string; item: { id: number; ti
     <div className="flex items-center gap-4 border-b border-line px-2 py-4 last:border-b-0">
       <span className="w-16 shrink-0 font-bold text-muted">{label}</span>
       {item ? (
-        <Link href={`${base}/${item.id}`} className="truncate text-body hover:text-primary">{item.title}</Link>
+        <Link href={`${base}/${item.id}`} className="truncate text-body hover:text-green">{item.title}</Link>
       ) : (
         <span className="text-muted/70">{label}이 없습니다.</span>
       )}

@@ -16,28 +16,39 @@ export default function Page() {
   const img = photos["camp-group"];
   return (
     <SubPage path="/about/greeting" title="인사말" description={`${site.slogan}, ${site.tagline} ${site.name}입니다.`}>
-      <div className="grid gap-10 md:grid-cols-[1fr_300px]">
-        <div className="space-y-6 text-[17px] leading-[1.9] text-body">
-          <p className="text-[24px] font-bold leading-snug text-ink md:text-[28px]">{greeting.lead}</p>
-          {greeting.body.map((t) => (
-            <p key={t}>{t}</p>
-          ))}
-          <blockquote className="rounded-2xl border-l-4 border-primary bg-primary-50 px-6 py-5">
-            <p className="text-[18px] font-bold leading-relaxed text-ink">“{greeting.quote.text}”</p>
-            <p className="mt-1 text-[14px] italic text-muted">{greeting.quote.en}</p>
-            <footer className="mt-2 text-[14px] text-muted">— {greeting.quote.by}</footer>
-          </blockquote>
-          {greeting.sections.map((s) => (
-            <section key={s.title} className="rounded-2xl bg-surface p-6">
-              <h2 className="mb-2 text-[19px] font-bold text-primary">{s.title}</h2>
-              <p>{s.text}</p>
-            </section>
-          ))}
-          <p>{greeting.closing}</p>
-          <p className="text-right text-[18px] font-bold text-ink">{greeting.signature}</p>
+      <div className="grid gap-14 lg:grid-cols-[1fr_280px]">
+        <div className="text-[17px] leading-[1.9] text-body">
+          <p className="t-h2 !leading-snug">{greeting.lead}</p>
+          <div className="mt-8 space-y-5">
+            {greeting.body.map((t) => (
+              <p key={t}>{t}</p>
+            ))}
+          </div>
+
+          <figure className="my-14 border-y border-line py-10">
+            <blockquote className="text-[22px] font-bold leading-relaxed tracking-tight text-ink">
+              “<span className="hl">{greeting.quote.text}</span>”
+            </blockquote>
+            <figcaption className="mt-4 text-[13.5px] text-muted">
+              {greeting.quote.by} · <span lang="en">{greeting.quote.en}</span>
+            </figcaption>
+          </figure>
+
+          <div className="space-y-10">
+            {greeting.sections.map((s, i) => (
+              <section key={s.title}>
+                <p className="num">{String(i + 1).padStart(2, "0")}</p>
+                <h2 className="mt-2 text-[22px] font-bold tracking-tight text-ink">{s.title}</h2>
+                <p className="mt-3">{s.text}</p>
+              </section>
+            ))}
+          </div>
+
+          <p className="mt-14">{greeting.closing}</p>
+          <p className="mt-6 border-t border-line pt-6 text-right text-[18px] font-bold text-ink">{greeting.signature}</p>
         </div>
-        <div className="relative hidden aspect-[3/4] overflow-hidden rounded-card md:block">
-          <Image src={img.src} alt="상상마루 캠프에 참가한 학생들" fill sizes="300px" className="object-cover" />
+        <div className="relative hidden aspect-[3/4] self-start overflow-hidden rounded-md bg-line lg:block">
+          <Image src={img.src} alt="상상마루 캠프에 참가한 학생들" fill sizes="280px" className="object-cover" />
         </div>
       </div>
     </SubPage>

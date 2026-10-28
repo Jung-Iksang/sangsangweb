@@ -10,7 +10,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-/** 서브페이지 공통 틀: 상단 타이틀 영역 + 좌측 섹션 메뉴 + 본문 */
+/** 서브페이지 공통 틀: 크림 타이틀 띠 + 좌측 섹션 메뉴 + 본문 */
 export function SubPage({ path, title, description, children }: Props) {
   const found = findSection(path);
   const section = found?.section;
@@ -25,84 +25,79 @@ export function SubPage({ path, title, description, children }: Props) {
   return (
     <>
       <JsonLd data={breadcrumbJsonLd(crumbs)} />
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-[#fff8e1]">
-        <Decor />
-        <div className="container-site relative py-12 md:py-16">
-          <nav aria-label="현재 위치" className="mb-4 text-[13px] text-muted">
-            <ol className="flex flex-wrap items-center gap-1.5">
+      <section className="border-b border-line bg-cream">
+        <div className="container-site py-12 md:py-20">
+          <nav aria-label="현재 위치" className="mb-8 text-[13px] text-muted">
+            <ol className="flex flex-wrap items-center gap-2">
               <li>
-                <Link href="/" className="hover:text-primary">홈</Link>
+                <Link href="/" className="hover:text-ink">홈</Link>
               </li>
               {crumbs.map((c, i, arr) => (
-                <li key={c.path + i} className="flex items-center gap-1.5">
-                  <span aria-hidden className="text-line">›</span>
+                <li key={c.path + i} className="flex items-center gap-2">
+                  <span aria-hidden className="text-line-strong">/</span>
                   {i === arr.length - 1 ? (
-                    <span aria-current="page" className="font-medium text-body">{c.name}</span>
+                    <span aria-current="page" className="line-clamp-1 text-ink">{c.name}</span>
                   ) : (
-                    <Link href={c.path} className="hover:text-primary">{c.name}</Link>
+                    <Link href={c.path} className="hover:text-ink">{c.name}</Link>
                   )}
                 </li>
               ))}
             </ol>
           </nav>
-          {section && <p className="mb-2 text-sm font-bold tracking-wide text-primary">{section.label}</p>}
-          <h1 className="text-[28px] font-bold leading-tight text-ink md:text-[40px]">{title}</h1>
-          {description && <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-muted md:text-base">{description}</p>}
+          {section && <p className="num mb-3">{section.label}</p>}
+          <h1 className="t-h1 max-w-4xl">{title}</h1>
+          {description && <p className="t-lead mt-5 max-w-3xl text-muted">{description}</p>}
         </div>
       </section>
 
       {section?.children && (
-        <nav aria-label={`${section.label} 하위 메뉴`} className="sticky top-[75px] z-30 border-b border-line bg-white lg:hidden">
-          <ul className="container-site flex gap-1 overflow-x-auto py-2 [scrollbar-width:none]">
-            {section.children.map((c) => (
-              <li key={c.href} className="shrink-0">
-                <Link
-                  href={c.href}
-                  aria-current={c.href === activeHref ? "page" : undefined}
-                  className={`block rounded-full px-4 py-2 text-[14px] font-medium ${c.href === activeHref ? "bg-primary text-white" : "text-body hover:bg-surface"}`}
-                >
-                  {c.label}
-                </Link>
-              </li>
-            ))}
+        <nav aria-label={`${section.label} 하위 메뉴`} className="sticky top-[75px] z-30 border-b border-line bg-paper lg:hidden">
+          <ul className="container-site flex gap-6 overflow-x-auto [scrollbar-width:none]">
+            {section.children.map((c) => {
+              const active = c.href === activeHref;
+              return (
+                <li key={c.href} className="shrink-0">
+                  <Link
+                    href={c.href}
+                    aria-current={active ? "page" : undefined}
+                    className={`block border-b-2 py-3.5 text-[14.5px] ${active ? "border-green font-semibold text-ink" : "border-transparent text-muted hover:text-ink"}`}
+                  >
+                    {c.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
       )}
 
-      <div className={`container-site py-12 md:py-16 ${section?.children ? "lg:grid lg:grid-cols-[210px_1fr] lg:gap-12" : ""}`}>
+      <div className={`container-site py-16 md:py-24 ${section?.children ? "lg:grid lg:grid-cols-[200px_1fr] lg:gap-16" : ""}`}>
         {section?.children && (
           <aside className="hidden lg:block">
-            <div className="sticky top-[100px] overflow-hidden rounded-card border border-line">
-              <p className="bg-primary px-5 py-4 text-[17px] font-bold text-white">{section.label}</p>
-              <ul className="py-2">
-                {section.children.map((c) => (
-                  <li key={c.href}>
-                    <Link
-                      href={c.href}
-                      aria-current={c.href === activeHref ? "page" : undefined}
-                      className={`flex items-center justify-between px-5 py-3 text-[15px] transition-colors ${c.href === activeHref ? "font-bold text-primary" : "text-body hover:text-primary"}`}
-                    >
-                      {c.label}
-                      <span aria-hidden className={c.href === activeHref ? "" : "opacity-0"}>›</span>
-                    </Link>
-                  </li>
-                ))}
+            <nav aria-label={`${section.label} 메뉴`} className="sticky top-[107px]">
+              <h2 className="border-b border-ink pb-3 text-[15px] font-bold text-ink">{section.label}</h2>
+              <ul>
+                {section.children.map((c) => {
+                  const active = c.href === activeHref;
+                  return (
+                    <li key={c.href} className="border-b border-line">
+                      <Link
+                        href={c.href}
+                        aria-current={active ? "page" : undefined}
+                        className={`flex items-center gap-2.5 py-3.5 text-[15px] transition-colors ${active ? "font-semibold text-ink" : "text-muted hover:text-ink"}`}
+                      >
+                        <span aria-hidden className={`h-1.5 w-1.5 shrink-0 rounded-full ${active ? "bg-green" : "bg-transparent"}`} />
+                        {c.label}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
-            </div>
+            </nav>
           </aside>
         )}
         <div className="min-w-0">{children}</div>
       </div>
     </>
-  );
-}
-
-function Decor() {
-  return (
-    <div aria-hidden className="pointer-events-none absolute inset-0">
-      <div className="absolute -right-10 -top-10 h-56 w-56 rounded-[36px] bg-brand-green/15 rotate-12" />
-      <div className="absolute right-40 top-24 h-24 w-24 rounded-[20px] bg-brand-yellow/20 -rotate-6" />
-      <div className="absolute -bottom-12 right-16 h-36 w-36 rounded-[28px] bg-brand-red/10 rotate-[20deg]" />
-    </div>
   );
 }

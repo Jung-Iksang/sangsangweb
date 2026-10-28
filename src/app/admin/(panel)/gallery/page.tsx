@@ -19,7 +19,7 @@ export default async function AdminGallery() {
       </div>
       <GalleryUploader />
       {items.length === 0 ? (
-        <p className="rounded-card bg-white py-16 text-center text-muted ring-1 ring-line">등록된 사진이 없습니다.</p>
+        <p className="rounded-md bg-white py-16 text-center text-muted border border-line">등록된 사진이 없습니다.</p>
       ) : (
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((g) => (

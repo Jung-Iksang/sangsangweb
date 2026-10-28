@@ -23,7 +23,7 @@ export async function BoardList({ board, page }: { board: BoardType; page: numbe
         총 <strong className="text-ink">{data.total}</strong>건{page > 1 && ` · ${page}페이지`}
       </p>
       {data.items.length === 0 ? (
-        <p className="rounded-card border border-line py-20 text-center text-muted">등록된 글이 없습니다.</p>
+        <p className="border-y border-line py-20 text-center text-muted">등록된 글이 없습니다.</p>
       ) : (
         <ul className="border-t-2 border-ink">
           {data.items.map((p, i) => (
@@ -33,15 +33,15 @@ export async function BoardList({ board, page }: { board: BoardType; page: numbe
                   {data.total - (page - 1) * POSTS_PER_PAGE - i}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <h2 className="flex items-center gap-2 text-[16.5px] font-medium text-ink group-hover:text-primary">
+                  <h2 className="flex items-center gap-2.5 text-[16.5px] font-semibold text-ink group-hover:underline group-hover:decoration-line-strong group-hover:underline-offset-4">
                     <span className="truncate">{p.title}</span>
                     {p.isNew && (
-                      <span className="shrink-0 rounded-full bg-brand-red-ink px-1.5 py-0.5 text-[10px] font-bold leading-none text-white">N</span>
+                      <span className="shrink-0 text-[11px] font-bold tracking-wide text-red">NEW</span>
                     )}
                   </h2>
                   {p.excerpt && <p className="mt-1 line-clamp-1 text-[14px] text-muted">{p.excerpt}</p>}
                 </div>
-                <time dateTime={p.createdAt} className="shrink-0 text-[14px] text-muted">
+                <time dateTime={p.createdAt} className="shrink-0 text-[14px] tabular-nums text-muted">
                   {formatDate(p.createdAt)}
                 </time>
               </Link>

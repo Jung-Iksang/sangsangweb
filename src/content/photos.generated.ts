@@ -44,6 +44,7 @@ export const photos = {
   "cert-lab": { src: "/photos/cert-lab.webp", width: 848, height: 1200 },
   "cert-venture": { src: "/photos/cert-venture.webp", width: 488, height: 690 },
   "cert-plaque": { src: "/photos/cert-plaque.webp", width: 870, height: 655 },
+  "brand-calligraphy": { src: "/photos/brand-calligraphy.png", width: 737, height: 289 },
 } as const;
 
 export type PhotoName = keyof typeof photos;

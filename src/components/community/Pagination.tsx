@@ -6,13 +6,13 @@ export function Pagination({ base, page, totalPages }: { base: string; page: num
   const href = (n: number) => (n === 1 ? base : `${base}/page/${n}`);
   const start = Math.max(1, Math.min(page - 2, totalPages - 4));
   const pages = Array.from({ length: Math.min(5, totalPages) }, (_, i) => start + i);
-  const btn = "flex h-10 min-w-10 items-center justify-center rounded-full px-3 text-[14px] font-medium";
+  const btn = "flex h-9 min-w-9 items-center justify-center rounded-sm px-2.5 text-[14px] font-medium tabular-nums";
   return (
     <nav aria-label="페이지 이동" className="mt-10 flex justify-center">
       <ul className="flex items-center gap-1">
         {page > 1 && (
           <li>
-            <Link href={href(page - 1)} className={`${btn} text-muted hover:bg-surface`} rel="prev" aria-label="이전 페이지">
+            <Link href={href(page - 1)} className={`${btn} text-muted hover:bg-cream`} rel="prev" aria-label="이전 페이지">
               ‹
             </Link>
           </li>
@@ -20,15 +20,15 @@ export function Pagination({ base, page, totalPages }: { base: string; page: num
         {pages.map((n) => (
           <li key={n}>
             {n === page ? (
-              <span aria-current="page" className={`${btn} bg-primary text-white`}>{n}</span>
+              <span aria-current="page" className={`${btn} bg-ink text-on-ink`}>{n}</span>
             ) : (
-              <Link href={href(n)} className={`${btn} text-body hover:bg-surface`}>{n}</Link>
+              <Link href={href(n)} className={`${btn} text-body hover:bg-cream`}>{n}</Link>
             )}
           </li>
         ))}
         {page < totalPages && (
           <li>
-            <Link href={href(page + 1)} className={`${btn} text-muted hover:bg-surface`} rel="next" aria-label="다음 페이지">
+            <Link href={href(page + 1)} className={`${btn} text-muted hover:bg-cream`} rel="next" aria-label="다음 페이지">
               ›
             </Link>
           </li>
