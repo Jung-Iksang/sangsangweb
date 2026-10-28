@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1100" viewBox="0 0 900 1100" role="img" aria-label="직업 탐색 (목업 이미지)">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1f63c9"/><stop offset="1" stop-color="#5b9bf0"/></linearGradient></defs>
+<rect width="900" height="1100" fill="url(#g)"/><circle cx="852" cy="7" r="269" fill="#fff" fill-opacity="0.07"/><circle cx="640" cy="481" r="153" fill="#fff" fill-opacity="0.13"/><circle cx="36" cy="1097" r="74" fill="#fff" fill-opacity="0.15"/><circle cx="285" cy="585" r="195" fill="#fff" fill-opacity="0.08"/><circle cx="874" cy="0" r="266" fill="#fff" fill-opacity="0.07"/>
+<g transform="translate(450 503.8)" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="6.416666666666667" stroke-linejoin="round">
+<rect x="-69.3" y="-50.050000000000004" width="138.6" height="100.10000000000001" rx="13.86"/>
+<circle cx="-26.95" cy="-15.4" r="12.32"/>
+<path d="M-69.3 34.65 L-19.25 -3.85 L11.549999999999999 23.099999999999998 L34.65 3.85 L69.3 34.65"/>
+</g>
+<text x="50%" y="630.85" text-anchor="middle" font-family="Spoqa Han Sans Neo, Apple SD Gothic Neo, Malgun Gothic, sans-serif" font-size="47.74" font-weight="700" fill="#fff">직업 탐색</text>
+<text x="50%" y="684.75" text-anchor="middle" font-family="sans-serif" font-size="27.72" letter-spacing="2" fill="#fff" fill-opacity=".75">MOCKUP IMAGE</text>
+</svg>

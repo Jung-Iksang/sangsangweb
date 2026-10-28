@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="학교밖 늘봄교육 (목업 이미지)">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5d9d2f"/><stop offset="1" stop-color="#a6d46e"/></linearGradient></defs>
+<rect width="1200" height="800" fill="url(#g)"/><circle cx="185" cy="576" r="139" fill="#fff" fill-opacity="0.10"/><circle cx="1046" cy="35" r="239" fill="#fff" fill-opacity="0.06"/><circle cx="988" cy="247" r="159" fill="#fff" fill-opacity="0.12"/><circle cx="130" cy="774" r="64" fill="#fff" fill-opacity="0.16"/><circle cx="242" cy="530" r="150" fill="#fff" fill-opacity="0.10"/>
+<g transform="translate(600 359.2)" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="5.666666666666667" stroke-linejoin="round">
+<rect x="-61.2" y="-44.2" width="122.4" height="88.4" rx="12.24"/>
+<circle cx="-23.799999999999997" cy="-13.600000000000001" r="10.88"/>
+<path d="M-61.2 30.6 L-17 -3.4000000000000004 L10.2 20.4 L30.6 3.4000000000000004 L61.2 30.6"/>
+</g>
+<text x="50%" y="471.4" text-anchor="middle" font-family="Spoqa Han Sans Neo, Apple SD Gothic Neo, Malgun Gothic, sans-serif" font-size="42.16" font-weight="700" fill="#fff">학교밖 늘봄교육</text>
+<text x="50%" y="519" text-anchor="middle" font-family="sans-serif" font-size="24.48" letter-spacing="2" fill="#fff" fill-opacity=".75">MOCKUP IMAGE</text>
+</svg>

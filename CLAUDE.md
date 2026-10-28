@@ -1,60 +1,54 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+@AGENTS.md
 
 ## 프로젝트 개요
 
-상상마루(SangsangMaru) - 진로·직업체험 교육 플랫폼 웹사이트. Figma → ANIMA 익스포트 기반 정적 웹사이트로, 미리넷 호스팅 서버에 배포 예정.
+상상마루(SangsangMaru) — 전북 익산 진로·직업체험 교육 기관 홈페이지. 2026-10 리뉴얼:
+기존 정적 HTML + PHP(미리넷) → **Next.js 16 (App Router, Cache Components) + Vercel + Neon + AWS S3/CloudFront**.
+기존 사이트는 `old/` 에 보관(배포 대상 아님). 디자인 레퍼런스: hamsungedu.co.kr (레이아웃 느낌만 차용).
 
-## 기술 스택
+**클라이언트 최우선 요구: 구글·네이버 SEO.** 공개 페이지는 반드시 서버에서 완성된 HTML 로 나가야 한다.
 
-- **프론트엔드**: HTML, CSS (Vanilla), JavaScript
-- **백엔드**: PHP (미리넷 호스팅 환경)
-- **데이터베이스**: MySQL/MariaDB
-- **폰트**: Spoqa Han Sans Neo (CDN)
+## 핵심 규칙
 
-## 프로젝트 구조
+- **Next 16 은 학습 데이터와 다름** — 코드 작성 전 `node_modules/next/dist/docs/` 확인 (middleware → `src/proxy.ts`, `"use cache"`/`cacheTag`/`updateTag`, `instant`).
+- 공개 데이터는 `src/lib/data.ts` 의 `"use cache"` 함수로만 조회 → 정적 셸에 포함(SEO). 수정은 `src/actions/admin.ts` 에서 `updateTag("posts"|"gallery")`.
+- 동적 라우트(`[id]`, `[slug]`, `page/[page]`)는 params 를 최상위에서 await + `export const instant = false` (크롤러에 완성 HTML·정확한 404). `generateStaticParams` 는 최소 1개 반환(없으면 placeholder).
+- 페이지네이션은 쿼리스트링 대신 경로(`/community/notice/page/2`).
+- 모든 공개 페이지는 `pageMetadata()`(`src/lib/seo.tsx`)로 title/description/canonical/OG 지정. 루트 레이아웃에 canonical 두지 말 것.
+- `next.config.ts` 의 `htmlLimitedBots` 에 Yeti(네이버)·Daum·Googlebot 포함 → 봇은 스트리밍 없는 완성 HTML 수신.
+- 메뉴 변경은 `src/config/menu.ts` 한 곳만.
+- 관리자: 단일 계정(환경변수 `ADMIN_ID`/`ADMIN_PASSWORD_HASH`/`AUTH_SECRET`), `/admin/*` 는 proxy + `requireAdmin()` 이중 확인, noindex.
+- 게시글 HTML 은 저장 시 `sanitizePostHtml()` 로 정제.
+
+## 구조
 
 ```
-sangsangweb/
-├── index.html              # 메인 페이지 (엔트리 포인트)
-├── style.css               # 메인 페이지 전용 스타일
-├── css/
-│   ├── globals.css         # 글로벌 리셋
-│   ├── variables.css       # CSS 변수 및 폰트 임포트
-│   └── common.css          # 공통 네비게이션/푸터 스타일
-├── pages/
-│   ├── login.html/.css     # 로그인 페이지
-│   ├── signup.html/.css    # 회원가입 페이지
-│   └── community/
-│       ├── notice.html     # 공지사항 목록
-│       └── community.css   # 커뮤니티 스타일
-├── img/                    # 이미지 파일
-├── js/                     # JavaScript (예정)
-└── php/                    # PHP 백엔드 (예정)
+src/app/(site)/      공개 페이지 (헤더/푸터 포함)
+src/app/admin/       관리자 (login, (panel)/…)
+src/app/api/admin/   업로드 URL 발급, 로컬 업로드 수신
+src/app/sitemap.ts · robots.ts · rss.xml/  SEO 파일
+src/components/      layout/ home/ community/ admin/ ui/
+src/config/          site.ts(회사정보) menu.ts(메뉴)
+src/content/         programs.ts about.ts career.ts (정적 콘텐츠)
+src/db/              schema.ts(drizzle) bootstrap.sql index.ts(연결)
+src/lib/             data.ts(공개·캐시) admin-data.ts auth.ts storage.ts seo.tsx html.ts
+scripts/             local-db.mjs(로컬 PGlite HTTP 서버) db-init.mjs gen-mock.mjs hash-password.mjs
 ```
 
-## 디자인 시스템
+## DB 연결
 
-- **컨테이너 너비**: 1160px (max-width: 1440px)
-- **네비게이션 높이**: 75px
-- **Primary 색상**: #1F63C9
-- **Border Radius**: 50px(버튼), 20px(카드), 15px(입력필드)
+- 운영: `DATABASE_URL`(Neon) → `drizzle-orm/neon-http`
+- 로컬: `npm run dev` 가 `scripts/local-db.mjs` 실행 → PGlite 를 단일 프로세스가 소유하고 HTTP 로 제공 → `LOCAL_DB_URL` + `drizzle-orm/pg-proxy`
+  (Next 개발 서버는 여러 워커/캐시 컨텍스트를 쓰므로 PGlite 파일을 직접 열면 손상됨 — 직접 열지 말 것)
+- 스키마 변경 시 `schema.ts` 와 `bootstrap.sql` 을 함께 수정.
 
-## CSS 구조 규칙
+## 디자인 토큰
 
-- `index.html`은 `.index-page-desktop` 클래스 기반 스타일 사용 (style.css)
-- 서브 페이지들은 `css/common.css` + 개별 CSS 파일 조합
-- 모든 페이지에서 `css/variables.css` 임포트 필수 (폰트 CDN 포함)
+`src/app/globals.css` `@theme`: primary `#1F63C9`, 로고색 green/yellow/red (글자에는 `-ink` 변형 사용 — 명도 대비 4.5:1),
+컨테이너 1160px(`container-site`), 네비 75px, 라운드 20px(카드)/50px(버튼)/15px(입력). 폰트 Spoqa Han Sans Neo(`src/fonts`, 자체 호스팅).
 
-## 페이지 간 경로
+## 검증
 
-- 메인 → 서브페이지: `pages/login.html`, `pages/community/notice.html`
-- 서브페이지 → 메인: `../index.html` 또는 `../../index.html`
-- CSS 경로: 서브페이지에서 `../css/` 사용
-
-## 개발 참고사항
-
-- 로컬 개발: 브라우저에서 index.html 직접 열기 또는 Live Server 사용
-- 이미지는 `img/` 폴더에 배치, 파일명은 HTML/CSS 참조와 일치해야 함
-- PHP 백엔드는 미리넷 호스팅 환경에서 테스트 필요
+`npm run lint && npm run typecheck && npm run build`. 크롤러 확인: `curl -A "Yeti" <url>` 로 본문·메타가 HTML 에 있는지 확인.

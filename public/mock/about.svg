@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="상상마루 (목업 이미지)">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1f63c9"/><stop offset="1" stop-color="#5b9bf0"/></linearGradient></defs>
+<rect width="1200" height="900" fill="url(#g)"/><circle cx="327" cy="523" r="185" fill="#fff" fill-opacity="0.09"/><circle cx="1142" cy="4" r="268" fill="#fff" fill-opacity="0.07"/><circle cx="840" cy="405" r="151" fill="#fff" fill-opacity="0.13"/><circle cx="43" cy="899" r="75" fill="#fff" fill-opacity="0.15"/><circle cx="395" cy="468" r="197" fill="#fff" fill-opacity="0.08"/>
+<g transform="translate(600 403.8)" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="6.416666666666667" stroke-linejoin="round">
+<rect x="-69.3" y="-50.050000000000004" width="138.6" height="100.10000000000001" rx="13.86"/>
+<circle cx="-26.95" cy="-15.4" r="12.32"/>
+<path d="M-69.3 34.65 L-19.25 -3.85 L11.549999999999999 23.099999999999998 L34.65 3.85 L69.3 34.65"/>
+</g>
+<text x="50%" y="530.85" text-anchor="middle" font-family="Spoqa Han Sans Neo, Apple SD Gothic Neo, Malgun Gothic, sans-serif" font-size="47.74" font-weight="700" fill="#fff">상상마루</text>
+<text x="50%" y="584.75" text-anchor="middle" font-family="sans-serif" font-size="27.72" letter-spacing="2" fill="#fff" fill-opacity=".75">MOCKUP IMAGE</text>
+</svg>

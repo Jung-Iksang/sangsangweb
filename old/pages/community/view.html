@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <title>게시글 - 상상마루</title>
+    <link rel="stylesheet" href="../../css/globals.css" />
+    <link rel="stylesheet" href="../../css/variables.css" />
+    <link rel="stylesheet" href="../../css/dropdown.css" />
+    <link rel="stylesheet" href="../../css/common.css" />
+    <link rel="stylesheet" href="view.css" />
+    <script src="../../js/api.js" defer></script>
+  </head>
+  <body>
+    <div class="view-page">
+      <header class="nav-container">
+        <nav class="nav-inner-container">
+          <div class="nav-logo-box">
+            <a href="../../index.html">
+              <img src="../../img/logo.png" alt="상상 마루" class="nav-logo" />
+            </a>
+          </div>
+          <ul class="navbar" role="menubar">
+            <li class="div nav-item" role="menuitem">
+              <a href="../about/greeting.html">단체소개</a>
+              <ul class="dropdown-menu">
+                <li><a href="../about/greeting.html">인사말</a></li>
+                <li><a href="../about/history.html">연혁</a></li>
+                <li><a href="../about/location.html">오시는 길</a></li>
+              </ul>
+            </li>
+            <li class="div nav-item no-dropdown" role="menuitem">
+              <a href="#">진로·직업체험</a>
+            </li>
+            <li class="div nav-item" role="menuitem">
+              <a href="../education/afterschool.html">교육활동</a>
+              <ul class="dropdown-menu">
+                <li><a href="../education/afterschool.html">방과후/늘봄 교육</a></li>
+                <li><a href="../education/outside.html">학교밖 늘봄교육</a></li>
+                <li><a href="../education/freeyear.html">자유학년(기)제</a></li>
+                <li><a href="../education/drone.html">탑마루드론축구단</a></li>
+                <li><a href="../education/hrd.html">HRD-Net강사양성과정</a></li>
+                <li><a href="../education/volunteer.html">교육기부 진로체험</a></li>
+              </ul>
+            </li>
+            <li class="div nav-item" role="menuitem">
+              <a href="../experience/creative.html">체험활동</a>
+              <ul class="dropdown-menu">
+                <li><a href="../experience/creative.html">창의적체험활동</a></li>
+                <li><a href="../experience/swai.html">SW.AI교육주간</a></li>
+                <li><a href="../experience/science.html">과학의날 행사 지원</a></li>
+                <li><a href="../experience/culture.html">문화예술체험 교육</a></li>
+              </ul>
+            </li>
+            <li class="div nav-item active" role="menuitem">
+              <a href="notice.html">커뮤니티</a>
+              <ul class="dropdown-menu">
+                <li><a href="notice.html">공지사항</a></li>
+                <li><a href="press.html">보도자료</a></li>
+                <li><a href="gallery.html">포토갤러리</a></li>
+              </ul>
+            </li>
+            <li class="div nav-item no-dropdown" role="menuitem">
+              <a href="../store/store.html">스토어</a>
+            </li>
+          </ul>
+          <div class="nav-button-box">
+            <a href="../login.html" class="nav-button" aria-label="로그인">
+              <span class="text-wrapper-2">로그인</span>
+            </a>
+            <a href="../signup.html" class="div-wrapper" aria-label="회원가입">
+              <span class="text-wrapper-3">회원가입</span>
+            </a>
+          </div>
+        </nav>
+      </header>
+
+      <main class="view-content">
+        <div class="view-container">
+          <article id="post-article" class="post-article">
+            <header class="post-header">
+              <span id="board-type" class="board-type">공지사항</span>
+              <h1 id="post-title" class="post-title">로딩 중...</h1>
+              <div class="post-meta">
+                <span id="post-author" class="post-author"></span>
+                <span id="post-date" class="post-date"></span>
+                <span id="post-views" class="post-views"></span>
+              </div>
+            </header>
+
+            <div id="post-content" class="post-content">
+              <p>게시글을 불러오는 중입니다...</p>
+            </div>
+
+            <footer class="post-footer">
+              <div class="post-navigation">
+                <a id="prev-post" href="#" class="nav-link prev" style="display: none;">
+                  <span class="nav-label">이전 글</span>
+                  <span id="prev-title" class="nav-title"></span>
+                </a>
+                <a id="next-post" href="#" class="nav-link next" style="display: none;">
+                  <span class="nav-label">다음 글</span>
+                  <span id="next-title" class="nav-title"></span>
+                </a>
+              </div>
+
+              <div class="post-actions">
+                <a id="list-link" href="notice.html" class="btn btn-secondary">목록</a>
+                <div id="admin-actions" class="admin-actions" style="display: none;">
+                  <button id="edit-btn" class="btn btn-edit">수정</button>
+                  <button id="delete-btn" class="btn btn-delete">삭제</button>
+                </div>
+              </div>
+            </footer>
+          </article>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <div class="footer-inner">
+          <div class="footer-info">
+            <address>
+              <p>전북특별자치도 익산시 원광대학교 프라임관</p>
+              <p>사업자 번호 : 651-86-01854(등록 2006년)</p>
+              <p>상호 : 상상마루 (Sangsangmaru) / 진로진학체험지원센터 대표 : 조진욱</p>
+              <p>고객센터 : 1544-0634 팩스 : 0505-200-6060 이메일 : cybercops@wku.ac.kr</p>
+            </address>
+          </div>
+          <div class="footer-bottom">
+            <p class="copyright">ⓒ 유한회사 상상마루 All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', async function() {
+        // URL에서 id 파라미터 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const postId = urlParams.get('id');
+
+        if (!postId) {
+          alert('잘못된 접근입니다.');
+          window.location.href = 'notice.html';
+          return;
+        }
+
+        // 네비게이션 업데이트
+        UIHelper.updateNavigation();
+
+        let currentPost = null;
+        let isAdmin = false;
+
+        // 관리자 확인
+        try {
+          const authResponse = await AuthAPI.checkStatus();
+          if (authResponse.logged_in && authResponse.user.role === 'admin') {
+            isAdmin = true;
+            document.getElementById('admin-actions').style.display = 'flex';
+          }
+        } catch (error) {
+          console.log('로그인 상태 확인 실패');
+        }
+
+        // 게시글 로드
+        try {
+          const response = await PostsAPI.view(postId);
+
+          if (response.success) {
+            currentPost = response.data;
+
+            // 제목 업데이트
+            document.title = `${currentPost.title} - 상상마루`;
+            document.getElementById('post-title').textContent = currentPost.title;
+
+            // 게시판 타입
+            const boardTypeEl = document.getElementById('board-type');
+            boardTypeEl.textContent = currentPost.board_type === 'notice' ? '공지사항' : '보도자료';
+
+            // 메타 정보
+            document.getElementById('post-author').textContent = currentPost.author || currentPost.author_name || '관리자';
+            document.getElementById('post-date').textContent = currentPost.created_at_formatted;
+            document.getElementById('post-views').textContent = `조회 ${currentPost.views}`;
+
+            // 내용 (줄바꿈 처리 - XSS 방지를 위해 textContent + createElement 사용)
+            const contentEl = document.getElementById('post-content');
+            contentEl.textContent = '';
+            const lines = currentPost.content.split('\n');
+            lines.forEach((line, index) => {
+              const span = document.createElement('span');
+              span.textContent = line;
+              contentEl.appendChild(span);
+              if (index < lines.length - 1) {
+                contentEl.appendChild(document.createElement('br'));
+              }
+            });
+
+            // 목록 링크 설정
+            const listLink = document.getElementById('list-link');
+            listLink.href = currentPost.board_type === 'notice' ? 'notice.html' : 'press.html';
+
+            // 이전/다음 글
+            if (response.prev) {
+              const prevLink = document.getElementById('prev-post');
+              prevLink.href = `view.html?id=${response.prev.id}`;
+              document.getElementById('prev-title').textContent = response.prev.title;
+              prevLink.style.display = 'block';
+            }
+
+            if (response.next) {
+              const nextLink = document.getElementById('next-post');
+              nextLink.href = `view.html?id=${response.next.id}`;
+              document.getElementById('next-title').textContent = response.next.title;
+              nextLink.style.display = 'block';
+            }
+
+          } else {
+            throw new Error('게시글을 찾을 수 없습니다.');
+          }
+        } catch (error) {
+          document.getElementById('post-title').textContent = '게시글을 찾을 수 없습니다';
+          document.getElementById('post-content').innerHTML = '<p>요청하신 게시글이 존재하지 않거나 삭제되었습니다.</p>';
+        }
+
+        // 수정 버튼
+        document.getElementById('edit-btn').addEventListener('click', function() {
+          window.location.href = `../admin/edit.html?id=${postId}`;
+        });
+
+        // 삭제 버튼
+        document.getElementById('delete-btn').addEventListener('click', async function() {
+          if (!confirm('정말 이 게시글을 삭제하시겠습니까?')) {
+            return;
+          }
+
+          try {
+            const response = await PostsAPI.delete(postId);
+            if (response.success) {
+              alert('게시글이 삭제되었습니다.');
+              window.location.href = currentPost.board_type === 'notice' ? 'notice.html' : 'press.html';
+            }
+          } catch (error) {
+            alert(error.message || '삭제 중 오류가 발생했습니다.');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

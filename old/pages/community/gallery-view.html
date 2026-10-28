@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <title>포토갤러리 - 상상마루</title>
+    <link rel="stylesheet" href="../../css/globals.css" />
+    <link rel="stylesheet" href="../../css/variables.css" />
+    <link rel="stylesheet" href="../../css/dropdown.css" />
+    <link rel="stylesheet" href="../../css/common.css" />
+    <link rel="stylesheet" href="view.css" />
+    <script src="../../js/api.js" defer></script>
+    <style>
+      .gallery-image-container {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto 30px;
+        text-align: center;
+      }
+      .gallery-image-container img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      .gallery-meta {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        color: #6A7282;
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="view-page">
+      <header class="nav-container">
+        <nav class="nav-inner-container">
+          <div class="nav-logo-box">
+            <a href="../../index.html">
+              <img src="../../img/logo.png" alt="상상 마루" class="nav-logo" />
+            </a>
+          </div>
+          <ul class="navbar" role="menubar">
+            <li class="div nav-item" role="menuitem">
+              <a href="../about/greeting.html">단체소개</a>
+              <ul class="dropdown-menu">
+                <li><a href="../about/greeting.html">인사말</a></li>
+                <li><a href="../about/history.html">연혁</a></li>
+                <li><a href="../about/location.html">오시는 길</a></li>
+              </ul>
+            </li>
+            <li class="div nav-item no-dropdown" role="menuitem">
+              <a href="#">진로·직업체험</a>
+            </li>
+            <li class="div nav-item" role="menuitem">
+              <a href="../education/afterschool.html">교육활동</a>
+              <ul class="dropdown-menu">
+                <li><a href="../education/afterschool.html">방과후/늘봄 교육</a></li>
+                <li><a href="../education/outside.html">학교밖 늘봄교육</a></li>
+                <li><a href="../education/freeyear.html">자유학년(기)제</a></li>
+                <li><a href="../education/drone.html">탑마루드론축구단</a></li>
+                <li><a href="../education/hrd.html">HRD-Net강사양성과정</a></li>
+                <li><a href="../education/volunteer.html">교육기부 진로체험</a></li>
+              </ul>
+            </li>
+            <li class="div nav-item" role="menuitem">
+              <a href="../experience/creative.html">체험활동</a>
+              <ul class="dropdown-menu">
+                <li><a href="../experience/creative.html">창의적체험활동</a></li>
+                <li><a href="../experience/swai.html">SW.AI교육주간</a></li>
+                <li><a href="../experience/science.html">과학의날 행사 지원</a></li>
+                <li><a href="../experience/culture.html">문화예술체험 교육</a></li>
+              </ul>
+            </li>
+            <li class="div nav-item active" role="menuitem">
+              <a href="notice.html">커뮤니티</a>
+              <ul class="dropdown-menu">
+                <li><a href="notice.html">공지사항</a></li>
+                <li><a href="press.html">보도자료</a></li>
+                <li><a href="gallery.html" class="active">포토갤러리</a></li>
+              </ul>
+            </li>
+            <li class="div nav-item no-dropdown" role="menuitem">
+              <a href="../store/store.html">스토어</a>
+            </li>
+          </ul>
+          <div class="nav-button-box">
+            <a href="../login.html" class="nav-button" aria-label="로그인">
+              <span class="text-wrapper-2">로그인</span>
+            </a>
+            <a href="../signup.html" class="div-wrapper" aria-label="회원가입">
+              <span class="text-wrapper-3">회원가입</span>
+            </a>
+          </div>
+        </nav>
+      </header>
+
+      <main class="view-content">
+        <div class="view-container">
+          <article id="gallery-article" class="post-article">
+            <header class="post-header">
+              <span class="board-type">포토갤러리</span>
+              <h1 id="gallery-title" class="post-title">로딩 중...</h1>
+              <div class="gallery-meta">
+                <span id="gallery-author"></span>
+                <span id="gallery-date"></span>
+              </div>
+            </header>
+
+            <div class="gallery-image-container">
+              <img id="gallery-image" src="" alt="" />
+            </div>
+
+            <footer class="post-footer">
+              <div class="post-actions">
+                <a href="gallery.html" class="btn btn-secondary">목록</a>
+                <div id="admin-actions" class="admin-actions" style="display: none;">
+                  <button id="delete-btn" class="btn btn-delete">삭제</button>
+                </div>
+              </div>
+            </footer>
+          </article>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <div class="footer-inner">
+          <div class="footer-info">
+            <address>
+              <p>전북특별자치도 익산시 원광대학교 프라임관</p>
+              <p>사업자 번호 : 651-86-01854(등록 2006년)</p>
+              <p>상호 : 상상마루 (Sangsangmaru) / 진로진학체험지원센터 대표 : 조진욱</p>
+              <p>고객센터 : 1544-0634 팩스 : 0505-200-6060 이메일 : cybercops@wku.ac.kr</p>
+            </address>
+          </div>
+          <div class="footer-bottom">
+            <p class="copyright">ⓒ 유한회사 상상마루 All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', async function() {
+        // URL에서 id 파라미터 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const galleryId = urlParams.get('id');
+
+        if (!galleryId) {
+          alert('잘못된 접근입니다.');
+          window.location.href = 'gallery.html';
+          return;
+        }
+
+        // 네비게이션 업데이트
+        if (typeof UIHelper !== 'undefined') {
+          UIHelper.updateNavigation();
+        }
+
+        let currentGallery = null;
+        let canDelete = false;
+
+        // 로그인 상태 확인 (작성자 또는 관리자는 삭제 가능)
+        try {
+          const authResponse = await AuthAPI.checkStatus();
+          if (authResponse.logged_in) {
+            window.currentUser = authResponse.user;
+          }
+        } catch (error) {
+          console.log('로그인 상태 확인 실패');
+        }
+
+        // 갤러리 상세 로드
+        try {
+          const response = await GalleryAPI.view(galleryId);
+
+          if (response.success) {
+            currentGallery = response.data;
+
+            // 제목 업데이트
+            document.title = `${currentGallery.title} - 포토갤러리 - 상상마루`;
+            document.getElementById('gallery-title').textContent = currentGallery.title;
+
+            // 메타 정보
+            document.getElementById('gallery-author').textContent = currentGallery.author_name || currentGallery.author || '작성자';
+            document.getElementById('gallery-date').textContent = currentGallery.created_at_formatted || currentGallery.created_at;
+
+            // 이미지
+            const imageEl = document.getElementById('gallery-image');
+            imageEl.src = currentGallery.image_path || currentGallery.thumbnail_path;
+            imageEl.alt = currentGallery.title;
+
+            // 삭제 권한 확인 (관리자 또는 작성자)
+            if (window.currentUser) {
+              if (window.currentUser.role === 'admin' ||
+                  window.currentUser.id === currentGallery.author_id) {
+                canDelete = true;
+                document.getElementById('admin-actions').style.display = 'flex';
+              }
+            }
+
+          } else {
+            throw new Error('이미지를 찾을 수 없습니다.');
+          }
+        } catch (error) {
+          document.getElementById('gallery-title').textContent = '이미지를 찾을 수 없습니다';
+          document.querySelector('.gallery-image-container').innerHTML = '<p>요청하신 이미지가 존재하지 않거나 삭제되었습니다.</p>';
+        }
+
+        // 삭제 버튼
+        document.getElementById('delete-btn').addEventListener('click', async function() {
+          if (!confirm('정말 이 사진을 삭제하시겠습니까?')) {
+            return;
+          }
+
+          try {
+            const response = await GalleryAPI.delete(galleryId);
+            if (response.success) {
+              alert('사진이 삭제되었습니다.');
+              window.location.href = 'gallery.html';
+            }
+          } catch (error) {
+            alert(error.message || '삭제 중 오류가 발생했습니다.');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
