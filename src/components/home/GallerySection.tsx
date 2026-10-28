@@ -9,9 +9,11 @@ export async function GallerySection() {
   return (
     <section aria-labelledby="gallery-title" className="py-20 md:py-28">
       <div className="container-site">
-        <SectionHead no="05" id="gallery-title" title="포토갤러리" desc="상상마루 교육 현장의 순간들" moreHref="/community/gallery" />
         {items.length === 0 ? (
-          <p className="border-y border-line py-16 text-center text-muted">등록된 사진이 없습니다.</p>
+          <>
+            <SectionHead no="05" id="gallery-title" title="포토갤러리" desc="상상마루 교육 현장의 순간들" moreHref="/community/gallery" />
+            <p className="border-y border-line py-16 text-center text-muted">등록된 사진이 없습니다.</p>
+          </>
         ) : (
           <GalleryCarousel items={items} dates={dates} />
         )}

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Gate } from "@/components/home/Gate";
 import { Hero } from "@/components/home/Hero";
+import { QuickLinks } from "@/components/home/QuickLinks";
 import { AboutIntro } from "@/components/home/AboutIntro";
 import { CertStrip } from "@/components/home/CertStrip";
-import { BizGrid } from "@/components/home/BizGrid";
+import { Programs } from "@/components/home/Programs";
 import { CareerSection } from "@/components/home/CareerSection";
 import { NewsBoards } from "@/components/home/NewsBoards";
 import { GallerySection } from "@/components/home/GallerySection";
@@ -17,11 +17,11 @@ export default function HomePage() {
   return (
     <>
       <JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />
-      <Gate />
       <Hero />
+      <QuickLinks />
       <AboutIntro />
       <CertStrip />
-      <BizGrid />
+      <Programs />
       <CareerSection />
       <NewsBoards />
       <GallerySection />

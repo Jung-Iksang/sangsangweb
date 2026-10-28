@@ -5,21 +5,26 @@ import { site } from "@/config/site";
 import { MobileMenu } from "./MobileMenu";
 import { ActiveNav, NavList } from "./MainNav";
 import { LogoLink } from "./LogoLink";
+import { HeaderScrolled } from "./HeaderScrolled";
 
-/** 상단 네비게이션 — 75px · 1160px · 로고 / 메뉴 / 문의 버튼 */
+/** 상단 네비게이션 — 85px(--header-h) · 유동 폭 · 로고 / 메뉴(메가메뉴) / 문의 버튼 */
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-paper">
-      <div className="container-site flex h-[75px] items-center justify-between gap-6">
+    <header
+      id="site-header"
+      className="sticky top-0 z-50 overflow-x-clip border-b border-line bg-paper transition-shadow data-[scrolled=true]:border-transparent data-[scrolled=true]:shadow-[0_1px_0_var(--color-line),0_6px_16px_rgb(31_30_28/0.04)]"
+    >
+      <HeaderScrolled />
+      <div className="container-site flex h-[var(--header-h)] items-center justify-between gap-6">
         <Suspense
           fallback={
             <Link href="/" className="flex shrink-0 items-center" aria-label={`${site.name} 홈`}>
-              <Image src="/logo.png" alt={site.name} width={131} height={42} priority className="h-[40px] w-auto" />
+              <Image src="/logo.png" alt={site.name} width={144} height={46} loading="eager" className="h-[46px] w-[144px] object-contain" />
             </Link>
           }
         >
           <LogoLink label={`${site.name} 홈`}>
-            <Image src="/logo.png" alt={site.name} width={131} height={42} priority className="h-[40px] w-auto" />
+            <Image src="/logo.png" alt={site.name} width={144} height={46} loading="eager" className="h-[46px] w-[144px] object-contain" />
           </LogoLink>
         </Suspense>
 
@@ -30,9 +35,13 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <a href={`tel:${site.contact.phone}`} className="btn btn-sm btn-outline hidden sm:inline-flex">
+          {/* 1024~1439px 에서는 메뉴 공간 확보를 위해 아이콘만 (글자는 스크린리더용으로 남김) */}
+          <a
+            href={`tel:${site.contact.phone}`}
+            className="btn btn-sm btn-outline hidden sm:inline-flex lg:max-[1439px]:w-10 lg:max-[1439px]:px-0"
+          >
             <PhoneIcon />
-            문의 {site.contact.phone}
+            <span className="lg:max-[1439px]:sr-only">문의 {site.contact.phone}</span>
           </a>
           <MobileMenu />
         </div>

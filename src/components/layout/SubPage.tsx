@@ -26,7 +26,7 @@ export function SubPage({ path, title, description, children }: Props) {
     <>
       <JsonLd data={breadcrumbJsonLd(crumbs)} />
       <section className="border-b border-line bg-cream">
-        <div className="container-site py-12 md:py-20">
+        <div className="container-read py-12 md:py-20">
           <nav aria-label="현재 위치" className="mb-8 text-[13px] text-muted">
             <ol className="flex flex-wrap items-center gap-2">
               <li>
@@ -51,7 +51,7 @@ export function SubPage({ path, title, description, children }: Props) {
       </section>
 
       {section?.children && (
-        <nav aria-label={`${section.label} 하위 메뉴`} className="sticky top-[75px] z-30 border-b border-line bg-paper lg:hidden">
+        <nav aria-label={`${section.label} 하위 메뉴`} className="sticky top-[var(--header-h)] z-30 border-b border-line bg-paper lg:hidden">
           <ul className="container-site flex gap-6 overflow-x-auto [scrollbar-width:none]">
             {section.children.map((c) => {
               const active = c.href === activeHref;
@@ -71,10 +71,10 @@ export function SubPage({ path, title, description, children }: Props) {
         </nav>
       )}
 
-      <div className={`container-site py-16 md:py-24 ${section?.children ? "lg:grid lg:grid-cols-[200px_1fr] lg:gap-16" : ""}`}>
+      <div className={`container-read py-16 md:py-24 ${section?.children ? "lg:grid lg:grid-cols-[220px_1fr] lg:gap-16" : ""}`}>
         {section?.children && (
           <aside className="hidden lg:block">
-            <nav aria-label={`${section.label} 메뉴`} className="sticky top-[107px]">
+            <nav aria-label={`${section.label} 메뉴`} className="sticky top-[calc(var(--header-h)+32px)]">
               <h2 className="border-b border-ink pb-3 text-[15px] font-bold text-ink">{section.label}</h2>
               <ul>
                 {section.children.map((c) => {

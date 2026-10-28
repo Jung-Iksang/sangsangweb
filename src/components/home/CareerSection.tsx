@@ -43,7 +43,7 @@ export function CareerSection() {
             return (
               <li key={c.title}>
                 <Link href={c.href} className="group block">
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-line">
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-line transition-[translate,box-shadow] duration-300 ease-out group-hover:shadow-lift group-focus-visible:shadow-lift motion-safe:group-hover:-translate-y-1.5 motion-safe:group-focus-visible:-translate-y-1.5">
                     <Image src={img.src} alt={c.title} fill sizes="(min-width:1024px) 270px, 50vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
                   </div>
                   <p className="mt-4 text-[16px] font-bold text-ink">{c.title}</p>

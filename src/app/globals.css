@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* ───────── 디자인 토큰 — 웜 크림 에디토리얼 (v1.2) ─────────
+/* ───────── 디자인 토큰 — 웜 크림 에디토리얼 (v1.3) ─────────
    크림·종이 바탕은 기업소개 PPT 표지 색, 초록·노랑·빨강은 상상마루 로고 큐브 색.
    규칙: 알약(rounded-full) 칩·버튼, 그라데이션 박스, 대문자 영문 소제목, 제목 옆 세로 막대 금지.
    명도 대비는 크림(#F6F3EC) 바탕 기준 모두 4.5:1 이상 (README 디자인 절 참고). */
@@ -41,13 +41,24 @@
   --radius-btn: 8px;
 
   --shadow-dropdown: 0 8px 24px rgb(31 30 28 / 0.1);
+  /* 카드·사진 hover 떠오름 (6px 위로 + 옅은 그림자) */
+  --shadow-lift: 0 16px 28px -14px rgb(31 30 28 / 0.35);
 }
 
+/* 헤더·푸터·메인 섹션: 창 폭을 따라 넓어짐 (1440px 에서 좌우 75px) */
 @utility container-site {
   width: 100%;
-  max-width: 1160px;
+  max-width: 1680px;
   margin-inline: auto;
-  padding-inline: 20px;
+  padding-inline: clamp(20px, 5.2vw, 80px);
+}
+
+/* 서브페이지 본문(좌측 메뉴 + 글): 넓은 화면에서도 읽기 폭 유지 */
+@utility container-read {
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5.2vw, 80px);
 }
 
 /* 타입 스케일 — Pretendard 굵기와 음수 자간으로 위계 */
@@ -159,6 +170,14 @@
   }
 }
 
+/* 드론축구장 잔디 — 세로 줄무늬 14줄 + 가로 띠를 겹친 체크무늬 잔디 깎은 자국 (경계가 딱 떨어지는 무늬, 그라데이션 아님) */
+@utility turf {
+  background-color: var(--color-green);
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0 calc(100% / 14), rgb(0 0 0 / 0.07) calc(100% / 14) calc(100% / 7)),
+    repeating-linear-gradient(0deg, transparent 0 110px, rgb(255 255 255 / 0.035) 110px 220px);
+}
+
 /* 텍스트 링크 (전체보기 등) */
 @utility link-more {
   font-size: 14px;
@@ -184,6 +203,9 @@
 }
 
 @layer base {
+  :root {
+    --header-h: 85px;
+  }
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;

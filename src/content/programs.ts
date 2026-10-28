@@ -16,6 +16,8 @@ export type Program = {
   summary: string;
   /** 제목 옆 작은 배지 (예: "2014년부터") */
   badge?: string;
+  /** 메인 프로그램 슬라이더 카드의 짧은 키-값 (본문 targets·highlights 에서 요약, 새 사실 금지) */
+  card: { target: string; period: string };
   intro: string[];
   /** 상단 숫자 강조 (3개 권장) */
   highlights?: { k: string; v: string }[];
@@ -50,6 +52,7 @@ export const programs: Program[] = [
     slug: "afterschool",
     category: "education",
     title: "학교밖 방과후마을학교",
+    card: { target: "초·중학생", period: "2015~2021 시즌 7 · 창의공학실" },
     badge: "2014년부터",
     summary:
       "익산교육지원청과 함께 시즌1(2015)부터 시즌7(2021)까지 이어 온 학교밖 방과후마을학교. 드론코딩·코딩보드·사이언스레벨업·3D펜을 상상마루 창의공학실에서 배웁니다.",
@@ -88,6 +91,7 @@ export const programs: Program[] = [
     slug: "neulbom",
     category: "education",
     title: "프로그램형 늘봄학교",
+    card: { target: "초등학생 · 늘봄학교", period: "2023년부터 · 방학중 특화 위탁" },
     badge: "2023년부터",
     summary:
       "2023년부터 운영하는 익산교육지원청 학교밖 늘봄학교와 2024년 방학중 방과후 특화프로그램 위탁운영. 정규 수업 후 SW·메이커·과학 활동으로 채우는 프로그램형 돌봄 교육입니다.",
@@ -126,6 +130,7 @@ export const programs: Program[] = [
     slug: "freeyear",
     category: "education",
     title: "자유학년(기)제 학습지원",
+    card: { target: "중학교 1학년", period: "학교로 찾아가는 수업 · 9개 영역" },
     summary:
       "중학교 자유학년(기)제와 연계해 로봇·드론·코딩·3D프린팅 등 4차 산업혁명 관련 수업을 학교로 찾아갑니다. 시험 부담 없이 미래 기술을 직접 만들며 진로를 탐색합니다.",
     intro: [
@@ -168,6 +173,7 @@ export const programs: Program[] = [
     slug: "instructor",
     category: "education",
     title: "강사양성과정",
+    card: { target: "경력단절여성 · 예비강사", period: "HRD-Net 국비과정 · 4과목" },
     summary:
       "경력단절여성·예비강사를 SW코딩·로봇·드론·3D프린팅 방과후 강사로 키우는 과정. 익산여성새로일하기센터 SW코딩융합강사양성과정, 고용노동부 HRD-Net 국비훈련, 원광대 SW코딩교육 인력양성 프로그램을 운영했습니다.",
     intro: [
@@ -219,6 +225,7 @@ export const programs: Program[] = [
     slug: "certificate",
     category: "education",
     title: "민간자격증 교육 · 발급 · 등록대행",
+    card: { target: "강사 · 교사 · 지도자", period: "등록 민간자격 23종 · 5개 부처" },
     badge: "등록 23종",
     summary:
       "교육부·과학기술정보통신부·국토교통부·문화체육관광부·환경부에 등록한 민간자격 23종의 교육·발급 기관. 진로직업상담사, 드론교육지도사, 로봇코딩지도사, AI교육지도사 등 4차산업·문화예술 지도사 과정을 운영합니다.",
@@ -277,6 +284,7 @@ export const programs: Program[] = [
     slug: "school",
     category: "experience",
     title: "4차산업혁명 진로체험 스쿨",
+    card: { target: "초·중·고 · 학교·기관", period: "6개 스쿨 · 교육부 인증" },
     summary:
       "세상을 바꾸는 미래기술을 직접 체험하는 6개 스쿨 — 드론·3D프린터·코딩·VR/AR·로봇·IoT. 교육부 인증 교육기부 진로체험기관이 학교로 찾아가거나 창의공학실에서 운영합니다.",
     intro: [
@@ -322,6 +330,7 @@ export const programs: Program[] = [
     slug: "culture",
     category: "experience",
     title: "문화예술체험",
+    card: { target: "초·중·고 · 가족 행사", period: "백제문양 체험 키트 · 자체 개발" },
     badge: "백제, 세계를 품다",
     summary:
       "익산 백제 문화유산을 소재로 한 문화예술 체험 — 백제문양 LED 한지등·주사위·석고방향제, 전통문양 스트링아트, LED 아크릴 조명등 만들기. 체험 교구는 국립박물관 문화상품점과 상상마루샵에서 만날 수 있습니다.",
@@ -364,6 +373,7 @@ export const programs: Program[] = [
     slug: "drone-soccer",
     category: "experience",
     title: "드론축구단",
+    card: { target: "청소년 · 다문화가족", period: "2017년부터 · 2개 팀" },
     badge: "2017년부터",
     summary:
       "2017년 창단한 탑마루드론축구단(서동왕자·선화공주팀)과 2018년 창단한 익산드론축구단을 운영합니다. 드론축구 페스티벌 참가, 원광대 총장배 청소년 드론축구 SW Festival 개최.",
@@ -427,6 +437,7 @@ export const programs: Program[] = [
     slug: "events",
     category: "experience",
     title: "대회 · 행사",
+    card: { target: "학생 · 가족 · 학교", period: "창의융합축전 · 하노이탑 · SW Festival" },
     badge: "2014년부터",
     summary:
       "2014년부터 이어 온 전라북도창의융합축전과 하노이탑대회, 청소년 드론축구 SW Festival, 유아과학페스티벌. 학교·지역 과학행사에 체험부스·실험키트·강사 파견을 지원합니다.",

@@ -48,7 +48,7 @@ export function MobileMenu() {
         className={`fixed inset-y-0 right-0 z-[70] flex w-[86%] max-w-[380px] flex-col bg-paper transition-transform duration-300 ${open ? "translate-x-0" : "translate-x-full"}`}
         inert={!open}
       >
-        <div className="flex h-[75px] items-center justify-between border-b border-line px-5">
+        <div className="flex h-[var(--header-h)] items-center justify-between border-b border-line px-5">
           <span className="text-[17px] font-bold text-ink">전체 메뉴</span>
           <button
             type="button"

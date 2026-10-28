@@ -47,19 +47,20 @@ scripts/             local-db.mjs(로컬 PGlite HTTP 서버) db-init.mjs gen-moc
   (Next 개발 서버는 여러 워커/캐시 컨텍스트를 쓰므로 PGlite 파일을 직접 열면 손상됨 — 직접 열지 말 것)
 - 스키마 변경 시 `schema.ts` 와 `bootstrap.sql` 을 함께 수정.
 
-## 디자인 — 웜 크림 에디토리얼 (v1.2)
+## 디자인 — 웜 크림 에디토리얼 (v1.3)
 
 `src/app/globals.css` `@theme` 토큰만 사용 (임의 색 hex 금지 — 네이버/카카오 지도·스토어 버튼 브랜드색만 예외).
 - 바탕 `paper`(#FBFAF7 기본) / `cream`(#F6F3EC 교차 띠) / `white`(카드·표), 글자 `ink` `body` `muted`, 선 `line` `line-strong`
 - 주색 `green`(#2F6B23 — 링크·활성·주 버튼·번호), 노랑은 `hl` 형광펜 밑줄로만, `red` 는 NEW·에러, 로고 원색 `brand-*` 은 8px 이하 점에만
 - 푸터는 `ink` 바탕 + `on-ink*` 글자
-- 유틸리티: `t-display/t-h1/t-h2/t-h3/t-lead`(타입 스케일), `num`(섹션 번호 01·02), `hl`, `btn` + `btn-primary/btn-outline/btn-dark/btn-ghost/btn-sm`, `link-more`, `container-site`
+- 유틸리티: `t-display/t-h1/t-h2/t-h3/t-lead`(타입 스케일), `num`(섹션 번호 01·02), `hl`, `btn` + `btn-primary/btn-outline/btn-dark/btn-ghost/btn-sm`, `link-more`, `turf`(드론축구장 체크무늬 잔디 — 메인 02 프로그램 띠, 일러스트는 `Programs.tsx`), `container-site`(유동) · `container-read`(서브페이지 본문)
 - 라운드 `rounded-sm`(6) / `rounded-md`(10) / `rounded-btn`(8)
-- **금지**: `rounded-full` 칩·버튼(8px 이하 점 제외), 그라데이션 박스, 대문자 영문 소제목(eyebrow), 제목 옆 세로 막대, 카드 그림자·hover 떠오름, 사진 위 글자 오버레이
-  (예외: 메인 첫 화면 `Gate` 분할 사진 패널 — 글자 가독성용 하단 스크림과 흰 글자 허용)
-- 섹션 머리는 `SectionHead`(번호 + 가는 선 + 전체보기 / 제목), 목록은 위 `border-ink` + 행 사이 `border-line`
+- **금지**: `rounded-full` 칩·버튼(8px 이하 점 제외), 그라데이션 박스, 대문자 영문 소제목(eyebrow), 제목 옆 세로 막대, 카드 기본 그림자, 사진 위 글자 오버레이
+  (hover 떠오름은 메인 사진 카드(프로그램·진로체험·갤러리)만 — 6px 위로 + `shadow-lift`, `motion-safe`)
+  (사진 위 글자는 히어로·카드의 작은 캡션/분류 라벨 `bg-ink/85` 만 허용 — 스크림·큰 흰 글자 없음)
+- 섹션 머리는 `SectionHead`(번호 + 가는 선 + 전체보기 / 제목, `tone="dark"` 초록 띠용, `actions` 캐러셀 화살표 슬롯), 목록은 위 `border-ink` + 행 사이 `border-line`
 - 폰트 Pretendard Variable 동적 서브셋 자체 호스팅 (`public/fonts/pretendard/`, `scripts/fetch-pretendard.mjs`)
-- 컨테이너 1160px, 네비 75px
+- 컨테이너 유동(최대 1680px, 여백 `clamp(20px,5.2vw,80px)`) · 서브페이지 본문 1320px, 헤더 85px(`--header-h`, sticky 값도 이 변수로) · 메가메뉴는 `MainNav.tsx`(CSS subgrid 배치 + JS 여닫기)
 
 ## 검증
 

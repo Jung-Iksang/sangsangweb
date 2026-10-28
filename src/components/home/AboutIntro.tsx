@@ -26,7 +26,7 @@ export function AboutIntro() {
           moreHref="/about/greeting"
           moreLabel="인사말 보기"
         />
-        <div className="grid gap-12 lg:grid-cols-[1.15fr_1fr] lg:gap-20">
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
           <div>
             <p className="text-[17px] leading-[1.9] text-body">
               {site.tagline}. 2012년 창의융합교육연구회로 시작해 로봇·드론·코딩·3D프린팅 교육과 진로·직업체험, 문화예술 체험을 익산의 학교와
@@ -56,8 +56,8 @@ export function AboutIntro() {
               ))}
             </dl>
           </div>
-          <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-line lg:aspect-auto">
-            <Image src={img.src} alt="상상마루 교육과정을 수료한 학생들" fill sizes="(min-width: 1024px) 480px, 100vw" className="object-cover" />
+          <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-line lg:order-first lg:aspect-auto">
+            <Image src={img.src} alt="상상마루 교육과정을 수료한 학생들" fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" />
           </div>
         </div>
       </div>
