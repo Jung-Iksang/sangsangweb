@@ -29,35 +29,103 @@ const server = http.createServer((req, res) => {
   req.on("end", async () => {
     try {
       const { sql, params, method } = JSON.parse(body);
-      const result = await db.query(sql, params ?? [], method === "all" ? { rowMode: "array" } : undefined);
-      res.writeHead(200, { "Content-Type": "application/json" }).end(JSON.stringify({ rows: result.rows }));
+      const result = await db.query(
+        sql,
+        params ?? [],
+        method === "all" ? { rowMode: "array" } : undefined,
+      );
+      res
+        .writeHead(200, { "Content-Type": "application/json" })
+        .end(JSON.stringify({ rows: result.rows }));
     } catch (err) {
-      res.writeHead(500, { "Content-Type": "application/json" }).end(JSON.stringify({ error: String(err?.message ?? err) }));
+      res
+        .writeHead(500, { "Content-Type": "application/json" })
+        .end(JSON.stringify({ error: String(err?.message ?? err) }));
     }
   });
 });
 await new Promise((r) => server.listen(PORT, "127.0.0.1", r));
 const url = `http://127.0.0.1:${PORT}`;
-console.log(`\n  ▶ 로컬 DB 서버: ${url}  (데이터: .data/pglite · 초기화하려면 폴더 삭제)\n`);
+console.log(
+  `\n  ▶ 로컬 DB 서버: ${url}  (데이터: .data/pglite · 초기화하려면 폴더 삭제)\n`,
+);
 
 let child;
+let shuttingDown = false;
+
 const runIdx = process.argv.indexOf("--run");
+
 if (runIdx > -1) {
   const cmd = process.argv.slice(runIdx + 1);
-  child = spawn("npx", cmd, { stdio: "inherit", env: { ...process.env, LOCAL_DB_URL: url } });
-  child.on("exit", (code) => shutdown(code ?? 0));
+
+  // Windows / macOS 공통 Next.js 실행
+  const nextCli = path.join(
+    root,
+    "node_modules",
+    "next",
+    "dist",
+    "bin",
+    "next",
+  );
+
+  child = spawn(process.execPath, [nextCli, ...cmd.slice(1)], {
+    stdio: "inherit",
+    env: {
+      ...process.env,
+      LOCAL_DB_URL: url,
+    },
+  });
+
+  // Next.js 종료 시 로컬 DB 정리
+  child.once("exit", (code, signal) => {
+    void shutdown(code ?? (signal ? 0 : 1));
+  });
+
+  // Next.js 실행 오류 처리
+  child.once("error", (err) => {
+    console.error("Next.js 실행 오류:", err);
+    void shutdown(1);
+  });
 }
 
 async function shutdown(code = 0) {
+  if (shuttingDown) return;
+  shuttingDown = true;
+
   try {
-    server.close();
+    // HTTP 서버 종료 완료 대기
+    await new Promise((resolve, reject) => {
+      server.close((err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
+
+    // PGlite 종료
     await db.close();
+
+    console.log("▶ 로컬 DB 서버 종료 완료");
+  } catch (err) {
+    console.error("로컬 DB 종료 오류:", err);
+    code = 1;
   } finally {
     process.exit(code);
   }
 }
-process.on("SIGINT", () => (child ? child.kill("SIGINT") : shutdown()));
-process.on("SIGTERM", () => (child ? child.kill("SIGTERM") : shutdown()));
+
+// Ctrl + C 종료 처리
+function handleSignal(signal) {
+  if (child && child.exitCode === null && child.signalCode === null) {
+    if (!child.kill(signal)) {
+      void shutdown(1);
+    }
+  } else {
+    void shutdown();
+  }
+}
+
+process.on("SIGINT", () => handleSignal("SIGINT"));
+process.on("SIGTERM", () => handleSignal("SIGTERM"));
 
 /** 비어 있으면 화면 확인용 예시 데이터 입력 (로컬 전용) */
 async function seed(pg) {
@@ -68,29 +136,74 @@ async function seed(pg) {
   const html = (b) =>
     `<p>${b}</p><h2>안내</h2><ul><li>장소: 상상마루 창의공학실 (익산시 동서로49길 24-1, 2층)</li><li>문의: 063-836-3383 · steamsci@hanmail.net</li></ul><p>자세한 사항은 상상마루로 문의해 주세요.</p>`;
   const notice = [
-    ["2026 겨울방학 학교밖 늘봄학교 참가자 모집", "익산교육지원청 학교밖 늘봄학교 겨울방학 프로그램 참가자를 모집합니다."],
-    ["탑마루드론축구단 신규 단원 모집", "드론축구에 관심 있는 청소년의 많은 지원 바랍니다."],
-    ["민간자격 강사양성과정(드론교육지도사·로봇코딩지도사) 수강생 모집", "자유학년제·방과후 강사를 준비하는 분들을 위한 과정입니다."],
-    ["4차산업 진로체험 스쿨 학교 신청 안내", "드론·3D프린터·코딩·VR/AR·로봇·IoT 진로체험 수업을 신청받습니다."],
+    [
+      "2026 겨울방학 학교밖 늘봄학교 참가자 모집",
+      "익산교육지원청 학교밖 늘봄학교 겨울방학 프로그램 참가자를 모집합니다.",
+    ],
+    [
+      "탑마루드론축구단 신규 단원 모집",
+      "드론축구에 관심 있는 청소년의 많은 지원 바랍니다.",
+    ],
+    [
+      "민간자격 강사양성과정(드론교육지도사·로봇코딩지도사) 수강생 모집",
+      "자유학년제·방과후 강사를 준비하는 분들을 위한 과정입니다.",
+    ],
+    [
+      "4차산업 진로체험 스쿨 학교 신청 안내",
+      "드론·3D프린터·코딩·VR/AR·로봇·IoT 진로체험 수업을 신청받습니다.",
+    ],
     ["홈페이지 리뉴얼 오픈 안내", "상상마루 홈페이지가 새롭게 단장했습니다."],
-    ["제3회 청소년 드론축구 SW Festival 개최 예정", "대회 일정과 참가 방법은 추후 공지합니다."],
+    [
+      "제3회 청소년 드론축구 SW Festival 개최 예정",
+      "대회 일정과 참가 방법은 추후 공지합니다.",
+    ],
   ];
   const press = [
-    ["상상마루, 교육부 교육기부 진로체험 인증기관 재인증", "인증기간은 2023년 7월 5일부터 2026년 7월 4일까지입니다."],
-    ["익산드론축구단, 다문화가족과 함께 드론축구 훈련", "익산시가족센터와 함께하는 익산드론축구단이 활동을 이어가고 있습니다."],
-    ["상상마루 기업부설연구소 '상상연구소' 인정", "한국산업기술진흥협회로부터 기업부설연구소로 인정받았습니다."],
-    ["백제문양 문화상품, 국립부여·공주박물관 문화상품점 입점", "상상마루가 개발한 백제문양 LED 체험 키트가 박물관 문화상품점에 입점했습니다."],
-    ["제2회 청소년 드론축구 SW Festival 성료", "익산시청소년수련관에서 청소년 드론축구 대회와 SW 진로체험부스를 운영했습니다."],
+    [
+      "상상마루, 교육부 교육기부 진로체험 인증기관 재인증",
+      "인증기간은 2023년 7월 5일부터 2026년 7월 4일까지입니다.",
+    ],
+    [
+      "익산드론축구단, 다문화가족과 함께 드론축구 훈련",
+      "익산시가족센터와 함께하는 익산드론축구단이 활동을 이어가고 있습니다.",
+    ],
+    [
+      "상상마루 기업부설연구소 '상상연구소' 인정",
+      "한국산업기술진흥협회로부터 기업부설연구소로 인정받았습니다.",
+    ],
+    [
+      "백제문양 문화상품, 국립부여·공주박물관 문화상품점 입점",
+      "상상마루가 개발한 백제문양 LED 체험 키트가 박물관 문화상품점에 입점했습니다.",
+    ],
+    [
+      "제2회 청소년 드론축구 SW Festival 성료",
+      "익산시청소년수련관에서 청소년 드론축구 대회와 SW 진로체험부스를 운영했습니다.",
+    ],
   ];
-  const pressPhotos = ["cert-moe", "drone-iksan", "cert-lab", "culture", "events-swfestival-poster-2"];
+  const pressPhotos = [
+    "cert-moe",
+    "drone-iksan",
+    "cert-lab",
+    "culture",
+    "events-swfestival-poster-2",
+  ];
   const insert = async (board, list, offset) => {
     for (const [i, [t, b]] of list.entries()) {
       const at = new Date(base - i * 4 * day - offset * day).toISOString();
       const thumb = board === "press" ? `/photos/${pressPhotos[i]}.webp` : null;
-      const body = thumb ? `<img src="${thumb}" alt="${t}" />${html(b)}` : html(b);
+      const body = thumb
+        ? `<img src="${thumb}" alt="${t}" />${html(b)}`
+        : html(b);
       await pg.query(
         "INSERT INTO posts (board_type,title,content,excerpt,thumbnail_url,created_at,updated_at) VALUES ($1,$2,$3,$4,$5,$6,$6)",
-        [board, t, body, `${b} 장소: 상상마루 창의공학실 / 문의: 063-836-3383`, thumb, at],
+        [
+          board,
+          t,
+          body,
+          `${b} 장소: 상상마루 창의공학실 / 문의: 063-836-3383`,
+          thumb,
+          at,
+        ],
       );
     }
   };
@@ -108,16 +221,23 @@ async function seed(pg) {
     ["백제문양 LED 주사위 만들기", "culture"],
     ["강사양성과정 수료식", "instructor"],
   ];
-  const dims = JSON.parse(readFileSync(path.join(root, "src/content/photos.dims.json"), "utf8"));
+  const dims = JSON.parse(
+    readFileSync(path.join(root, "src/content/photos.dims.json"), "utf8"),
+  );
   for (const [i, [t, name]] of gallery.entries()) {
     const d = dims[name] ?? { width: 1200, height: 900 };
-    await pg.query("INSERT INTO gallery (title,image_url,width,height,created_at) VALUES ($1,$2,$3,$4,$5)", [
-      t,
-      `/photos/${name}.webp`,
-      d.width,
-      d.height,
-      new Date(base - i * 3 * day).toISOString(),
-    ]);
+    await pg.query(
+      "INSERT INTO gallery (title,image_url,width,height,created_at) VALUES ($1,$2,$3,$4,$5)",
+      [
+        t,
+        `/photos/${name}.webp`,
+        d.width,
+        d.height,
+        new Date(base - i * 3 * day).toISOString(),
+      ],
+    );
   }
-  console.log("  ▶ 예시 데이터를 입력했습니다 (공지 6 · 보도 5 · 사진 10, 기업소개 자료 기반)");
+  console.log(
+    "  ▶ 예시 데이터를 입력했습니다 (공지 6 · 보도 5 · 사진 10, 기업소개 자료 기반)",
+  );
 }
