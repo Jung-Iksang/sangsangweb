@@ -41,7 +41,7 @@ export default function Page() {
         <Block no="02" id="schools" title="세상을 바꾸는 미래기술 6개 스쿨" desc="미래 기술을 직접 만들고 조종하며 그 분야의 직업을 알아봅니다.">
           <ol className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {careerSchools.map((s) => (
-              <li key={s.no} className="border-t-2 pt-5" style={{ borderColor: s.color }}>
+              <li key={s.no} id={`school-${s.no}`} className="scroll-mt-28 border-t-2 pt-5" style={{ borderColor: s.color }}>
                 <p className="text-[13px] font-semibold tabular-nums text-muted">
                   {s.no} · {s.tech}
                 </p>

@@ -7,7 +7,7 @@ import { ActiveNav, NavList } from "./MainNav";
 import { LogoLink } from "./LogoLink";
 import { HeaderScrolled } from "./HeaderScrolled";
 
-/** 상단 네비게이션 — 85px(--header-h) · 유동 폭 · 로고 / 메뉴(메가메뉴) / 문의 버튼 */
+/** 상단 네비게이션 — 높이 --header-h · 유동 폭 · 로고 / 메뉴(메가메뉴) / 문의 버튼 */
 export function Header() {
   return (
     <header
@@ -19,12 +19,12 @@ export function Header() {
         <Suspense
           fallback={
             <Link href="/" className="flex shrink-0 items-center" aria-label={`${site.name} 홈`}>
-              <Image src="/logo.png" alt={site.name} width={144} height={46} loading="eager" className="h-[46px] w-[144px] object-contain" />
+              <Image src="/logo.png" alt={site.name} width={116} height={37} loading="eager" className="h-[37px] w-[116px] object-contain" />
             </Link>
           }
         >
           <LogoLink label={`${site.name} 홈`}>
-            <Image src="/logo.png" alt={site.name} width={144} height={46} loading="eager" className="h-[46px] w-[144px] object-contain" />
+            <Image src="/logo.png" alt={site.name} width={116} height={37} loading="eager" className="h-[37px] w-[116px] object-contain" />
           </LogoLink>
         </Suspense>
 

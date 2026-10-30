@@ -76,7 +76,7 @@ export function MobileMenu() {
                       aria-expanded={isOpen}
                     >
                       <span className="num">{no}</span>
-                      <span className="flex-1 text-[18px] font-bold text-ink">{item.label}</span>
+                      <span className="flex-1 text-[calc(18px-1pt)] font-bold text-ink">{item.label}</span>
                       <svg viewBox="0 0 24 24" className={`h-5 w-5 text-muted transition-transform ${isOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
                       </svg>
@@ -96,7 +96,7 @@ export function MobileMenu() {
                 ) : (
                   <Link href={item.href} onClick={close} className="flex items-center gap-3 py-4">
                     <span className="num">{no}</span>
-                    <span className="text-[18px] font-bold text-ink">{item.label}</span>
+                    <span className="text-[calc(18px-1pt)] font-bold text-ink">{item.label}</span>
                   </Link>
                 )}
               </li>

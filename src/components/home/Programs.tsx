@@ -1,9 +1,20 @@
+import localFont from "next/font/local";
 import { photos } from "@/content/photos.generated";
 import { categoryLabel, programs } from "@/content/programs";
 import { DroneBall } from "@/components/ui/DroneBall";
 import { ProgramSlider, type ProgramCard } from "./ProgramSlider";
 
-/** 02 상상마루 프로그램 — 일러스트 드론축구장 위를 흐르는 흰 카드 (9개 모두 서버 HTML 에 포함) */
+const programFont = localFont({
+  src: [
+    { path: "../../../public/fonts/paperlogy/Paperlogy-4Regular.woff2", weight: "400", style: "normal" },
+    { path: "../../../public/fonts/paperlogy/Paperlogy-5Medium.woff2", weight: "500", style: "normal" },
+    { path: "../../../public/fonts/paperlogy/Paperlogy-8ExtraBold.woff2", weight: "800", style: "normal" },
+  ],
+  display: "swap",
+  preload: false,
+});
+
+/** 상상마루 프로그램 — 일러스트 드론축구장 위를 흐르는 흰 카드 (9개 모두 서버 HTML 에 포함) */
 export function Programs() {
   const cards: ProgramCard[] = programs.map((p) => ({
     href: `/${p.category}/${p.slug}`,
@@ -16,9 +27,9 @@ export function Programs() {
     tags: p.keywords.slice(0, 2),
   }));
   return (
-    <section aria-labelledby="programs-title" className="turf relative overflow-hidden py-20 md:py-28">
+    <section aria-labelledby="programs-title" className="turf relative overflow-hidden py-8">
       <FieldIllustration />
-      <div className="container-site relative">
+      <div className={`container-site relative ${programFont.className}`}>
         <ProgramSlider cards={cards} />
       </div>
     </section>
@@ -111,10 +122,10 @@ function FieldIllustration() {
         })}
 
         {/* 날아다니는 드론축구공 + 점선 비행 궤적 (카드가 없는 위·아래 빈 곳) */}
-        <svg viewBox="0 0 400 80" className="absolute right-[18%] top-6 h-[72px] w-[360px]" fill="none">
+        <svg viewBox="0 0 400 80" className="absolute right-[18%] top-[90px] h-[72px] w-[360px]" fill="none">
           <path d="M8 70 C 120 72, 200 10, 330 30" stroke="rgb(255 255 255 / 0.45)" strokeWidth="2" strokeDasharray="1 7" strokeLinecap="round" />
         </svg>
-        <span className="absolute right-[calc(18%-12px)] top-[34px] h-9 w-9 rotate-12">
+        <span className="absolute right-[calc(18%-12px)] top-[100px] h-9 w-9 rotate-12">
           <DroneBall />
         </span>
         <svg viewBox="0 0 400 80" className="absolute bottom-6 left-[20%] h-[72px] w-[360px]" fill="none">
