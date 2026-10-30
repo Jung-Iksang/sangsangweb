@@ -22,7 +22,7 @@ const CLOSE_DELAY = 150;
  * - 1차 칸: 폭 고정 · 글자 가운데 · 헤더 높이 전체가 링크
  * - 2행 grid: 1행 1차 링크, 2행 하위 목록(각 칸 subgrid) + 전폭 배경판. 가장 긴 목록에 맞춰 모든 칸 높이가 같다
  * - 여닫기는 JS 상태: 마우스 들어오면 열고, 나가면 잠깐 뒤 닫음. 키보드 포커스로 열고 Esc·링크 클릭으로 닫음
- * - ul 높이는 헤더 높이(85px)로 고정, 각 칸(li)은 마우스를 무시하고 링크·하위 목록만 반응
+ * - ul 높이는 헤더 높이(--header-h)로 고정, 각 칸(li)은 마우스를 무시하고 링크·하위 목록만 반응
  *   → 닫혀 있을 때 헤더 아래로 넘친 칸 영역이 본문 마우스·클릭을 가로채지 않음
  */
 export function NavList({ active }: { active: string | null }) {
@@ -85,7 +85,7 @@ export function NavList({ active }: { active: string | null }) {
             <Link
               href={item.href}
               aria-current={isActive ? "true" : undefined}
-              className="pointer-events-auto flex items-center justify-center text-[16px] font-semibold text-ink"
+              className="pointer-events-auto flex items-center justify-center whitespace-nowrap text-[calc(20px-1pt)] font-semibold leading-none tracking-tight text-ink"
             >
               <span
                 className={`relative flex h-full items-center after:absolute after:inset-x-0 after:bottom-0 after:h-[2px] after:origin-left after:bg-green after:transition-transform after:duration-300 ${

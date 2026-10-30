@@ -1,57 +1,52 @@
 import Image from "next/image";
 import Link from "next/link";
-import { careerCards, careerSchools } from "@/content/career";
-import { photos } from "@/content/photos.generated";
-import { SectionHead } from "./SectionHead";
+import { careerSchools } from "@/content/career";
+import { photos, type PhotoName } from "@/content/photos.generated";
+import "./CareerSection.css";
+
+// 기존 직업세계의 현장 사진을 여섯 스쿨 카드에 재사용합니다.
+const schoolPhotos: Record<string, { photo: PhotoName; alt: string }> = {
+  "01": { photo: "drone-class", alt: "드론 조종 교육 현장" },
+  "02": { photo: "career-maker", alt: "부품을 조립하는 메이커 교실" },
+  "03": { photo: "hero-education", alt: "노트북으로 코딩을 배우는 학생들" },
+  "04": { photo: "career-startup", alt: "4차산업 창의융합 진로체험 안내" },
+  "05": { photo: "career-robot", alt: "직접 만든 로봇을 조종하는 학생" },
+  "06": { photo: "career-maker", alt: "전자 부품으로 작품을 만드는 학생들" },
+};
 
 export function CareerSection() {
   return (
-    <section aria-labelledby="career-title" className="py-20 md:py-28">
+    <section aria-labelledby="career-title" className="career-section">
       <div className="container-site">
-        <SectionHead
-          no="03"
-          id="career-title"
-          title={
-            <>
-              진로가 미래다! <span className="hl">미래기술</span>로 만나는 직업 세계
-            </>
-          }
-          desc="교육부 인증 교육기부 진로체험기관 상상마루는 여섯 가지 미래기술을 직접 만들고 조종하는 진로체험 스쿨을 운영합니다."
-          moreHref="/career"
-          moreLabel="진로·직업체험"
-        />
-
-        <ol className="grid border-t border-ink md:grid-cols-2 md:gap-x-12">
-          {careerSchools.map((s) => (
-            <li key={s.no} className="border-b border-line">
-              <Link href="/experience/school" className="group flex items-center gap-5 py-5 transition-colors hover:bg-cream md:px-3">
-                <span className="num w-6 shrink-0">{s.no}</span>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-[19px] font-bold text-ink">{s.name}</span>
-                  <span className="mt-0.5 block text-[14px] text-muted">{s.tagline}</span>
-                </span>
-                <span aria-hidden className="h-2 w-2 shrink-0 rounded-full" style={{ background: s.color }} />
-                <span aria-hidden className="text-muted transition-transform group-hover:translate-x-0.5">→</span>
+        <div className="career-heading">
+          <h2 id="career-title">6가지 직업세계</h2>
+          <p>직접 날리고, 만들고, 코딩하며 만나는 미래의 직업</p>
+        </div>
+        <ul className="career-cards">
+          {careerSchools.map((school) => (
+            <li key={school.no}>
+              <Link href={`/career#school-${school.no}`} className="career-card">
+                <div className="career-visual">
+                  <Image
+                    src={photos[schoolPhotos[school.no].photo].src}
+                    alt={schoolPhotos[school.no].alt}
+                    fill
+                    sizes="(min-width: 1440px) 414px, (min-width: 1024px) 30vw, (min-width: 600px) 45vw, 90vw"
+                    className="career-photo"
+                  />
+                </div>
+                <div className="career-cardBody">
+                  <div className="career-cardHeading">
+                    <h3>{school.name}</h3>
+                    <svg className="career-cardArrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      <path d="M5 12h14m-6-6 6 6-6 6" />
+                    </svg>
+                  </div>
+                  <p>{school.tagline}</p>
+                </div>
               </Link>
             </li>
           ))}
-        </ol>
-
-        <ul className="mt-16 grid grid-cols-2 gap-x-5 gap-y-10 lg:grid-cols-4">
-          {careerCards.map((c) => {
-            const img = photos[c.photo];
-            return (
-              <li key={c.title}>
-                <Link href={c.href} className="group block">
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-line transition-[translate,box-shadow] duration-300 ease-out group-hover:shadow-lift group-focus-visible:shadow-lift motion-safe:group-hover:-translate-y-1.5 motion-safe:group-focus-visible:-translate-y-1.5">
-                    <Image src={img.src} alt={c.title} fill sizes="(min-width:1024px) 270px, 50vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
-                  </div>
-                  <p className="mt-4 text-[16px] font-bold text-ink">{c.title}</p>
-                  <p className="mt-1 text-[13px] leading-snug text-muted">{c.desc}</p>
-                </Link>
-              </li>
-            );
-          })}
         </ul>
       </div>
     </section>

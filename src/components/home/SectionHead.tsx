@@ -15,7 +15,7 @@ export function SectionHead({
   tone = "light",
   actions,
 }: {
-  no: string;
+  no?: string;
   title: React.ReactNode;
   desc?: string;
   moreHref?: string;
@@ -26,9 +26,9 @@ export function SectionHead({
 }) {
   const dark = tone === "dark";
   return (
-    <div className="mb-10 md:mb-14">
+    <div className="mb-6">
       <div className="flex items-center gap-4">
-        <span className={dark ? "num text-white/85" : "num"}>{no}</span>
+        {no && <span className={dark ? "num text-white/85" : "num"}>{no}</span>}
         <span aria-hidden className={`h-px flex-1 ${dark ? "bg-white/20" : "bg-line"}`} />
         {moreHref && (
           <Link
@@ -44,11 +44,11 @@ export function SectionHead({
         )}
         {actions && <div className="ml-2 flex gap-2">{actions}</div>}
       </div>
-      <h2 id={id} className={`t-h2 mt-5 ${dark ? "text-white" : ""}`}>
+      <h2 id={id} className={`t-h2 mt-3 ${dark ? "text-white" : ""}`}>
         {title}
       </h2>
       {desc && (
-        <p className={`mt-4 max-w-2xl text-[17px] leading-relaxed ${dark ? "text-white/75" : "text-muted"}`}>{desc}</p>
+        <p className={`mt-3 max-w-2xl text-[17px] leading-relaxed ${dark ? "text-white/75" : "text-muted"}`}>{desc}</p>
       )}
     </div>
   );

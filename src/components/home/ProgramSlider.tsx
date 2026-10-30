@@ -146,6 +146,7 @@ export function ProgramSlider({ cards }: { cards: ProgramCard[] }) {
   return (
     <div
       ref={rootRef}
+      className="grid grid-cols-[minmax(0,1fr)] grid-rows-[1fr_auto_1fr]"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       onFocus={(e) => {
@@ -157,7 +158,6 @@ export function ProgramSlider({ cards }: { cards: ProgramCard[] }) {
       }}
     >
       <SectionHead
-        no="02"
         id="programs-title"
         tone="dark"
         title="상상마루 프로그램"
@@ -211,38 +211,38 @@ export function ProgramSlider({ cards }: { cards: ProgramCard[] }) {
                     sizes="(min-width:1536px) 20vw, (min-width:1280px) 25vw, (min-width:1024px) 33vw, (min-width:640px) 50vw, 85vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                   />
-                  <span className="absolute bottom-3 left-3 rounded-sm bg-ink/85 px-2.5 py-1 text-[12px] font-semibold text-white">
+                  <span className="absolute bottom-3 left-3 rounded-sm bg-ink/85 px-2.5 py-1 text-[12px] font-medium text-white">
                     {c.category}
                   </span>
                   {c.badge && (
-                    <span className="absolute right-3 top-3 rounded-sm border border-line bg-white px-2.5 py-1 text-[12px] font-bold text-ink">
+                    <span className="absolute right-3 top-3 rounded-sm border border-line bg-white px-2.5 py-1 text-[12px] font-medium text-ink">
                       {c.badge}
                     </span>
                   )}
                 </div>
                 <div className="p-6">
-                  <h3 className="truncate text-[19px] font-bold tracking-tight text-ink group-hover:underline group-hover:decoration-line-strong group-hover:underline-offset-4">
+                  <h3 className="truncate text-[19px] font-medium tracking-tight text-ink group-hover:underline group-hover:decoration-line-strong group-hover:underline-offset-4">
                     {c.title}
                   </h3>
                   <dl className="mt-3 space-y-1 text-[14.5px]">
                     <div className="flex gap-3">
-                      <dt className="w-9 shrink-0 font-semibold text-ink">대상</dt>
+                      <dt className="w-9 shrink-0 font-medium text-ink">대상</dt>
                       <dd className="min-w-0 truncate text-muted">{c.target}</dd>
                     </div>
                     <div className="flex gap-3">
-                      <dt className="w-9 shrink-0 font-semibold text-ink">운영</dt>
+                      <dt className="w-9 shrink-0 font-medium text-ink">운영</dt>
                       <dd className="min-w-0 truncate text-muted">{c.period}</dd>
                     </div>
                   </dl>
                   <div className="mt-5 flex items-center justify-between gap-3 border-t border-line pt-4">
                     <ul className="flex max-h-[26px] min-w-0 flex-wrap gap-1.5 overflow-hidden" aria-label="키워드">
                       {c.tags.map((t) => (
-                        <li key={t} className="shrink-0 rounded-sm border border-line px-2 py-0.5 text-[12.5px] text-muted">
+                        <li key={t} className="shrink-0 py-0.5 text-[12.5px] font-normal text-[#b72b62]">
                           {t}
                         </li>
                       ))}
                     </ul>
-                    <span className="shrink-0 text-[13px] font-semibold text-green">
+                    <span className="shrink-0 text-[13px] font-medium text-black">
                       자세히 <span aria-hidden>→</span>
                     </span>
                   </div>
