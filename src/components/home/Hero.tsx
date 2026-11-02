@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { photos } from "@/content/photos.generated";
@@ -41,6 +41,19 @@ export function Hero() {
     setActive((index + slides.length) % slides.length);
   };
 
+  /** 터치 스와이프 — 가로로 40px 넘게 밀면 이전/다음 (세로 스크롤은 브라우저에 맡김, 마우스는 제외) */
+  const swipeStart = useRef<{ x: number; y: number } | null>(null);
+  const onSwipeStart = (event: PointerEvent) => {
+    if (event.pointerType !== "mouse") swipeStart.current = { x: event.clientX, y: event.clientY };
+  };
+  const onSwipeEnd = (event: PointerEvent) => {
+    const start = swipeStart.current;
+    swipeStart.current = null;
+    if (!start) return;
+    const dx = event.clientX - start.x;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(event.clientY - start.y)) select(active + (dx < 0 ? 1 : -1));
+  };
+
   return (
     <section ref={root} aria-labelledby="hero-title" className="hero-banner"
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
@@ -48,7 +61,7 @@ export function Hero() {
       onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}>
       <div className="hero-layout">
         <div className="hero-media" role="region" aria-label="상상마루 교육 현장 사진" aria-roledescription="캐러셀">
-          <div className="hero-visual">
+          <div className="hero-visual" onPointerDown={onSwipeStart} onPointerUp={onSwipeEnd} onPointerCancel={() => { swipeStart.current = null; }}>
             {slides.map((slide, index) => (
               <div key={slide.src} className="hero-slide" data-active={index === active} aria-hidden={index !== active}>
                 <Image src={slide.src} alt={slide.caption} fill preload={index === 0}

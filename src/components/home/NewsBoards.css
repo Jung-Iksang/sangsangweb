@@ -13,7 +13,7 @@
 .news-notice-list a { display: flex; align-items: center; gap: 0.875rem; min-height: clamp(3.5rem, calc(2.5rem + 1.6vw), 4.25rem); padding: .875rem 3px; }
 .news-notice-list a::before { content: ""; width: 3px; height: 3px; flex-shrink: 0; border-radius: 50%; background: var(--color-body); }
 .news-notice-title { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-family: var(--font-sans); font-weight: var(--type-weight-medium); font-size: var(--type-list-title); line-height: 1.6; color: var(--color-body); }
-.news-new { flex-shrink: 0; font-size: 0.625rem; font-weight: 800; color: var(--color-red); }
+.news-new { flex-shrink: 0; font-size: 0.8125rem; font-weight: 800; color: var(--color-red); }
 .news-hub time { font-size: var(--type-small); font-variant-numeric: tabular-nums; color: var(--color-muted); }
 .news-notice-list time { flex-shrink: 0; }
 .news-notice-list a:hover .news-notice-title, .news-gallery-card:hover h3 { text-decoration: underline; text-underline-offset: 0.25rem; }
@@ -39,7 +39,7 @@
 }
 @media (max-width: 600px) {
   .news-controls { gap: 0.25rem; }
-  .news-control { width: 2.125rem; height: 2.125rem; border-radius: 0.625rem; }
+  .news-control { width: 2.5rem; height: 2.5rem; border-radius: 0.625rem; }
   .news-control svg { width: 1.125rem; height: 1.125rem; }
   .news-gallery-slide { flex-basis: 100%; }
   .news-gallery-card h3 { margin-top: 0.9375rem; min-height: 0; }
