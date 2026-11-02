@@ -49,24 +49,26 @@ scripts/             local-db.mjs(로컬 PGlite HTTP 서버) db-init.mjs gen-moc
 - 갤러리 = 앨범: `gallery` 행이 대표 사진, 나머지는 `gallery_images`(sort_order). 관리자 `/admin/gallery`(새 앨범) · `/admin/gallery/[id]`(사진 관리).
 - 강사 현장 사진 = `gallery.program_slug`(career-programs slug, 액션에서 화이트리스트 검증) → `getFieldPhotos(theme)` 가 `/career/[theme]` 프로그램 카드 아래에 최신순 표시.
 
-## 디자인 — 화이트 + 키위 그린 (v1.5)
+## 디자인 — 화이트 + 블루 (v1.8)
 
-`src/app/globals.css` `@theme` 토큰만 사용 (임의 색 hex 금지 — 네이버/카카오 지도·스토어 버튼 브랜드색만 예외).
-- 바탕 `paper`(#FFFFFF 기본) / `cream`(#F5F6F4 연회색 — 교차 띠·표 머리·hover) / `white`(카드), 글자 `ink` `body`(#474E58) `muted`(#6B6B6B), 선 `line`(#E5E5E5) `line-strong`
-- 주색 `green`(#357F20 — 로고 라임을 글자용으로 진하게; 링크·활성·주 버튼·번호), `teal`(#27825F 그라데이션 끝), 노랑은 `hl` 형광펜 밑줄로만, `red`(#C23A45) 는 NEW·에러, 로고 원색 `brand-*` 은 8px 이하 점에만
-- 그라데이션은 `grad-kiwi`(사이드메뉴 섹션 블록, 흰 글자) · `grad-band`(서브 타이틀 띠·히어로 왼쪽 패널) 두 유틸리티로만 — 그 밖의 그라데이션·임의 hex 금지
-- 푸터는 `ink` 바탕 + `on-ink*` 글자
-- 유틸리티: `t-display/t-h1/t-h2/t-h3/t-lead`(타입 스케일), `num`(섹션 번호 01·02), `hl`, `btn` + `btn-primary/btn-outline/btn-dark/btn-ghost/btn-sm`, `link-more`, `turf`(드론축구장 체크무늬 잔디 — 메인 02 프로그램 띠, 일러스트는 `Programs.tsx`), `container-site`(유동) · `container-read`(서브페이지 본문)
+v1.8 = PR #3(블루 디자인) 채택 + 서브페이지 틀·진로·직업체험·사진은 v1.7 유지.
+`src/app/globals.css` `@theme` 토큰만 사용 (임의 색 hex 금지 — 컴포넌트 CSS 파일 포함, 네이버/카카오 지도·스토어 버튼 브랜드색만 예외).
+- 바탕 `paper`(#FFFFFF) / `cream`(#F3F6FB — 교차 띠·표 머리·hover) / `white`(카드), 글자 `ink`(#172F4E) `body`(#3C5069) `muted`(#5E7086), 선 `line`(#DCE4EF) `line-strong`
+- 주색 `blue`(#215EAC — 링크·활성·주 버튼·번호) / `blue-dark`(hover) / `blue-soft`·`blue-mist`(히어로 바탕·장식), `navy`(#142D4E), 노랑은 `hl` 형광펜 밑줄로만, `red` 는 NEW·에러, 로고 원색 `brand-*` 은 8px 이하 점에만, `turf`/`turf-dark` 는 드론축구장 띠 전용
+- 그라데이션은 `grad-brand`(사이드메뉴 섹션 블록, 흰 글자) · `grad-band`(서브 타이틀 띠) 두 유틸리티로만 — 그 밖의 그라데이션·임의 hex 금지
+- 푸터는 `ink` 바탕 + `on-ink*` 글자, v1.7 3단(로고·주소 | 바로가기 | 인증·지정) + 하단 사업자 정보 줄
+- 유틸리티: `t-display/t-h1/t-h2/t-h3/t-lead`, `num`, `hl`, `btn` + `btn-primary/btn-outline/btn-dark/btn-ghost/btn-sm`, `link-more`, `turf`(드론축구장 잔디 — 메인 02 프로그램 띠, 일러스트는 `Programs.tsx`), `container-site`(헤더·히어로·메인 공통, 최대 1430px·좌우 30px — `Header.css` 의 `.site-header-frame`·`.hero-layout` 과 같은 값) · `container-read`(서브페이지 본문 1320px)
+- 글자 체계: `src/styles/typography.css`(`--type-*` 변수·`.type-*` 클래스, `.public-site` 래퍼 범위 — `(site)/layout.tsx`). 이 파일은 레이어 밖 CSS 라 Tailwind 유틸리티보다 우선함에 주의
 - 라운드 `rounded-sm`(6) / `rounded-md`(10) / `rounded-btn`(8)
-- **금지**: `rounded-full` 칩·버튼(8px 이하 점 제외), `grad-*` 외 그라데이션, 대문자 영문 소제목(eyebrow), 제목 옆 세로 막대, 카드 기본 그림자(서브페이지 메뉴 카드만 예외), 사진 위 글자 오버레이
+- **금지**: `rounded-full` 칩·버튼(8px 이하 점·원형 캐러셀 버튼 제외), `grad-*` 외 그라데이션, 대문자 영문 소제목(eyebrow), 제목 옆 세로 막대, 카드 기본 그림자(서브페이지 메뉴 카드만 예외), 사진 위 글자 오버레이
   (hover 떠오름은 메인 사진 카드(프로그램·진로체험·갤러리)만 — 6px 위로 + `shadow-lift`, `motion-safe`)
-  (사진 위 글자는 히어로·카드의 작은 캡션/분류 라벨 `bg-ink/85` 만 허용 — 스크림·큰 흰 글자 없음)
-- 섹션 머리는 `SectionHead`(번호 + 가는 선 + 전체보기 / 제목, `tone="dark"` 초록 띠용, `actions` 캐러셀 화살표 슬롯), 목록은 위 `border-ink` + 행 사이 `border-line`
-- 폰트 **Paperlogy**(본문 500·제목 700, 완성형 서브셋, `public/fonts/paperlogy/`, `npm run fetch-paperlogy`) + Pretendard Variable 폴백(`public/fonts/pretendard/`). 레이아웃 레퍼런스: isedu.kr (색은 우리 토큰만)
-- 메인 04 소식 = 공지사항 | 포토갤러리 2단(`NewsBoards` + `NewsGallery`), 보도자료는 메인에 없음. 글자는 누르는 것 16~18px·보조 13px 이상(v1.4.1 에서 한 단계 키움)
-- 서브페이지는 `SubPage`(가운데 타이틀 띠 + 떠 있는 좌측 메뉴 카드). 상세 글은 `bandTitle`=게시판 이름, 글 제목은 `DetailHead` h1(페이지마다 h1 다르게 — SEO). 커뮤니티: 공지·보도 표, 갤러리 3열 카드, 상세 하단 먹색 `목록` + `PrevNext` 2칸 바
-- 컨테이너 유동(최대 1680px, 여백 `clamp(20px,5.2vw,80px)`) · 서브페이지 본문 1320px, 헤더 85px(`--header-h`, sticky 값도 이 변수로) · 메가메뉴는 `MainNav.tsx`(CSS subgrid 배치 + JS 여닫기)
+  (사진 위 글자는 히어로·카드의 작은 캡션/분류 라벨만 허용 — 스크림·큰 흰 글자 없음)
+- 폰트 **Paperlogy 하나**(본문 500·라벨 600·제목 700·큰 숫자 800, 완성형 서브셋, `public/fonts/paperlogy/`, `npm run fetch-paperlogy`) + Pretendard Variable 폴백(`public/fonts/pretendard/`). `next/font/local` 등으로 다른 글꼴 추가 금지
+- 헤더 2단: 위 블루 안내 줄(기관명·슬로건 | 공지사항·오시는 길·교육문의 전화) + 로고·주 메뉴(메가메뉴 `MainNav.tsx`). 메뉴 줄에 문의 버튼 두지 않음(안내 줄과 중복). `--header-h` 는 `Header.css` 가 두 줄 합으로 계산 — sticky·앵커는 이 변수 사용
+- 메인: `Hero`(왼쪽 사진 캐러셀 / 오른쪽 위 "호기심 충전소" 카드 — 캘리그라피 + 아이·드론·로봇 일러스트 / 오른쪽 아래 안내 카드 + 바로가기) → `AboutIntro`(`ScrollReveal`) → `CareerSection`(대표 6개 분야, cp-* 사진) → `Programs`(turf) → `NewsBoards`(공지사항 | 포토갤러리) → `Partners`
+- 서브페이지는 `SubPage`(가운데 타이틀 띠 + 떠 있는 좌측 메뉴 카드). 상세 글은 `bandTitle`=게시판 이름, 글 제목은 `DetailHead` h1(페이지마다 h1 다르게 — SEO). 커뮤니티: 공지·보도 표, 포토갤러리 3열 카드, 상세 하단 먹색 `목록` + `PrevNext` 2칸 바. 연혁은 `HistoryTimeline`
+- 명칭은 "포토갤러리"(메뉴·메타·관리자 모두)
 
 ## 검증
 
-`npm run lint && npm run typecheck && npm run build`. 크롤러 확인: `curl -A "Yeti" <url>` 로 본문·메타가 HTML 에 있는지 확인.
+`npm run lint && npm run typecheck && npm test && npm run build`. 크롤러 확인: `curl -A "Yeti" <url>` 로 본문·메타가 HTML 에 있는지 확인.

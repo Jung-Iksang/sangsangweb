@@ -42,12 +42,6 @@
   --color-on-ink-muted: #b8c9df;
   --color-on-ink-blue: #a9d1ff;
 
-  /* 임시 별칭 — green 클래스를 blue 로 바꾸는 동안만 유지 */
-  --color-green: var(--color-blue);
-  --color-green-dark: var(--color-blue-dark);
-  --color-green-soft: var(--color-blue-soft);
-  --color-on-ink-green: var(--color-on-ink-blue);
-
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-btn: 8px;
@@ -141,7 +135,7 @@
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: var(--color-green);
+  color: var(--color-blue);
 }
 
 /* 버튼 — 모서리 8px, 알약 금지 */
@@ -165,10 +159,10 @@
   font-size: 15px;
 }
 @utility btn-primary {
-  background: var(--color-green);
+  background: var(--color-blue);
   color: #fff;
   &:hover {
-    background: var(--color-green-dark);
+    background: var(--color-blue-dark);
   }
 }
 @utility btn-dark {
@@ -195,7 +189,7 @@
   text-decoration-color: var(--color-line-strong);
   text-underline-offset: 5px;
   &:hover {
-    color: var(--color-green);
+    color: var(--color-blue);
     text-decoration-color: currentColor;
   }
 }
@@ -218,7 +212,7 @@
   text-underline-offset: 5px;
   white-space: nowrap;
   &:hover {
-    color: var(--color-green);
+    color: var(--color-blue);
     text-decoration-color: currentColor;
   }
 }
@@ -259,7 +253,7 @@
     background: rgb(245 184 0 / 0.35);
   }
   :focus-visible {
-    outline: 2px solid var(--color-green);
+    outline: 2px solid var(--color-blue);
     outline-offset: 2px;
   }
 }
@@ -273,7 +267,7 @@
 .prose-post > * + * { margin-top: 1em; }
 .prose-post h2 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-ink); margin-top: 1.8em; }
 .prose-post h3 { font-size: 1.25rem; font-weight: 700; color: var(--color-ink); margin-top: 1.5em; }
-.prose-post a { color: var(--color-green); text-decoration: underline; text-underline-offset: 3px; }
+.prose-post a { color: var(--color-blue); text-decoration: underline; text-underline-offset: 3px; }
 .prose-post ul { list-style: disc; padding-left: 1.4em; }
 .prose-post ol { list-style: decimal; padding-left: 1.4em; }
 .prose-post blockquote { border-left: 2px solid var(--color-line-strong); padding-left: 1em; color: var(--color-muted); }

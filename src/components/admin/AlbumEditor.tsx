@@ -89,7 +89,7 @@ export function AlbumEditor({ album, programs }: { album?: Album; programs: Prog
     }
   }
 
-  const input = "w-full rounded-lg border border-line px-3 py-2 text-[14px] outline-none focus:border-green";
+  const input = "w-full rounded-lg border border-line px-3 py-2 text-[14px] outline-none focus:border-blue";
 
   return (
     <section className="space-y-4 rounded-md border border-line bg-white p-5">
@@ -123,7 +123,7 @@ export function AlbumEditor({ album, programs }: { album?: Album; programs: Prog
         onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && inputRef.current?.click()}
         role="button"
         tabIndex={0}
-        className={`flex cursor-pointer flex-col items-center justify-center rounded-md border-2 border-dashed px-6 py-8 text-center transition ${drag ? "border-green bg-green-soft" : "border-line hover:border-green/60"}`}
+        className={`flex cursor-pointer flex-col items-center justify-center rounded-md border-2 border-dashed px-6 py-8 text-center transition ${drag ? "border-blue bg-blue-soft" : "border-line hover:border-blue/60"}`}
       >
         <p className="text-[16px] font-bold text-ink">사진을 끌어다 놓거나 클릭해서 선택하세요</p>
         <p className="mt-1 text-[13px] text-muted">JPG · PNG · WEBP · GIF, 여러 장 동시 선택 가능 · 첫 번째 사진이 대표 사진이 됩니다</p>
@@ -137,7 +137,7 @@ export function AlbumEditor({ album, programs }: { album?: Album; programs: Prog
               <div className="relative aspect-[3/2] bg-cream">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={p.preview} alt="" className="h-full w-full object-cover" />
-                <span className={`absolute left-1.5 top-1.5 rounded-sm px-1.5 py-0.5 text-[11.5px] font-bold ${i === 0 ? "bg-green text-white" : "bg-ink/85 text-white"}`}>
+                <span className={`absolute left-1.5 top-1.5 rounded-sm px-1.5 py-0.5 text-[11.5px] font-bold ${i === 0 ? "bg-blue text-white" : "bg-ink/85 text-white"}`}>
                   {i === 0 ? "대표" : i + 1}
                 </span>
                 {p.kind === "new" && (
@@ -165,7 +165,7 @@ export function AlbumEditor({ album, programs }: { album?: Album; programs: Prog
 
       <div className="flex flex-wrap items-center justify-end gap-3">
         {message && (
-          <p role="status" className={`mr-auto rounded-lg px-4 py-2.5 text-[14px] ${message.ok ? "bg-green-soft text-green" : "bg-red/10 text-red"}`}>
+          <p role="status" className={`mr-auto rounded-lg px-4 py-2.5 text-[14px] ${message.ok ? "bg-blue-soft text-blue" : "bg-red/10 text-red"}`}>
             {message.text}
           </p>
         )}
@@ -174,7 +174,7 @@ export function AlbumEditor({ album, programs }: { album?: Album; programs: Prog
             되돌리기
           </button>
         )}
-        <button type="button" onClick={save} disabled={busy} className="h-11 rounded-btn bg-green px-7 font-bold text-white hover:bg-green-dark disabled:opacity-60">
+        <button type="button" onClick={save} disabled={busy} className="h-11 rounded-btn bg-blue px-7 font-bold text-white hover:bg-blue-dark disabled:opacity-60">
           {busy ? "저장 중…" : album ? "저장" : `앨범 등록 (${photos.length}장)`}
         </button>
       </div>

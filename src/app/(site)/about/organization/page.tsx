@@ -21,7 +21,7 @@ export default function Page() {
           <div className="flex flex-col items-center">
             <div className="rounded-sm bg-ink px-12 py-4 text-[18px] font-bold text-on-ink">{organization.ceo}</div>
             <div aria-hidden className="h-7 w-px bg-line-strong" />
-            <div className="rounded-sm border border-green bg-white px-6 py-3 text-[16px] font-bold text-green">{organization.lab}</div>
+            <div className="rounded-sm border border-blue bg-white px-6 py-3 text-[16px] font-bold text-blue">{organization.lab}</div>
             <div aria-hidden className="h-7 w-px bg-line-strong" />
             <ul className="grid w-full grid-cols-2 gap-3 border-t border-line-strong pt-7 sm:grid-cols-3 lg:grid-cols-5">
               {organization.teams.map((t) => (

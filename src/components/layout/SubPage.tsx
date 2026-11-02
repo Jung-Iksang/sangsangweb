@@ -76,7 +76,7 @@ export function SubPage({ path, title, bandTitle, description, children }: Props
                   <Link
                     href={c.href}
                     aria-current={active ? "page" : undefined}
-                    className={`block border-b-2 py-3.5 text-[16px] ${active ? "border-green font-semibold text-ink" : "border-transparent text-muted hover:text-ink"}`}
+                    className={`block border-b-2 py-3.5 text-[16px] ${active ? "border-blue font-semibold text-ink" : "border-transparent text-muted hover:text-ink"}`}
                   >
                     {c.label}
                   </Link>
@@ -102,12 +102,12 @@ export function SubPage({ path, title, bandTitle, description, children }: Props
                       <Link
                         href={c.href}
                         aria-current={active ? "page" : undefined}
-                        className={`group flex items-center justify-between gap-3 py-3.5 text-[17px] leading-snug transition-colors ${active ? "font-semibold text-green" : "text-muted hover:text-ink"}`}
+                        className={`group flex items-center justify-between gap-3 py-3.5 text-[17px] leading-snug transition-colors ${active ? "font-semibold text-blue" : "text-muted hover:text-ink"}`}
                       >
                         {c.label}
                         <span
                           aria-hidden
-                          className={`grid h-5 w-5 shrink-0 place-items-center rounded-[4px] ${active ? "bg-green text-white" : "bg-cream text-muted group-hover:text-ink"}`}
+                          className={`grid h-5 w-5 shrink-0 place-items-center rounded-[4px] ${active ? "bg-blue text-white" : "bg-cream text-muted group-hover:text-ink"}`}
                         >
                           <Chevron className="h-2 w-2" />
                         </span>

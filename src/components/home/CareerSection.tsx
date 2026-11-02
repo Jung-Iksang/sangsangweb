@@ -15,7 +15,7 @@ export function CareerSection() {
           <h2 id="career-title">진로·직업체험</h2>
           <p>
             {careerThemes.length}개 분야 {careerPrograms.length}개 프로그램 — 직접 날리고, 만들고, 코딩하며 만나는 미래의 직업{" "}
-            <Link href="/career" className="whitespace-nowrap font-semibold text-green underline-offset-4 hover:underline">
+            <Link href="/career" className="whitespace-nowrap font-semibold text-blue underline-offset-4 hover:underline">
               전체 보기 →
             </Link>
           </p>

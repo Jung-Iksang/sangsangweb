@@ -31,7 +31,7 @@ export default function Page() {
             ].map((s) => (
               <div key={s.v} className="py-6 pr-4 md:px-6 md:first:pl-0">
                 <dt className="sr-only">{s.v}</dt>
-                <dd className="text-[26px] font-extrabold tracking-tight text-green">{s.k}</dd>
+                <dd className="text-[26px] font-extrabold tracking-tight text-blue">{s.k}</dd>
                 <dd className="mt-1 text-[15px] leading-snug text-muted">{s.v}</dd>
               </div>
             ))}

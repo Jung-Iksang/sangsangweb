@@ -46,7 +46,7 @@ export default async function Page({ params }: PageProps<"/career/[theme]">) {
         <div>
           <p className="text-[20px] font-bold text-ink">{t.tagline}</p>
           <p className="mt-1 text-[15px] text-muted">
-            프로그램 <strong className="font-bold tabular-nums text-green">{list.length}</strong>개 · 체험 40분 · 특강 2시간(2교시) · {careerOverview.fee}
+            프로그램 <strong className="font-bold tabular-nums text-blue">{list.length}</strong>개 · 체험 40분 · 특강 2시간(2교시) · {careerOverview.fee}
           </p>
         </div>
         <a href={`tel:${site.contact.phone}`} className="btn btn-primary btn-sm shrink-0">
@@ -58,7 +58,7 @@ export default async function Page({ params }: PageProps<"/career/[theme]">) {
         <ul className="flex flex-wrap gap-2">
           {list.map((p) => (
             <li key={p.slug}>
-              <a href={`#${p.slug}`} className="block rounded-sm border border-line bg-white px-3 py-1.5 text-[15px] text-body hover:border-green hover:text-ink">
+              <a href={`#${p.slug}`} className="block rounded-sm border border-line bg-white px-3 py-1.5 text-[15px] text-body hover:border-blue hover:text-ink">
                 {p.title}
               </a>
             </li>

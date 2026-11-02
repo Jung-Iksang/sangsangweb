@@ -49,7 +49,7 @@ export async function GalleryGrid({ page }: { page: number }) {
                   {g.programSlug && getCareerProgram(g.programSlug) && (
                     <>
                       <span aria-hidden className="h-2.5 w-px bg-line-strong" />
-                      <span className="truncate font-medium text-green">{getCareerProgram(g.programSlug)!.title}</span>
+                      <span className="truncate font-medium text-blue">{getCareerProgram(g.programSlug)!.title}</span>
                     </>
                   )}
                 </p>

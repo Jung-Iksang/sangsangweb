@@ -43,7 +43,7 @@ export default function Page() {
               <div key={i.label} className="grid gap-1 border-b border-line py-4 sm:grid-cols-[7.5rem_1fr] sm:gap-8">
                 <dt className="font-bold text-ink">{i.label}</dt>
                 <dd className="text-body">
-                  {i.href ? <a href={i.href} className="underline decoration-line-strong underline-offset-4 hover:text-green">{i.value}</a> : i.value}
+                  {i.href ? <a href={i.href} className="underline decoration-line-strong underline-offset-4 hover:text-blue">{i.value}</a> : i.value}
                 </dd>
               </div>
             ))}

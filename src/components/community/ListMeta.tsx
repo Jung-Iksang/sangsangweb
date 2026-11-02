@@ -7,7 +7,7 @@ export function ListMeta({ total, page, totalPages }: { total: number; page: num
       </svg>
       총 <strong className="font-semibold text-ink">{total}</strong>건
       <span className="tabular-nums">
-        (<span className="text-green">{page}</span>/{totalPages} 페이지)
+        (<span className="text-blue">{page}</span>/{totalPages} 페이지)
       </span>
     </p>
   );

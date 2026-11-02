@@ -39,7 +39,7 @@ export function CareerProgramCard({ program: p, no, field }: { program: CareerPr
           </h2>
           {(p.job || p.tagline) && (
             <p className="mt-1.5 text-[16px] text-muted">
-              {p.job && <span className="font-semibold text-green">{p.job}</span>}
+              {p.job && <span className="font-semibold text-blue">{p.job}</span>}
               {p.job && p.tagline && <span aria-hidden className="mx-2 inline-block h-3 w-px bg-line-strong align-middle" />}
               {p.tagline}
             </p>
@@ -56,7 +56,7 @@ export function CareerProgramCard({ program: p, no, field }: { program: CareerPr
             <ul className="mt-5 space-y-1.5 text-[16px] leading-relaxed text-body">
               {p.outline.map((o) => (
                 <li key={o} className="flex gap-2.5">
-                  <span aria-hidden className="mt-[0.7em] h-1 w-1 shrink-0 rounded-full bg-green" />
+                  <span aria-hidden className="mt-[0.7em] h-1 w-1 shrink-0 rounded-full bg-blue" />
                   <span>{o}</span>
                 </li>
               ))}

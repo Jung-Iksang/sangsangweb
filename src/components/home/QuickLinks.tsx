@@ -23,7 +23,7 @@ export function QuickLinks() {
                 <span className="mt-1.5 block text-[17px] font-bold text-ink">{l.name}</span>
                 <span className="mt-1 block truncate text-[14px] text-muted">{l.desc}</span>
               </span>
-              <span aria-hidden className="text-[18px] text-muted transition-transform group-hover:translate-x-1 group-hover:text-green">
+              <span aria-hidden className="text-[18px] text-muted transition-transform group-hover:translate-x-1 group-hover:text-blue">
                 →
               </span>
             </Link>

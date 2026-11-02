@@ -42,7 +42,7 @@ export function ProgramPage({ program: p }: { program: Program }) {
               {p.highlights.map((h) => (
                 <div key={h.k} className="py-6 sm:px-6 sm:first:pl-0">
                   <dt className="sr-only">{h.v}</dt>
-                  <dd className="text-[28px] font-extrabold tracking-tight text-green">
+                  <dd className="text-[28px] font-extrabold tracking-tight text-blue">
                     <AnimatedStat value={h.k} />
                   </dd>
                   <dd className="mt-1.5 text-[15px] leading-snug text-muted">{h.v}</dd>

@@ -26,8 +26,8 @@ export function GalleryItemCard({ item }: { item: Item }) {
       <div className="space-y-2 p-4">
         {editing ? (
           <>
-            <input value={title} onChange={(e) => setTitle(e.target.value)} aria-label="제목" className="w-full rounded-lg border border-line px-3 py-2 text-[14px] outline-none focus:border-green" />
-            <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={2} placeholder="앨범 설명 (선택)" aria-label="설명" className="w-full resize-none rounded-lg border border-line px-3 py-2 text-[14px] outline-none focus:border-green" />
+            <input value={title} onChange={(e) => setTitle(e.target.value)} aria-label="제목" className="w-full rounded-lg border border-line px-3 py-2 text-[14px] outline-none focus:border-blue" />
+            <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={2} placeholder="앨범 설명 (선택)" aria-label="설명" className="w-full resize-none rounded-lg border border-line px-3 py-2 text-[14px] outline-none focus:border-blue" />
             {error && <p className="text-[13px] text-red">{error}</p>}
             <div className="flex justify-end gap-1.5">
               <button type="button" onClick={() => setEditing(false)} className="rounded-lg border border-line px-3 py-1.5 text-[13px]">취소</button>
@@ -40,7 +40,7 @@ export function GalleryItemCard({ item }: { item: Item }) {
                   setEditing(false);
                   router.refresh();
                 })}
-                className="rounded-lg bg-green px-3 py-1.5 text-[13px] font-bold text-white disabled:opacity-60"
+                className="rounded-lg bg-blue px-3 py-1.5 text-[13px] font-bold text-white disabled:opacity-60"
               >
                 저장
               </button>
@@ -51,12 +51,12 @@ export function GalleryItemCard({ item }: { item: Item }) {
             <p className="truncate font-bold text-ink">{item.title}</p>
             <p className="text-[13px] text-muted">
               {formatDate(item.createdAt)}
-              {item.programTitle && <span className="ml-2 rounded-sm bg-green-soft px-1.5 py-0.5 text-[12px] font-semibold text-green">{item.programTitle}</span>}
+              {item.programTitle && <span className="ml-2 rounded-sm bg-blue-soft px-1.5 py-0.5 text-[12px] font-semibold text-blue">{item.programTitle}</span>}
             </p>
             <div className="flex justify-end gap-1.5 pt-1">
-              <Link href={`/community/gallery/${item.id}`} target="_blank" className="rounded-lg border border-line px-3 py-1.5 text-[13px] hover:border-green">보기</Link>
-              <Link href={`/admin/gallery/${item.id}`} className="rounded-lg border border-line px-3 py-1.5 text-[13px] hover:border-green">사진 관리</Link>
-              <button type="button" onClick={() => setEditing(true)} className="rounded-lg border border-line px-3 py-1.5 text-[13px] hover:border-green">수정</button>
+              <Link href={`/community/gallery/${item.id}`} target="_blank" className="rounded-lg border border-line px-3 py-1.5 text-[13px] hover:border-blue">보기</Link>
+              <Link href={`/admin/gallery/${item.id}`} className="rounded-lg border border-line px-3 py-1.5 text-[13px] hover:border-blue">사진 관리</Link>
+              <button type="button" onClick={() => setEditing(true)} className="rounded-lg border border-line px-3 py-1.5 text-[13px] hover:border-blue">수정</button>
               <button
                 type="button"
                 disabled={pending}

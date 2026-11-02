@@ -18,7 +18,7 @@ export default function LoginPage() {
         </div>
         <LoginForm />
         <p className="mt-6 text-center text-[13px]">
-          <Link href="/" className="text-muted hover:text-green">← 홈페이지로 돌아가기</Link>
+          <Link href="/" className="text-muted hover:text-blue">← 홈페이지로 돌아가기</Link>
         </p>
       </div>
     </div>
