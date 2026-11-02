@@ -45,13 +45,7 @@ export function Header() {
           </Suspense>
         </nav>
 
-        <div className="flex items-center gap-2">
-          <a href={`tel:${site.contact.phone}`} className="site-header-contact btn btn-outline hidden sm:inline-flex">
-            <PhoneIcon />
-            <span>문의 {site.contact.phone}</span>
-          </a>
-          <MobileMenu />
-        </div>
+        <MobileMenu />
       </div>
     </header>
   );

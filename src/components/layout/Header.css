@@ -14,7 +14,6 @@ html:has(#site-header) { --utility-header-h: 3rem; --navigation-header-h: 4.875r
 .site-brand-logo { width: 8.75rem; height: 2.8rem; }
 .site-main-nav { --type-nav: 1.125rem; }
 .site-main-nav .type-menu-link { font-size: .9375rem; }
-.site-header-contact { height: 2.625rem; min-height: 2.625rem; padding: .5rem 1rem; gap: .5rem; flex-shrink: 0; font-size: .875rem; font-weight: 600; white-space: nowrap; }
 @media (max-width: 1279px) {
   html:has(#site-header) { --utility-header-h: 2rem; --navigation-header-h: 4rem; }
   .site-brand-logo { width: 7.5rem; height: 2.4rem; }

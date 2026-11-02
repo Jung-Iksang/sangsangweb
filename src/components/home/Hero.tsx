@@ -81,7 +81,7 @@ export function Hero() {
                 className="hero-brand-image"
               />
             </h1>
-            <p className="hero-brand-caption"><span>호기심이 배움으로</span><br />자라는 체험 공간</p>
+            <p className="hero-brand-caption"><strong className="hl">호기심이 배움으로</strong><br />자라는 체험 공간</p>
           </div>
           <div className="hero-characters" aria-hidden="true">
             <Image
@@ -100,7 +100,7 @@ export function Hero() {
             <div className="hero-location"><dt>위치안내</dt><dd className="hero-address">{site.address.locality} {site.address.street}</dd></div>
           </dl>
           <nav className="hero-quickLinks" aria-label="교육 안내 바로가기">
-            <Link href="/experience/school"><QuickIcon kind="program" />프로그램</Link>
+            <Link href="/career"><QuickIcon kind="program" />프로그램</Link>
             <a href={`tel:${site.contact.phone}`}><QuickIcon kind="phone" />교육문의</a>
             <Link href="/about/location"><QuickIcon kind="map" />오시는 길</Link>
           </nav>
