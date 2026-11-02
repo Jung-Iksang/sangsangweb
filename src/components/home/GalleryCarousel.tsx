@@ -74,7 +74,7 @@ export function GalleryCarousel({ items, dates }: { items: GalleryCard[]; dates:
               <li key={item.id} className="news-gallery-slide">
                 <Link href={`/community/gallery/${item.id}`} className="news-gallery-card" onFocus={() => { setPaused(true); api?.scrollTo(items.indexOf(item)); }}>
                   <div className="news-gallery-image">
-                    <SmartImage src={item.imageUrl} alt={item.title} fill sizes="(min-width:1680px) 365px, (min-width:901px) 23vw, (min-width:601px) 45vw, 85vw" className="object-cover" />
+                    <SmartImage src={item.imageUrl} alt={item.title} fill sizes="(min-width:2520px) 550px, (min-width:901px) 23vw, (min-width:601px) 45vw, 85vw" className="object-cover" />
                   </div>
                   <h3>{item.title}</h3>
                   <time dateTime={item.createdAt}>{dates[item.id]}</time>

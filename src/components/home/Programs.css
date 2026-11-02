@@ -1,0 +1,11 @@
+/* Signature drone-soccer field: keep its green identity within this section. */
+.programs-field {
+  --color-green: #2f6b23;
+  --color-green-dark: #275a1d;
+  --color-green-soft: #e6efdf;
+  --color-blue: #2f6b23;
+  --color-navy: #275a1d;
+}
+
+.programs-field .program-tag { color: #215eac; }
+

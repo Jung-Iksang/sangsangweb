@@ -4,7 +4,7 @@ export function ScrollTopButton() {
   return (
     <button
       type="button"
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      onClick={() => window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" })}
       className="flex h-8 w-8 items-center justify-center rounded-sm border border-on-ink/25 text-on-ink transition-colors hover:border-on-ink hover:bg-on-ink hover:text-ink"
       aria-label="맨 위로"
     >
