@@ -19,7 +19,7 @@ export async function BoardList({ board, page }: { board: BoardType; page: numbe
 
   return (
     <SubPage path={path} title={boardLabel[board]} description={boardDescription[board]}>
-      <p className="mb-4 text-[14px] text-muted">
+      <p className="mb-4 text-[0.875rem] text-muted">
         총 <strong className="text-ink">{data.total}</strong>건{page > 1 && ` · ${page}페이지`}
       </p>
       {data.items.length === 0 ? (
@@ -29,19 +29,19 @@ export async function BoardList({ board, page }: { board: BoardType; page: numbe
           {data.items.map((p, i) => (
             <li key={p.id} className="border-b border-line">
               <Link href={`${base}/${p.id}`} className="group flex items-center gap-4 px-2 py-5 md:px-4">
-                <span className="hidden w-10 shrink-0 text-center text-[14px] text-muted sm:block">
+                <span className="hidden w-10 shrink-0 text-center text-[0.875rem] text-muted sm:block">
                   {data.total - (page - 1) * POSTS_PER_PAGE - i}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <h2 className="flex items-center gap-2.5 text-[16.5px] font-semibold text-ink group-hover:underline group-hover:decoration-line-strong group-hover:underline-offset-4">
+                  <h2 className="flex items-center gap-2.5 type-list-title text-ink group-hover:underline group-hover:decoration-line-strong group-hover:underline-offset-4">
                     <span className="truncate">{p.title}</span>
                     {p.isNew && (
-                      <span className="shrink-0 text-[11px] font-bold tracking-wide text-red">NEW</span>
+                      <span className="shrink-0 text-[0.6875rem] font-bold tracking-wide text-red">NEW</span>
                     )}
                   </h2>
-                  {p.excerpt && <p className="mt-1 line-clamp-1 text-[14px] text-muted">{p.excerpt}</p>}
+                  {p.excerpt && <p className="type-small mt-1 line-clamp-1 text-muted">{p.excerpt}</p>}
                 </div>
-                <time dateTime={p.createdAt} className="shrink-0 text-[14px] tabular-nums text-muted">
+                <time dateTime={p.createdAt} className="type-small shrink-0 tabular-nums text-muted">
                   {formatDate(p.createdAt)}
                 </time>
               </Link>

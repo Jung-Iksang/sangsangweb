@@ -11,7 +11,7 @@ export function CtaBanner() {
             우리 학교·기관에 맞는 진로체험,
             <br className="hidden sm:block" /> <span className="hl">함께 설계해</span> 보세요
           </h2>
-          <p className="mt-4 text-[16px] leading-relaxed text-muted">프로그램 구성, 일정, 비용까지 담당자가 직접 안내해 드립니다.</p>
+          <p className="mt-4 text-[1rem] leading-relaxed text-muted">프로그램 구성, 일정, 비용까지 담당자가 직접 안내해 드립니다.</p>
         </div>
         <div className="flex shrink-0 flex-wrap gap-3">
           <a href={`tel:${site.contact.phone}`} className="btn btn-primary">

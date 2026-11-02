@@ -1,0 +1,42 @@
+.site-footer { color: var(--color-on-ink); }
+.footer-content { padding-block: 1.5rem .875rem; }
+.footer-main { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: clamp(2rem, 3.2vw, 3rem); }
+.footer-main > * { min-width: 0; }
+.footer-address { margin-top: 0; color: var(--color-on-ink-muted); font-size: .875rem; font-weight: 400; line-height: 1.7; font-style: normal; }
+.footer-contact-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem 1.25rem; margin-top: .5rem; }
+.footer-contact-list > div { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: .5rem; align-items: baseline; }
+.footer-contact-list > .footer-email { grid-column: 1 / -1; }
+.footer-contact-list dd { min-width: 0; color: var(--color-on-ink); font-weight: 500; }
+.footer-contact-list > div:not(.footer-email) dd { font-variant-numeric: tabular-nums; }
+.footer-contact-list a { text-underline-offset: .2rem; text-decoration-color: rgb(245 248 254 / .4); }
+.footer-contact-list a:hover, .footer-contact-list a:focus-visible { text-decoration-line: underline; }
+.footer-heading { color: var(--color-on-ink); font-size: 1rem; font-weight: 600; line-height: 1.5; letter-spacing: -.015em; }
+.footer-actions > a:hover { text-decoration: underline; }
+.footer-bottom { margin-top: 1rem; border-top: 1px solid rgb(245 248 254 / .16); padding-top: .75rem; }
+.footer-business-info { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem 1.25rem; margin-top: .625rem; color: var(--color-on-ink-muted); font-size: .8125rem; font-weight: 400; line-height: 1.55; }
+.footer-business-info > div { display: grid; grid-template-columns: 8.25rem minmax(0, 1fr); gap: .75rem; align-items: baseline; }
+.footer-business-info > div:nth-child(2) { grid-column: 1; grid-row: 2; }
+.footer-business-info > div:nth-child(3) { grid-column: 2; grid-row: 1; }
+.footer-business-info dt { color: var(--color-on-ink-muted); }
+.footer-business-info dd { min-width: 0; color: var(--color-on-ink); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.footer-meta { display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; color: var(--color-on-ink-muted); font-size: .75rem; line-height: 1.6; }
+.footer-meta > p { white-space: nowrap; }
+.footer-actions { display: flex; align-items: center; gap: 1rem; }
+.footer-actions > a { color: var(--color-on-ink); font-size: .8125rem; text-underline-offset: .25rem; }
+.site-footer .footer-actions button { width: 2.5rem; height: 2.5rem; }
+.site-footer :focus-visible { outline-color: var(--color-on-ink); outline-offset: 3px; }
+@media (max-width: 1023px) {
+  .footer-main { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+  .footer-organization { border-top: 1px solid rgb(245 248 254 / .12); padding-top: 1rem; }
+}
+@media (max-width: 599px) {
+  .footer-content { padding-block: 1.5rem 1rem; }
+  .footer-contact-list { column-gap: 1rem; }
+  .footer-business-info { grid-template-columns: minmax(0, 1fr); }
+  .footer-business-info > div:nth-child(2), .footer-business-info > div:nth-child(3) { grid-column: auto; grid-row: auto; }
+  .footer-business-info > div { grid-template-columns: 7.5rem minmax(0, 1fr); gap: .5rem; }
+}
+@media (max-width: 359px) {
+  .footer-contact-list { grid-template-columns: minmax(0, 1fr); }
+  .footer-contact-list > .footer-email { grid-column: auto; }
+}

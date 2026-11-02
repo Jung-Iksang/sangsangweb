@@ -21,7 +21,7 @@ function parse(page: string) {
 
 export async function generateMetadata({ params }: PageProps<"/community/gallery/page/[page]">): Promise<Metadata> {
   const page = parse((await params).page);
-  return pageMetadata({ title: `포토갤러리 ${page}페이지`, description: galleryDescription, path: `/community/gallery/page/${page}` });
+  return pageMetadata({ title: `갤러리 ${page}페이지`, description: galleryDescription, path: `/community/gallery/page/${page}` });
 }
 
 export default async function Page({ params }: PageProps<"/community/gallery/page/[page]">) {

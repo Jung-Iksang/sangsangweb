@@ -9,7 +9,7 @@ export async function NewsBoards() {
   const dates = Object.fromEntries(gallery.map((item) => [item.id, formatDate(item.createdAt)]));
   return (
     <section aria-label="상상마루 소식" className="news-hub">
-      <div className="container-site news-hub-grid">
+      <div className="site-content-frame news-hub-grid">
         <section aria-labelledby="notice-title" className="news-notices">
           <div className="news-panel-head">
             <h2 id="notice-title"><Link href="/community/notice">공지사항</Link></h2>

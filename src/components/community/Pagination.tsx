@@ -6,7 +6,7 @@ export function Pagination({ base, page, totalPages }: { base: string; page: num
   const href = (n: number) => (n === 1 ? base : `${base}/page/${n}`);
   const start = Math.max(1, Math.min(page - 2, totalPages - 4));
   const pages = Array.from({ length: Math.min(5, totalPages) }, (_, i) => start + i);
-  const btn = "flex h-9 min-w-9 items-center justify-center rounded-sm px-2.5 text-[14px] font-medium tabular-nums";
+  const btn = "flex h-9 min-w-9 items-center justify-center rounded-sm px-2.5 text-[0.875rem] font-medium tabular-nums";
   return (
     <nav aria-label="페이지 이동" className="mt-10 flex justify-center">
       <ul className="flex items-center gap-1">

@@ -6,8 +6,9 @@ import { MobileMenu } from "./MobileMenu";
 import { ActiveNav, NavList } from "./MainNav";
 import { LogoLink } from "./LogoLink";
 import { HeaderScrolled } from "./HeaderScrolled";
+import "./Header.css";
 
-/** 상단 네비게이션 — 높이 --header-h · 유동 폭 · 로고 / 메뉴(메가메뉴) / 문의 버튼 */
+/** 기관 안내 48px + 주 메뉴 78px. --header-h는 두 단의 전체 높이입니다. */
 export function Header() {
   return (
     <header
@@ -15,33 +16,39 @@ export function Header() {
       className="sticky top-0 z-50 overflow-x-clip border-b border-line bg-paper transition-shadow data-[scrolled=true]:border-transparent data-[scrolled=true]:shadow-[0_1px_0_var(--color-line),0_6px_16px_rgb(31_30_28/0.04)]"
     >
       <HeaderScrolled />
-      <div className="container-site flex h-[var(--header-h)] items-center justify-between gap-6">
+      <div className="site-utility">
+        <div className="site-header-frame site-utility-inner">
+          <p className="site-utility-brand"><span>{site.legalName}</span><span className="site-utility-message">{site.slogan}</span></p>
+          <nav aria-label="기관 안내 바로가기" className="site-utility-links">
+            <Link href="/community/notice">공지사항</Link>
+            <Link href="/about/location">오시는 길</Link>
+            <a href={`tel:${site.contact.phone}`}>교육문의 <span>{site.contact.phone}</span></a>
+          </nav>
+        </div>
+      </div>
+      <div className="site-header-frame site-navigation-row flex items-center justify-between gap-6">
         <Suspense
           fallback={
             <Link href="/" className="flex shrink-0 items-center" aria-label={`${site.name} 홈`}>
-              <Image src="/logo.png" alt={site.name} width={116} height={37} loading="eager" className="h-[37px] w-[116px] object-contain" />
+              <Image src="/logo.png" alt={site.name} width={150} height={48} loading="eager" className="site-brand-logo object-contain" />
             </Link>
           }
         >
           <LogoLink label={`${site.name} 홈`}>
-            <Image src="/logo.png" alt={site.name} width={116} height={37} loading="eager" className="h-[37px] w-[116px] object-contain" />
+            <Image src="/logo.png" alt={site.name} width={150} height={48} loading="eager" className="site-brand-logo object-contain" />
           </LogoLink>
         </Suspense>
 
-        <nav aria-label="주 메뉴" className="hidden h-full lg:block">
+        <nav aria-label="주 메뉴" className="site-main-nav hidden h-full xl:block">
           <Suspense fallback={<NavList active={null} />}>
             <ActiveNav />
           </Suspense>
         </nav>
 
         <div className="flex items-center gap-2">
-          {/* 1024~1439px 에서는 메뉴 공간 확보를 위해 아이콘만 (글자는 스크린리더용으로 남김) */}
-          <a
-            href={`tel:${site.contact.phone}`}
-            className="btn btn-sm btn-outline hidden sm:inline-flex lg:max-[1439px]:w-10 lg:max-[1439px]:px-0"
-          >
+          <a href={`tel:${site.contact.phone}`} className="site-header-contact btn btn-outline hidden sm:inline-flex">
             <PhoneIcon />
-            <span className="lg:max-[1439px]:sr-only">문의 {site.contact.phone}</span>
+            <span>문의 {site.contact.phone}</span>
           </a>
           <MobileMenu />
         </div>
@@ -61,3 +68,4 @@ export function PhoneIcon({ className = "h-4 w-4" }: { className?: string }) {
     </svg>
   );
 }
+

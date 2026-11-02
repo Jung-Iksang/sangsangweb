@@ -57,7 +57,7 @@ export default async function Page({ params }: PageProps<"/community/[board]/[id
       />
       <ViewCounter id={post.id} />
       <article>
-        <header className="flex flex-wrap items-center gap-3 border-b-2 border-ink pb-4 text-[14px] text-muted">
+        <header className="flex flex-wrap items-center gap-3 border-b-2 border-ink pb-4 text-[0.875rem] text-muted">
           <Link href={base} className="num hover:underline">
             {boardLabel[post.boardType]}
           </Link>
@@ -66,7 +66,7 @@ export default async function Page({ params }: PageProps<"/community/[board]/[id
         </header>
         <div className="prose-post py-10" dangerouslySetInnerHTML={{ __html: post.content }} />
       </article>
-      <nav aria-label="이전·다음 글" className="border-y border-line text-[15px]">
+      <nav aria-label="이전·다음 글" className="border-y border-line text-[0.9375rem]">
         <Neighbor label="다음 글" item={post.next} base={base} />
         <Neighbor label="이전 글" item={post.prev} base={base} />
       </nav>

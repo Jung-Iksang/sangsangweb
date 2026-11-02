@@ -84,7 +84,7 @@ export function HeroSlides({
             alt={s.alt}
             fill
             preload={n === 0}
-            sizes="(min-width:1680px) 840px, (min-width:1024px) 50vw, (min-width:640px) 90vw, calc(100vw - 40px)"
+            sizes="(min-width:2520px) 1140px, (min-width:1024px) 50vw, (min-width:640px) 90vw, calc(100vw - 40px)"
             aria-hidden={n !== i ? true : undefined}
             className={`object-cover transition-opacity duration-[1200ms] ease-in-out ${
               n === i ? "opacity-100" : "opacity-0"
@@ -96,7 +96,7 @@ export function HeroSlides({
       <div className="flex min-h-14 flex-wrap items-center justify-between gap-x-3 gap-y-1 pt-2">
         <p
           aria-live={enabled && !paused && !hover ? "off" : "polite"}
-          className="flex items-center gap-3 text-[13px] font-medium text-body"
+          className="flex items-center gap-3 text-[0.8125rem] font-medium text-body"
         >
           <span aria-hidden className="num">
             {String(i + 1).padStart(2, "0")}

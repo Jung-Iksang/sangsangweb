@@ -7,7 +7,7 @@ const items = [
   { href: "/admin", label: "대시보드", match: (p: string) => p === "/admin" },
   { href: "/admin/posts?board=notice", label: "공지사항 관리", match: (p: string, b: string | null) => p.startsWith("/admin/posts") && b !== "press" },
   { href: "/admin/posts?board=press", label: "보도자료 관리", match: (p: string, b: string | null) => p.startsWith("/admin/posts") && b === "press" },
-  { href: "/admin/gallery", label: "포토갤러리 관리", match: (p: string) => p.startsWith("/admin/gallery") },
+  { href: "/admin/gallery", label: "갤러리 관리", match: (p: string) => p.startsWith("/admin/gallery") },
 ];
 
 export function AdminNav() {

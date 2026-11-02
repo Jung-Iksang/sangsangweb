@@ -10,7 +10,7 @@ const edgeLogoInsets: Record<string, [number, number]> = {
 export function Partners() {
   return (
     <section aria-label="협력 기관" className="border-t border-[#eaeaea] bg-white py-8 md:py-10">
-      <div className="container-site">
+      <div className="site-content-frame">
         <ul className="grid grid-cols-2 items-center gap-x-6 gap-y-6 [--partner-logo-height:3rem] sm:grid-cols-3 md:[--partner-logo-height:3.5rem] lg:grid-cols-6 lg:gap-x-8">
           {partners.map((p) => {
             const [left, right] = edgeLogoInsets[p.src] ?? [0, 0];
@@ -21,7 +21,7 @@ export function Partners() {
                   className="relative w-full overflow-hidden"
                   style={{
                     aspectRatio: `${visibleWidth} / ${p.height}`,
-                    maxWidth: `min(${200 * visibleWidth / p.width}px, calc(var(--partner-logo-height) * ${visibleWidth / p.height}))`,
+                    maxWidth: `min(${12.5 * visibleWidth / p.width}rem, calc(var(--partner-logo-height) * ${visibleWidth / p.height}))`,
                   }}
                 >
                   <Image
@@ -29,7 +29,7 @@ export function Partners() {
                     alt={p.name}
                     width={p.width}
                     height={p.height}
-                    sizes="(min-width: 1440px) 200px, (min-width: 1024px) 14vw, (min-width: 640px) 28vw, 42vw"
+                    sizes="(min-width: 2160px) 300px, (min-width: 1024px) 14vw, (min-width: 640px) 28vw, 42vw"
                     className="absolute top-0 h-full max-w-none"
                     style={{ width: `${100 * p.width / visibleWidth}%`, left: `${-100 * left / visibleWidth}%` }}
                   />

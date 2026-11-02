@@ -20,10 +20,10 @@ export function QuickLinks() {
             <Link href={l.href} className="group flex h-full items-center gap-4 px-4 py-6 transition-colors hover:bg-cream lg:px-7 lg:py-7">
               <span className="min-w-0 flex-1">
                 <span className="num block">{l.no}</span>
-                <span className="mt-1.5 block text-[16px] font-bold text-ink">{l.name}</span>
-                <span className="mt-1 block truncate text-[13px] text-muted">{l.desc}</span>
+                <span className="mt-1.5 block text-[1rem] font-bold text-ink">{l.name}</span>
+                <span className="mt-1 block truncate text-[0.8125rem] text-muted">{l.desc}</span>
               </span>
-              <span aria-hidden className="text-[18px] text-muted transition-transform group-hover:translate-x-1 group-hover:text-green">
+              <span aria-hidden className="text-[1.125rem] text-muted transition-transform group-hover:translate-x-1 group-hover:text-green">
                 →
               </span>
             </Link>

@@ -1,0 +1,28 @@
+/* One horizontal boundary for the header, Hero and main content sections. */
+html:has(#site-header) { --utility-header-h: 3rem; --navigation-header-h: 4.875rem; --header-h: calc(var(--utility-header-h) + var(--navigation-header-h) + 1px); }
+.site-header-frame, .hero-layout, .site-content-frame { width: calc(100% - 3.75rem); max-width: 89.375rem; margin-inline: auto; }
+.site-utility { color: #fff; background: linear-gradient(100deg, #07509f, #1676d2); }
+.site-utility-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; height: var(--utility-header-h); font-size: .8125rem; line-height: 1.5; letter-spacing: 0; }
+.site-utility-brand { display: flex; align-items: center; gap: 1.5rem; min-width: 0; white-space: nowrap; }
+.site-utility-brand > span:first-child { font-weight: 600; }
+.site-utility-message { color: #e5efff; }
+.site-utility-links { display: flex; align-items: center; gap: 1.25rem; flex-shrink: 0; }
+.site-utility-links a { display: inline-flex; align-items: center; gap: .375rem; min-height: var(--utility-header-h); }
+.site-utility-links a:hover { text-decoration: underline; text-underline-offset: .2rem; }
+.public-site .site-utility :focus-visible { outline-color: white; outline-offset: -3px; }
+.site-navigation-row { height: var(--navigation-header-h); }
+.site-brand-logo { width: 8.75rem; height: 2.8rem; }
+.site-main-nav { --type-nav: 1.125rem; }
+.site-main-nav .type-menu-link { font-size: .9375rem; }
+.site-header-contact { height: 2.625rem; min-height: 2.625rem; padding: .5rem 1rem; gap: .5rem; flex-shrink: 0; font-size: .875rem; font-weight: 600; white-space: nowrap; }
+@media (max-width: 1279px) {
+  html:has(#site-header) { --utility-header-h: 2rem; --navigation-header-h: 4rem; }
+  .site-brand-logo { width: 7.5rem; height: 2.4rem; }
+}
+@media (max-width: 799px) {
+  .site-header-frame, .hero-layout, .site-content-frame { width: calc(100% - 1.875rem); }
+}
+@media (max-width: 599px) {
+  .site-utility-inner { gap: .75rem; font-size: .75rem; }
+  .site-utility-message, .site-utility-links > a:not(:last-child), .site-utility-links > a > span { display: none; }
+}

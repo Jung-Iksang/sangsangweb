@@ -45,7 +45,7 @@ export const mainMenu: MenuItem[] = [
     children: [
       { label: "공지사항", href: "/community/notice" },
       { label: "보도자료", href: "/community/press" },
-      { label: "포토갤러리", href: "/community/gallery" },
+      { label: "갤러리", href: "/community/gallery" },
     ],
   },
   { label: "스토어", href: "/store" },

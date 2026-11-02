@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: PageProps<"/community/gallery
   const g = await load(params);
   return pageMetadata({
     title: g.title,
-    description: g.description || `상상마루 포토갤러리 - ${g.title} (${formatDate(g.createdAt)})`,
+    description: g.description || `상상마루 갤러리 - ${g.title} (${formatDate(g.createdAt)})`,
     path: `/community/gallery/${g.id}`,
     image: g.imageUrl.endsWith(".svg") ? null : g.imageUrl,
   });
@@ -49,20 +49,20 @@ export default async function Page({ params }: PageProps<"/community/gallery/[id
           />
         </div>
         <figcaption className="mt-4 flex flex-wrap items-baseline justify-between gap-2">
-          <span className="text-[15px] text-body">{g.description}</span>
-          <time dateTime={g.createdAt} className="text-[14px] text-muted">{formatDate(g.createdAt)}</time>
+          <span className="text-[0.9375rem] text-body">{g.description}</span>
+          <time dateTime={g.createdAt} className="text-[0.875rem] text-muted">{formatDate(g.createdAt)}</time>
         </figcaption>
       </figure>
       <nav aria-label="이전·다음 사진" className="mt-10 grid grid-cols-2 gap-3">
         {g.prev ? (
           <Link href={`${base}/${g.prev.id}`} className="group border-t border-ink py-4">
-            <span className="text-[13px] text-muted">‹ 이전 사진</span>
+            <span className="text-[0.8125rem] text-muted">‹ 이전 사진</span>
             <p className="truncate font-semibold text-ink group-hover:underline group-hover:decoration-line-strong group-hover:underline-offset-4">{g.prev.title}</p>
           </Link>
         ) : <span />}
         {g.next ? (
           <Link href={`${base}/${g.next.id}`} className="group border-t border-ink py-4 text-right">
-            <span className="text-[13px] text-muted">다음 사진 ›</span>
+            <span className="text-[0.8125rem] text-muted">다음 사진 ›</span>
             <p className="truncate font-semibold text-ink group-hover:underline group-hover:decoration-line-strong group-hover:underline-offset-4">{g.next.title}</p>
           </Link>
         ) : <span />}

@@ -26,8 +26,8 @@ export function SubPage({ path, title, description, children }: Props) {
     <>
       <JsonLd data={breadcrumbJsonLd(crumbs)} />
       <section className="border-b border-line bg-cream">
-        <div className="container-read py-12 md:py-20">
-          <nav aria-label="현재 위치" className="mb-8 text-[13px] text-muted">
+        <div className="container-read py-11 md:py-17">
+          <nav aria-label="현재 위치" className="type-caption mb-8 text-muted">
             <ol className="flex flex-wrap items-center gap-2">
               <li>
                 <Link href="/" className="hover:text-ink">홈</Link>
@@ -60,7 +60,7 @@ export function SubPage({ path, title, description, children }: Props) {
                   <Link
                     href={c.href}
                     aria-current={active ? "page" : undefined}
-                    className={`block border-b-2 py-3.5 text-[14.5px] ${active ? "border-green font-semibold text-ink" : "border-transparent text-muted hover:text-ink"}`}
+                    className={`block border-b-2 py-3.5 type-menu-link ${active ? "border-green font-semibold text-ink" : "border-transparent text-muted hover:text-ink"}`}
                   >
                     {c.label}
                   </Link>
@@ -71,11 +71,11 @@ export function SubPage({ path, title, description, children }: Props) {
         </nav>
       )}
 
-      <div className={`container-read py-16 md:py-24 ${section?.children ? "lg:grid lg:grid-cols-[220px_1fr] lg:gap-16" : ""}`}>
+      <div className={`container-read py-14 md:py-20 ${section?.children ? "lg:grid lg:grid-cols-[13.75rem_minmax(0,1fr)] lg:gap-14" : ""}`}>
         {section?.children && (
           <aside className="hidden lg:block">
-            <nav aria-label={`${section.label} 메뉴`} className="sticky top-[calc(var(--header-h)+32px)]">
-              <h2 className="border-b border-ink pb-3 text-[15px] font-bold text-ink">{section.label}</h2>
+            <nav aria-label={`${section.label} 메뉴`} className="sticky top-[calc(var(--header-h)+2rem)]">
+              <h2 className="border-b border-ink pb-3 text-[0.9375rem] font-bold text-ink">{section.label}</h2>
               <ul>
                 {section.children.map((c) => {
                   const active = c.href === activeHref;
@@ -84,7 +84,7 @@ export function SubPage({ path, title, description, children }: Props) {
                       <Link
                         href={c.href}
                         aria-current={active ? "page" : undefined}
-                        className={`flex items-center gap-2.5 py-3.5 text-[15px] transition-colors ${active ? "font-semibold text-ink" : "text-muted hover:text-ink"}`}
+                        className={`flex items-center gap-2.5 py-3.5 type-menu-link transition-colors ${active ? "font-semibold text-ink" : "text-muted hover:text-ink"}`}
                       >
                         <span aria-hidden className={`h-1.5 w-1.5 shrink-0 rounded-full ${active ? "bg-green" : "bg-transparent"}`} />
                         {c.label}
@@ -96,7 +96,7 @@ export function SubPage({ path, title, description, children }: Props) {
             </nav>
           </aside>
         )}
-        <div className="min-w-0">{children}</div>
+        <div className="site-page-content min-w-0">{children}</div>
       </div>
     </>
   );

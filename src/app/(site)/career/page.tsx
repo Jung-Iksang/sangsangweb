@@ -29,8 +29,8 @@ export default function Page() {
                     <Image src={img.src} alt={c.title} fill sizes="80px" className="object-cover" />
                   </div>
                   <div>
-                    <h3 className="text-[16.5px] font-bold text-ink">{c.title}</h3>
-                    <p className="mt-1 text-[14px] leading-relaxed text-muted">{c.desc}</p>
+                    <h3 className="text-[1.03125rem] font-bold text-ink">{c.title}</h3>
+                    <p className="mt-1 text-[0.875rem] leading-relaxed text-muted">{c.desc}</p>
                   </div>
                 </li>
               );
@@ -42,17 +42,17 @@ export default function Page() {
           <ol className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {careerSchools.map((s) => (
               <li key={s.no} id={`school-${s.no}`} className="scroll-mt-28 border-t-2 pt-5" style={{ borderColor: s.color }}>
-                <p className="text-[13px] font-semibold tabular-nums text-muted">
+                <p className="text-[0.8125rem] font-semibold tabular-nums text-muted">
                   {s.no} · {s.tech}
                 </p>
-                <h3 className="mt-1.5 text-[21px] font-bold tracking-tight text-ink">{s.name}</h3>
-                <p className="mt-1 text-[14px] font-medium text-body">{s.tagline}</p>
-                <p className="mt-4 text-[14.5px] leading-relaxed text-body">{s.desc}</p>
-                <p className="mt-3 text-[13px] text-muted">{s.tags.map((t) => `#${t}`).join(" ")}</p>
+                <h3 className="mt-1.5 text-[1.3125rem] font-bold tracking-tight text-ink">{s.name}</h3>
+                <p className="type-small mt-1 font-medium text-body">{s.tagline}</p>
+                <p className="type-body mt-4 text-body">{s.desc}</p>
+                <p className="mt-3 text-[0.8125rem] text-muted">{s.tags.map((t) => `#${t}`).join(" ")}</p>
               </li>
             ))}
           </ol>
-          <Link href="/experience/school" className="btn btn-ghost mt-10 text-[16px]">
+          <Link href="/experience/school" className="btn btn-ghost mt-10 text-[1rem]">
             진로체험 스쿨 자세히 보기 <span aria-hidden>→</span>
           </Link>
         </Block>
@@ -67,8 +67,8 @@ export default function Page() {
                     <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-line">
                       <Image src={img.src} alt={c.title} fill sizes="(min-width:1024px) 220px, 50vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
                     </div>
-                    <h3 className="mt-4 text-[16px] font-bold text-ink">{c.title}</h3>
-                    <p className="mt-1 text-[13.5px] text-muted">{c.desc}</p>
+                    <h3 className="mt-4 text-[1rem] font-bold text-ink">{c.title}</h3>
+                    <p className="mt-1 text-[0.84375rem] text-muted">{c.desc}</p>
                   </Link>
                 </li>
               );
@@ -102,7 +102,7 @@ function Block({ no, id, title, desc, children }: { no: string; id: string; titl
   return (
     <section aria-labelledby={id}>
       <p className="num">{no}</p>
-      <h2 id={id} className="mt-2 text-[24px] font-bold tracking-tight text-ink">{title}</h2>
+      <h2 id={id} className="type-subsection-title mt-2 text-ink">{title}</h2>
       {desc && <p className="mt-2 text-muted">{desc}</p>}
       <div className="mt-8">{children}</div>
     </section>

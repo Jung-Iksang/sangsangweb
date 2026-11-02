@@ -23,15 +23,15 @@ export function ProgramPage({ program: p }: { program: Program }) {
       <article className="space-y-20">
         <div>
           <div className="relative aspect-[16/8] overflow-hidden rounded-md bg-line">
-            <Image src={hero.src} alt={`${p.title} 활동 모습`} fill priority sizes="(min-width:1024px) 880px, 100vw" className="object-cover" />
+            <Image src={hero.src} alt={`${p.title} 활동 모습`} fill priority sizes="(min-width:1024px) 55rem, 100vw" className="object-cover" />
             {p.badge && (
-              <span className="absolute left-4 top-4 rounded-sm border border-line bg-white px-2.5 py-1 text-[12px] font-bold text-ink">
+              <span className="absolute left-4 top-4 rounded-sm border border-line bg-white px-2.5 py-1 text-[0.75rem] font-bold text-ink">
                 {p.badge}
               </span>
             )}
           </div>
 
-          <div className="mt-12 space-y-4 text-[17px] leading-[1.9] text-body">
+          <div className="type-reading mt-12 space-y-4 text-body">
             {p.intro.map((t) => (
               <p key={t}>{t}</p>
             ))}
@@ -42,10 +42,10 @@ export function ProgramPage({ program: p }: { program: Program }) {
               {p.highlights.map((h) => (
                 <div key={h.k} className="py-6 sm:px-6 sm:first:pl-0">
                   <dt className="sr-only">{h.v}</dt>
-                  <dd className="text-[28px] font-extrabold tracking-tight text-green">
+                  <dd className="text-[1.75rem] font-extrabold tracking-tight text-green">
                     <AnimatedStat value={h.k} />
                   </dd>
-                  <dd className="mt-1.5 text-[13.5px] leading-snug text-muted">{h.v}</dd>
+                  <dd className="mt-1.5 text-[0.84375rem] leading-snug text-muted">{h.v}</dd>
                 </div>
               ))}
             </dl>
@@ -57,7 +57,7 @@ export function ProgramPage({ program: p }: { program: Program }) {
             {p.features.map((f, i) => (
               <li key={f} className="flex gap-5 border-b border-line py-4">
                 <span className="num pt-1">{String(i + 1).padStart(2, "0")}.</span>
-                <span className="text-[16.5px] font-medium text-ink">{f}</span>
+                <span className="type-body font-medium text-ink">{f}</span>
               </li>
             ))}
           </ol>
@@ -66,7 +66,7 @@ export function ProgramPage({ program: p }: { program: Program }) {
         <Block id="targets" no={next()} title="대상">
           <ul className="flex flex-wrap gap-2">
             {p.targets.map((t) => (
-              <li key={t} className="rounded-sm border border-line-strong bg-white px-3.5 py-2 text-[14.5px] font-medium text-ink">
+              <li key={t} className="rounded-sm border border-line-strong bg-white px-3.5 py-2 text-[0.90625rem] font-medium text-ink">
                 {t}
               </li>
             ))}
@@ -77,7 +77,7 @@ export function ProgramPage({ program: p }: { program: Program }) {
           <Block key={s.title} id={`section-${si}`} no={next()} title={s.title}>
             <dl className="border-t border-ink">
               {s.items.map((d) => (
-                <div key={d.label} className={`border-b border-line py-4 ${d.value ? "grid gap-1 sm:grid-cols-[200px_1fr] sm:gap-8" : ""}`}>
+                <div key={d.label} className={`border-b border-line py-4 ${d.value ? "grid gap-1 sm:grid-cols-[12.5rem_1fr] sm:gap-8" : ""}`}>
                   <dt className="font-bold text-ink">{d.label}</dt>
                   {d.value && <dd className="leading-relaxed text-body">{d.value}</dd>}
                 </div>
@@ -89,9 +89,9 @@ export function ProgramPage({ program: p }: { program: Program }) {
         {p.table && (
           <Block id="table" no={next()} title={p.table.caption}>
             <div className="overflow-x-auto border-t border-ink">
-              <table className="w-full min-w-[560px] text-left text-[14.5px]">
+              <table className="w-full min-w-[35rem] text-left text-[0.90625rem]">
                 <caption className="sr-only">{p.table.caption}</caption>
-                <thead className="text-[13px] text-muted">
+                <thead className="text-[0.8125rem] text-muted">
                   <tr className="border-b border-line-strong">
                     {p.table.columns.map((c) => (
                       <th key={c} scope="col" className="whitespace-nowrap py-3 pr-4 font-semibold">
@@ -128,9 +128,9 @@ export function ProgramPage({ program: p }: { program: Program }) {
                   <li key={ph.name}>
                     <figure>
                       <div className="relative aspect-[4/3] overflow-hidden rounded-md bg-line">
-                        <Image src={img.src} alt={`${p.title} 사진 — ${ph.alt}`} fill sizes="(min-width:1024px) 290px, 50vw" className="object-cover" />
+                        <Image src={img.src} alt={`${p.title} 사진 — ${ph.alt}`} fill sizes="(min-width:1024px) 18.125rem, 50vw" className="object-cover" />
                       </div>
-                      <figcaption className="mt-3 text-[13px] leading-snug text-muted">{ph.alt}</figcaption>
+                      <figcaption className="mt-3 text-[0.8125rem] leading-snug text-muted">{ph.alt}</figcaption>
                     </figure>
                   </li>
                 );
@@ -143,7 +143,7 @@ export function ProgramPage({ program: p }: { program: Program }) {
           <ul className="flex flex-wrap gap-6">
             {p.links.map((l) => (
               <li key={l.href}>
-                <Link href={l.href} {...(l.external ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="btn btn-ghost text-[16px]">
+                <Link href={l.href} {...(l.external ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="btn btn-ghost text-[1rem]">
                   {l.label} <span aria-hidden>→</span>
                 </Link>
               </li>
@@ -167,7 +167,7 @@ export function ProgramPage({ program: p }: { program: Program }) {
         </section>
 
         <nav aria-labelledby="related">
-          <h2 id="related" className="border-b border-ink pb-4 text-[17px] font-bold text-ink">
+          <h2 id="related" className="border-b border-ink pb-4 text-[1.0625rem] font-bold text-ink">
             다른 {categoryLabel[p.category]}
           </h2>
           <ul>
@@ -175,8 +175,8 @@ export function ProgramPage({ program: p }: { program: Program }) {
               <li key={s.slug} className="border-b border-line">
                 <Link href={`/${s.category}/${s.slug}`} className="group flex items-center gap-6 py-5">
                   <span className="min-w-0 flex-1">
-                    <span className="block text-[17px] font-bold text-ink group-hover:underline group-hover:decoration-line-strong group-hover:underline-offset-4">{s.title}</span>
-                    <span className="mt-1 block truncate text-[14px] text-muted">{s.summary}</span>
+                    <span className="block text-[1.0625rem] font-bold text-ink group-hover:underline group-hover:decoration-line-strong group-hover:underline-offset-4">{s.title}</span>
+                    <span className="mt-1 block truncate text-[0.875rem] text-muted">{s.summary}</span>
                   </span>
                   <span aria-hidden className="text-muted transition-transform group-hover:translate-x-0.5">→</span>
                 </Link>
@@ -193,7 +193,7 @@ function Block({ id, no, title, children }: { id: string; no: string; title: str
   return (
     <section aria-labelledby={id}>
       <p className="num">{no}</p>
-      <h2 id={id} className="mb-6 mt-2 text-[24px] font-bold tracking-tight text-ink">
+      <h2 id={id} className="type-subsection-title mb-6 mt-2 text-ink">
         {title}
       </h2>
       {children}

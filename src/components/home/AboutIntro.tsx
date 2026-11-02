@@ -36,7 +36,7 @@ export function AboutIntro() {
 
   return (
     <AboutIntroReveal>
-      <div className="container-site about-intro-grid">
+      <div className="site-content-frame about-intro-grid">
 
         {/* =====================================================
             1. 왼쪽 사진
@@ -44,9 +44,9 @@ export function AboutIntro() {
 
         <div
           className="about-intro-visual"
-          data-about-reveal
+          data-reveal-item
         >
-          {/* 사진 뒤 컬러 배경 */}
+          {/* 사진 뒤의 연한 회색 오프셋 레이어 */}
 
           <div
             className="about-intro-backdrop"
@@ -61,19 +61,10 @@ export function AboutIntro() {
               alt="상상마루 진로캠프를 수료한 학생들의 단체사진"
               width={img.width}
               height={img.height}
-              sizes="
-                (min-width: 1680px) 660px,
-                (min-width: 1024px) 43vw,
-                90vw
-              "
+              sizes="(min-width:1550px) 708px, (min-width:1024px) 46vw, (min-width:768px) 688px, calc(100vw - 48px)"
             />
           </div>
 
-          {/* 사진 하단 설명 */}
-
-          <p className="about-intro-photo-caption">
-            아이들의 호기심이 가능성으로 자라도록.
-          </p>
         </div>
 
         {/* =====================================================
@@ -87,16 +78,16 @@ export function AboutIntro() {
           <h2
             id="about-title"
             className="about-intro-title"
-            data-about-reveal
+            data-reveal-item
           >
-            <span>상상마루</span>는
+            <span>상상마루는</span>
           </h2>
 
           {/* 소개 문구 */}
 
           <p
             className="about-intro-lead"
-            data-about-reveal
+            data-reveal-item
           >
             2012년부터,
             <br />
@@ -107,7 +98,7 @@ export function AboutIntro() {
 
           <div
             className="about-intro-description"
-            data-about-reveal
+            data-reveal-item
           >
             <p>
               창의융합교육연구회로 시작한 상상마루는
@@ -124,7 +115,7 @@ export function AboutIntro() {
           </div>
 
           {/* =================================================
-              3. 통계 + 자동 연혁
+              3. 연혁 및 통계
              ================================================= */}
 
           <AboutIntroStats

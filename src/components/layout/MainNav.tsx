@@ -12,8 +12,8 @@ export function ActiveNav() {
   return <NavList active={active} />;
 }
 
-/** 1차 메뉴 칸 폭 (1440px 에서 150px) */
-const CELL = "clamp(104px, 10.4vw, 150px)";
+/** Equal menu cells; the header owns the navigation typography. */
+const CELL = "clamp(6.5rem, 9vw, 8.75rem)";
 /** 마우스가 메뉴 밖으로 나간 뒤 닫힐 때까지 기다리는 시간 — 대각선으로 움직일 때 깜빡임 방지 */
 const CLOSE_DELAY = 150;
 
@@ -22,7 +22,7 @@ const CLOSE_DELAY = 150;
  * - 1차 칸: 폭 고정 · 글자 가운데 · 헤더 높이 전체가 링크
  * - 2행 grid: 1행 1차 링크, 2행 하위 목록(각 칸 subgrid) + 전폭 배경판. 가장 긴 목록에 맞춰 모든 칸 높이가 같다
  * - 여닫기는 JS 상태: 마우스 들어오면 열고, 나가면 잠깐 뒤 닫음. 키보드 포커스로 열고 Esc·링크 클릭으로 닫음
- * - ul 높이는 헤더 높이(--header-h)로 고정, 각 칸(li)은 마우스를 무시하고 링크·하위 목록만 반응
+ * - ul 높이는 주 메뉴 높이(--navigation-header-h)로 고정, 각 칸(li)은 마우스를 무시하고 링크·하위 목록만 반응
  *   → 닫혀 있을 때 헤더 아래로 넘친 칸 영역이 본문 마우스·클릭을 가로채지 않음
  */
 export function NavList({ active }: { active: string | null }) {
@@ -43,7 +43,7 @@ export function NavList({ active }: { active: string | null }) {
 
   return (
     <ul
-      className="grid h-full grid-rows-[var(--header-h)_auto]"
+      className="grid h-full grid-rows-[var(--navigation-header-h)_auto]"
       style={{ gridTemplateColumns: `repeat(${mainMenu.length}, ${CELL})` }}
       onMouseEnter={show}
       onMouseLeave={() => hide()}
@@ -85,7 +85,9 @@ export function NavList({ active }: { active: string | null }) {
             <Link
               href={item.href}
               aria-current={isActive ? "true" : undefined}
-              className="pointer-events-auto flex items-center justify-center whitespace-nowrap text-[calc(20px-1pt)] font-semibold leading-none tracking-tight text-ink"
+              aria-expanded={open}
+              aria-controls={`site-submenu-${n}`}
+              className="pointer-events-auto flex items-center justify-center whitespace-nowrap type-nav text-ink"
             >
               <span
                 className={`relative flex h-full items-center after:absolute after:inset-x-0 after:bottom-0 after:h-[2px] after:origin-left after:bg-green after:transition-transform after:duration-300 ${
@@ -95,12 +97,12 @@ export function NavList({ active }: { active: string | null }) {
                 {item.label}
               </span>
             </Link>
-            <ul className={`pointer-events-auto py-6 transition-[opacity,visibility,background-color] duration-150 group-hover/item:bg-cream ${vis}`}>
+            <ul id={`site-submenu-${n}`} className={`pointer-events-auto py-6 transition-[opacity,visibility,background-color] duration-150 group-hover/item:bg-cream ${vis}`}>
               {children.map((child) => (
                 <li key={child.href}>
                   <Link
                     href={child.href}
-                    className="block text-balance px-2 py-2 text-center text-[14.5px] font-medium leading-5 text-body decoration-green underline-offset-4 hover:text-ink hover:underline"
+                    className="block text-balance px-2 py-2 text-center type-menu-link text-body decoration-green underline-offset-4 hover:text-ink hover:underline"
                   >
                     {child.label}
                   </Link>

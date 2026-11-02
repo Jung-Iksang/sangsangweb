@@ -35,7 +35,7 @@ export function SectionHead({
             href={moreHref}
             className={
               dark
-                ? "whitespace-nowrap text-[14px] font-semibold text-white underline decoration-white/40 underline-offset-[5px] transition-colors hover:decoration-white"
+                ? "whitespace-nowrap text-[0.875rem] font-semibold text-white underline decoration-white/40 underline-offset-[0.3125rem] transition-colors hover:decoration-white"
                 : "link-more"
             }
           >
@@ -48,7 +48,7 @@ export function SectionHead({
         {title}
       </h2>
       {desc && (
-        <p className={`mt-3 max-w-2xl text-[17px] leading-relaxed ${dark ? "text-white/75" : "text-muted"}`}>{desc}</p>
+        <p className={`type-reading mt-3 max-w-2xl ${dark ? "text-white/75" : "text-muted"}`}>{desc}</p>
       )}
     </div>
   );

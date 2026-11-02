@@ -28,7 +28,7 @@ export default function Page() {
           <div>
             <p className="num">{site.store.platform}</p>
             <h2 className="t-h2 mt-2">{site.store.name}</h2>
-            <p className="mt-4 text-[16.5px] leading-[1.85] text-body">
+            <p className="mt-4 text-[1.03125rem] leading-[1.85] text-body">
               상상마루샵은 숨겨진 백제 문화재 속에서 백제의 정서를 담아낸 전통과 문화를 널리 알리기 위하여, 교육 콘텐츠·교구재 개발에 앞장서고 있습니다.
               국립부여박물관과 국립공주박물관 문화상품점에도 입점해 있습니다.
             </p>
@@ -53,7 +53,7 @@ export default function Page() {
 
         <section aria-labelledby="products">
           <p className="num">01</p>
-          <h2 id="products" className="mb-8 mt-2 text-[24px] font-bold tracking-tight text-ink">대표 상품 · 체험 키트</h2>
+          <h2 id="products" className="mb-8 mt-2 text-[1.5rem] font-bold tracking-tight text-ink">대표 상품 · 체험 키트</h2>
           <ul className="grid gap-x-6 gap-y-10 sm:grid-cols-3">
             {products.map((p) => {
               const img = photos[p.photo];
@@ -62,18 +62,18 @@ export default function Page() {
                   <div className="relative aspect-[4/3] overflow-hidden rounded-md bg-line">
                     <Image src={img.src} alt={p.title} fill sizes="(min-width:640px) 290px, 100vw" className="object-cover" />
                   </div>
-                  <h3 className="mt-4 text-[16px] font-bold text-ink">{p.title}</h3>
-                  <p className="mt-1 text-[14px] text-muted">{p.desc}</p>
+                  <h3 className="mt-4 text-[1rem] font-bold text-ink">{p.title}</h3>
+                  <p className="mt-1 text-[0.875rem] text-muted">{p.desc}</p>
                 </li>
               );
             })}
           </ul>
-          <Link href="/experience/culture" className="btn btn-ghost mt-10 text-[16px]">
+          <Link href="/experience/culture" className="btn btn-ghost mt-10 text-[1rem]">
             문화예술체험 프로그램 보기 <span aria-hidden>→</span>
           </Link>
         </section>
 
-        <p className="border-t border-line pt-6 text-[13px] text-muted">
+        <p className="border-t border-line pt-6 text-[0.8125rem] text-muted">
           {site.legalName} · 대표 {site.business.ceo} · 통신판매업신고 {site.business.mailOrderNo} · 사업자등록번호 {site.business.registrationNo}
         </p>
       </div>

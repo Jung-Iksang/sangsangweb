@@ -1,10 +1,12 @@
 import localFont from "next/font/local";
+import { DroneBall } from "@/components/ui/DroneBall";
+import "./Programs.css";
 import { photos } from "@/content/photos.generated";
 import { categoryLabel, programs } from "@/content/programs";
-import { DroneBall } from "@/components/ui/DroneBall";
 import { ProgramSlider, type ProgramCard } from "./ProgramSlider";
 
 const programFont = localFont({
+  variable: "--font-program-display",
   src: [
     { path: "../../../public/fonts/paperlogy/Paperlogy-4Regular.woff2", weight: "400", style: "normal" },
     { path: "../../../public/fonts/paperlogy/Paperlogy-5Medium.woff2", weight: "500", style: "normal" },
@@ -14,29 +16,25 @@ const programFont = localFont({
   preload: false,
 });
 
-/** 상상마루 프로그램 — 일러스트 드론축구장 위를 흐르는 흰 카드 (9개 모두 서버 HTML 에 포함) */
 export function Programs() {
-  const cards: ProgramCard[] = programs.map((p) => ({
-    href: `/${p.category}/${p.slug}`,
-    title: p.title,
-    category: categoryLabel[p.category],
-    badge: p.badge,
-    image: photos[p.image].src,
-    target: p.card.target,
-    period: p.card.period,
-    tags: p.keywords.slice(0, 2),
+  const cards: ProgramCard[] = programs.map((program) => ({
+    href: `/${program.category}/${program.slug}`,
+    title: program.title,
+    category: categoryLabel[program.category],
+    badge: program.badge,
+    image: photos[program.image].src,
+    target: program.card.target,
+    period: program.card.period,
+    tags: program.keywords.slice(0, 2),
   }));
   return (
-    <section aria-labelledby="programs-title" className="turf relative overflow-hidden py-8">
+    <section aria-labelledby="programs-title" className="programs-field turf relative isolate overflow-hidden py-12 md:py-16">
       <FieldIllustration />
-      <div className={`container-site relative ${programFont.className}`}>
-        <ProgramSlider cards={cards} />
-      </div>
+      <div className={`site-content-frame relative z-10 ${programFont.className} ${programFont.variable}`}><ProgramSlider cards={cards} /></div>
     </section>
   );
 }
 
-/* ── 일러스트 타일 (SVG data URI) ── */
 const svgUrl = (svg: string) => `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
 /** 풀잎 — 듬성듬성 흩어진 작은 풀 */
 const TUFTS = svgUrl(
@@ -65,19 +63,19 @@ function FieldIllustration() {
       <div className="absolute inset-0 hidden md:block">
         {/* 그물 펜스: 가장자리 띠(가운데를 mask 로 비움) + 안쪽 테두리 */}
         <div
-          className="absolute inset-3 rounded-[28px] p-4"
+          className="absolute inset-3 rounded-[1.75rem] p-4"
           style={{
             backgroundImage: MESH,
             mask: "linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0)",
             WebkitMask: "linear-gradient(#000 0 0) content-box xor, linear-gradient(#000 0 0)",
           }}
         />
-        <div className="absolute inset-3 rounded-[28px] border-2 border-white/20" />
-        <div className="absolute inset-7 rounded-[20px] border-[3px] border-white/35" />
+        <div className="absolute inset-3 rounded-[1.75rem] border-2 border-white/20" />
+        <div className="absolute inset-7 rounded-[1.25rem] border-[3px] border-white/35" />
 
         {/* 경기장 선 (펜스 안쪽) */}
         <div className="absolute inset-y-7 left-1/2 w-[3px] -translate-x-1/2 bg-white/30" />
-        <svg viewBox="0 0 200 200" className="absolute left-1/2 top-1/2 h-[clamp(220px,24vw,340px)] w-[clamp(220px,24vw,340px)] -translate-x-1/2 -translate-y-1/2" fill="none">
+        <svg viewBox="0 0 200 200" className="absolute left-1/2 top-1/2 h-[clamp(13.75rem,24vw,21.25rem)] w-[clamp(13.75rem,24vw,21.25rem)] -translate-x-1/2 -translate-y-1/2" fill="none">
           <circle cx="100" cy="100" r="97" stroke={line} strokeWidth="3" vectorEffect="non-scaling-stroke" />
           <circle cx="100" cy="100" r="6" fill="rgb(255 255 255 / 0.4)" />
         </svg>
@@ -108,7 +106,7 @@ function FieldIllustration() {
               {/* 링 골대: 링(측면에서 본 타원) + 기둥 + 받침 그림자 */}
               <svg
                 viewBox="0 0 44 110"
-                className={`absolute top-1/2 hidden h-[110px] w-11 -translate-y-[62%] xl:block ${L ? "left-7 -translate-x-1/2" : "right-7 translate-x-1/2"}`}
+                className={`absolute top-1/2 hidden h-[6.875rem] w-11 -translate-y-[62%] xl:block ${L ? "left-7 -translate-x-1/2" : "right-7 translate-x-1/2"}`}
                 fill="none"
               >
                 <ellipse cx="22" cy="100" rx="13" ry="4" fill="rgb(0 0 0 / 0.18)" />
@@ -122,16 +120,16 @@ function FieldIllustration() {
         })}
 
         {/* 날아다니는 드론축구공 + 점선 비행 궤적 (카드가 없는 위·아래 빈 곳) */}
-        <svg viewBox="0 0 400 80" className="absolute right-[18%] top-[90px] h-[72px] w-[360px]" fill="none">
+        <svg viewBox="0 0 400 80" className="absolute right-[18%] top-[5.625rem] h-[4.5rem] w-[22.5rem]" fill="none">
           <path d="M8 70 C 120 72, 200 10, 330 30" stroke="rgb(255 255 255 / 0.45)" strokeWidth="2" strokeDasharray="1 7" strokeLinecap="round" />
         </svg>
-        <span className="absolute right-[calc(18%-12px)] top-[100px] h-9 w-9 rotate-12">
+        <span className="absolute right-[calc(18%-0.75rem)] top-[6.25rem] h-9 w-9 rotate-12">
           <DroneBall />
         </span>
-        <svg viewBox="0 0 400 80" className="absolute bottom-6 left-[20%] h-[72px] w-[360px]" fill="none">
+        <svg viewBox="0 0 400 80" className="absolute bottom-6 left-[20%] h-[4.5rem] w-[22.5rem]" fill="none">
           <path d="M392 12 C 280 8, 200 70, 70 52" stroke="rgb(255 255 255 / 0.45)" strokeWidth="2" strokeDasharray="1 7" strokeLinecap="round" />
         </svg>
-        <span className="absolute bottom-[42px] left-[calc(20%+36px)] h-8 w-8 -rotate-12">
+        <span className="absolute bottom-[2.625rem] left-[calc(20%+2.25rem)] h-8 w-8 -rotate-12">
           <DroneBall />
         </span>
       </div>

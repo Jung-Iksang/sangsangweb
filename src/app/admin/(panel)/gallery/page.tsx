@@ -6,7 +6,7 @@ import { requireAdmin } from "@/lib/auth";
 // 관리자 화면: 매 요청 서버 렌더링 (DB 최신값 · 로그인 확인)
 export const instant = false;
 
-export const metadata = { title: "포토갤러리 관리" };
+export const metadata = { title: "갤러리 관리" };
 
 export default async function AdminGallery() {
   await requireAdmin();
@@ -14,7 +14,7 @@ export default async function AdminGallery() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-[26px] font-bold text-ink">포토갤러리 관리</h1>
+        <h1 className="text-[26px] font-bold text-ink">갤러리 관리</h1>
         <p className="mt-1 text-muted">총 {items.length}장 · 사진 제목은 검색 결과와 이미지 설명(alt)으로 쓰이니 구체적으로 적어 주세요.</p>
       </div>
       <GalleryUploader />

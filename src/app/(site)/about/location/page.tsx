@@ -37,10 +37,10 @@ export default function Page() {
 
         <section aria-labelledby="contact-info">
           <p className="num">01</p>
-          <h2 id="contact-info" className="mb-6 mt-2 text-[24px] font-bold tracking-tight text-ink">연락처</h2>
+          <h2 id="contact-info" className="type-subsection-title mb-6 mt-2 text-ink">연락처</h2>
           <dl className="border-t border-ink">
             {info.map((i) => (
-              <div key={i.label} className="grid gap-1 border-b border-line py-4 sm:grid-cols-[120px_1fr] sm:gap-8">
+              <div key={i.label} className="grid gap-1 border-b border-line py-4 sm:grid-cols-[7.5rem_1fr] sm:gap-8">
                 <dt className="font-bold text-ink">{i.label}</dt>
                 <dd className="text-body">
                   {i.href ? <a href={i.href} className="underline decoration-line-strong underline-offset-4 hover:text-green">{i.value}</a> : i.value}
@@ -52,10 +52,10 @@ export default function Page() {
 
         <section aria-labelledby="transport">
           <p className="num">02</p>
-          <h2 id="transport" className="mb-6 mt-2 text-[24px] font-bold tracking-tight text-ink">교통 안내</h2>
+          <h2 id="transport" className="type-subsection-title mb-6 mt-2 text-ink">교통 안내</h2>
           <dl className="border-t border-ink">
             {transport.map((t) => (
-              <div key={t.label} className="grid gap-1 border-b border-line py-4 sm:grid-cols-[120px_1fr] sm:gap-8">
+              <div key={t.label} className="grid gap-1 border-b border-line py-4 sm:grid-cols-[7.5rem_1fr] sm:gap-8">
                 <dt className="font-bold text-ink">{t.label}</dt>
                 <dd className="text-body">{t.value}</dd>
               </div>

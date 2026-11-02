@@ -17,7 +17,7 @@ export default function Page() {
   return (
     <SubPage path="/about/greeting" title="인사말" description={`${site.slogan}, ${site.tagline} ${site.name}입니다.`}>
       <div className="grid gap-14 lg:grid-cols-[1fr_280px]">
-        <div className="text-[17px] leading-[1.9] text-body">
+        <div className="type-reading text-body">
           <p className="t-h2 !leading-snug">{greeting.lead}</p>
           <div className="mt-8 space-y-5">
             {greeting.body.map((t) => (
@@ -26,10 +26,10 @@ export default function Page() {
           </div>
 
           <figure className="my-14 border-y border-line py-10">
-            <blockquote className="text-[22px] font-bold leading-relaxed tracking-tight text-ink">
+            <blockquote className="text-[1.375rem] font-bold leading-relaxed tracking-tight text-ink">
               “<span className="hl">{greeting.quote.text}</span>”
             </blockquote>
-            <figcaption className="mt-4 text-[13.5px] text-muted">
+            <figcaption className="mt-4 text-[0.84375rem] text-muted">
               {greeting.quote.by} · <span lang="en">{greeting.quote.en}</span>
             </figcaption>
           </figure>
@@ -38,14 +38,14 @@ export default function Page() {
             {greeting.sections.map((s, i) => (
               <section key={s.title}>
                 <p className="num">{String(i + 1).padStart(2, "0")}</p>
-                <h2 className="mt-2 text-[22px] font-bold tracking-tight text-ink">{s.title}</h2>
+                <h2 className="type-subsection-title mt-2 text-ink">{s.title}</h2>
                 <p className="mt-3">{s.text}</p>
               </section>
             ))}
           </div>
 
           <p className="mt-14">{greeting.closing}</p>
-          <p className="mt-6 border-t border-line pt-6 text-right text-[18px] font-bold text-ink">{greeting.signature}</p>
+          <p className="mt-6 border-t border-line pt-6 text-right text-[1.125rem] font-bold text-ink">{greeting.signature}</p>
         </div>
         <div className="relative hidden aspect-[3/4] self-start overflow-hidden rounded-md bg-line lg:block">
           <Image src={img.src} alt="상상마루 캠프에 참가한 학생들" fill sizes="280px" className="object-cover" />

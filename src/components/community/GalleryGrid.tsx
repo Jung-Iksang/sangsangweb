@@ -13,7 +13,7 @@ export async function GalleryGrid({ page }: { page: number }) {
   if (page > 1 && page > data.totalPages) notFound();
   const base = "/community/gallery";
   return (
-    <SubPage path={page === 1 ? base : `${base}/page/${page}`} title="포토갤러리" description={galleryDescription}>
+    <SubPage path={page === 1 ? base : `${base}/page/${page}`} title="갤러리" description={galleryDescription}>
       {data.items.length === 0 ? (
         <p className="border-y border-line py-20 text-center text-muted">등록된 사진이 없습니다.</p>
       ) : (
@@ -27,12 +27,12 @@ export async function GalleryGrid({ page }: { page: number }) {
                     alt={g.title}
                     fill
                     priority={i < 3}
-                    sizes="(min-width:1024px) 290px, (min-width:768px) 33vw, 50vw"
+                    sizes="(min-width:1024px) 18.125rem, (min-width:768px) 33vw, 50vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                   />
                 </div>
-                <h2 className="mt-4 truncate text-[15.5px] font-bold text-ink group-hover:underline group-hover:decoration-line-strong group-hover:underline-offset-4">{g.title}</h2>
-                <time dateTime={g.createdAt} className="text-[13px] text-muted">{formatDate(g.createdAt)}</time>
+                <h2 className="type-list-title mt-4 truncate text-ink group-hover:underline group-hover:decoration-line-strong group-hover:underline-offset-4">{g.title}</h2>
+                <time dateTime={g.createdAt} className="type-caption text-muted">{formatDate(g.createdAt)}</time>
               </Link>
             </li>
           ))}

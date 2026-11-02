@@ -87,7 +87,7 @@ export function YearTicker({
           </button>
         )}
       </span>
-      <span className="mt-1.5 block min-h-[2.8em] overflow-hidden text-[12.5px] font-normal leading-snug tracking-normal text-muted md:text-[13px]">
+      <span className="mt-1.5 block min-h-[2.8em] overflow-hidden text-[0.78125rem] font-normal leading-snug tracking-normal text-muted md:text-[0.8125rem]">
         <span key={cur.year} className="tick-up line-clamp-2">
           {cur.text}
         </span>

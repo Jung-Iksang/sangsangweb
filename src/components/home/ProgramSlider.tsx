@@ -146,7 +146,7 @@ export function ProgramSlider({ cards }: { cards: ProgramCard[] }) {
   return (
     <div
       ref={rootRef}
-      className="grid grid-cols-[minmax(0,1fr)] grid-rows-[1fr_auto_1fr]"
+      className="grid grid-cols-[minmax(0,1fr)] items-start"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       onFocus={(e) => {
@@ -171,7 +171,7 @@ export function ProgramSlider({ cards }: { cards: ProgramCard[] }) {
                 type="button"
                 onClick={() => setPaused((p) => !p)}
                 aria-label={paused ? "프로그램 자동 흐름 재생" : "프로그램 자동 흐름 일시정지"}
-                className="flex h-11 w-11 items-center justify-center rounded-btn border border-white/35 text-white transition-colors hover:border-white hover:bg-white hover:text-green"
+                className="flex h-11 w-11 items-center justify-center rounded-btn border border-white/35 text-white transition-colors hover:border-white hover:bg-white hover:text-navy"
               >
                 {paused ? (
                   <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="currentColor" aria-hidden>
@@ -197,34 +197,34 @@ export function ProgramSlider({ cards }: { cards: ProgramCard[] }) {
               key={c.href}
               aria-roledescription="slide"
               aria-label={`${i + 1} / ${n}`}
-              className="min-w-0 shrink-0 grow-0 basis-[85%] pl-6 sm:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-1/5"
+              className="min-w-0 shrink-0 grow-0 basis-full pl-6 sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
             >
               <Link
                 href={c.href}
-                className="group block h-full overflow-hidden rounded-md bg-white transition-[translate,box-shadow] duration-300 ease-out hover:shadow-lift focus-visible:shadow-lift motion-safe:hover:-translate-y-1.5 motion-safe:focus-visible:-translate-y-1.5"
+                className="program-card group block h-full overflow-hidden rounded-md bg-white transition-[translate,box-shadow] duration-300 ease-out hover:shadow-lift focus-visible:shadow-lift motion-safe:hover:-translate-y-1.5 motion-safe:focus-visible:-translate-y-1.5"
               >
                 <div className="relative aspect-[3/2] overflow-hidden bg-line">
                   <Image
                     src={c.image}
                     alt={c.title}
                     fill
-                    sizes="(min-width:1536px) 20vw, (min-width:1280px) 25vw, (min-width:1024px) 33vw, (min-width:640px) 50vw, 85vw"
+                    sizes="(min-width:1280px) 25vw, (min-width:1024px) 33vw, (min-width:640px) 50vw, calc(100vw - 30px)"
                     className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                   />
-                  <span className="absolute bottom-3 left-3 rounded-sm bg-ink/85 px-2.5 py-1 text-[12px] font-medium text-white">
+                  <span className="absolute bottom-3 left-3 rounded-sm bg-ink/85 px-2.5 py-1 type-caption font-medium text-white">
                     {c.category}
                   </span>
                   {c.badge && (
-                    <span className="absolute right-3 top-3 rounded-sm border border-line bg-white px-2.5 py-1 text-[12px] font-medium text-ink">
+                    <span className="absolute right-3 top-3 rounded-sm border border-line bg-white px-2.5 py-1 type-caption font-medium text-ink">
                       {c.badge}
                     </span>
                   )}
                 </div>
-                <div className="p-6">
-                  <h3 className="truncate text-[19px] font-medium tracking-tight text-ink group-hover:underline group-hover:decoration-line-strong group-hover:underline-offset-4">
+                <div className="p-6 lg:p-7">
+                  <h3 className="program-card-title type-card-title truncate text-ink group-hover:underline group-hover:decoration-line-strong group-hover:underline-offset-4">
                     {c.title}
                   </h3>
-                  <dl className="mt-3 space-y-1 text-[14.5px]">
+                  <dl className="type-body mt-3 space-y-1">
                     <div className="flex gap-3">
                       <dt className="w-9 shrink-0 font-medium text-ink">대상</dt>
                       <dd className="min-w-0 truncate text-muted">{c.target}</dd>
@@ -235,16 +235,13 @@ export function ProgramSlider({ cards }: { cards: ProgramCard[] }) {
                     </div>
                   </dl>
                   <div className="mt-5 flex items-center justify-between gap-3 border-t border-line pt-4">
-                    <ul className="flex max-h-[26px] min-w-0 flex-wrap gap-1.5 overflow-hidden" aria-label="키워드">
+                    <ul className="flex max-h-[1.625rem] min-w-0 flex-wrap gap-1.5 overflow-hidden" aria-label="키워드">
                       {c.tags.map((t) => (
-                        <li key={t} className="shrink-0 py-0.5 text-[12.5px] font-normal text-[#b72b62]">
+                        <li key={t} className="program-tag shrink-0 py-0.5 font-normal text-blue">
                           {t}
                         </li>
                       ))}
                     </ul>
-                    <span className="shrink-0 text-[13px] font-medium text-black">
-                      자세히 <span aria-hidden>→</span>
-                    </span>
                   </div>
                 </div>
               </Link>
@@ -328,6 +325,7 @@ export function ProgramSlider({ cards }: { cards: ProgramCard[] }) {
             tabIndex={i === selected ? 0 : -1}
             aria-label={`${i + 1}번째 프로그램으로 이동: ${c.title}`}
             aria-current={i === selected ? "true" : undefined}
+            onClick={() => go((carousel) => carousel.scrollTo(i))}
             onKeyDown={(e) => {
               if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
                 e.preventDefault();
@@ -354,7 +352,7 @@ export function ProgramSlider({ cards }: { cards: ProgramCard[] }) {
             {/* 가리킨 칸의 프로그램 이름 (양 끝 칸은 막대 안쪽으로 정렬) */}
             <span
               aria-hidden
-              className={`pointer-events-none absolute bottom-full mb-0.5 translate-y-1 whitespace-nowrap rounded-sm bg-white px-2 py-1 text-[12px] font-semibold text-green opacity-0 transition-[opacity,translate] duration-150 group-hover/seg:translate-y-0 group-hover/seg:opacity-100 group-focus-visible/seg:translate-y-0 group-focus-visible/seg:opacity-100 ${
+              className={`pointer-events-none absolute bottom-full mb-0.5 translate-y-1 whitespace-nowrap rounded-sm bg-white px-2 py-1 text-[0.75rem] font-semibold text-green opacity-0 transition-[opacity,translate] duration-150 group-hover/seg:translate-y-0 group-hover/seg:opacity-100 group-focus-visible/seg:translate-y-0 group-focus-visible/seg:opacity-100 ${
                 i === 0 ? "left-0" : i === n - 1 ? "right-0" : "left-1/2 -translate-x-1/2"
               }`}
             >

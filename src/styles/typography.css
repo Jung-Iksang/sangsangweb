@@ -1,0 +1,120 @@
+/* Public-site typography: sizes use rem so browser zoom and user scaling work.
+   Headings carry hierarchy through size and spacing, rather than excess weight. */
+.public-site {
+  --type-page-title: clamp(2rem, 1.5rem + 1.5vw, 2.625rem);
+  --type-section-title: clamp(1.875rem, 1.4rem + 1.25vw, 2.375rem);
+  --type-panel-title: clamp(1.625rem, 1.4rem + .6vw, 2rem);
+  --type-subsection-title: 1.5rem;
+  --type-card-title: 1.375rem;
+  --type-gallery-title: clamp(1.125rem, 1.05rem + .25vw, 1.25rem);
+  --type-list-title: clamp(1.0625rem, 1rem + .18vw, 1.125rem);
+  --type-body: 1rem;
+  --type-reading-body: 1.0625rem;
+  --type-lead: 1.125rem;
+  --type-small: .9375rem;
+  --type-caption: .8125rem;
+  --type-nav: 1.25rem;
+  --type-weight-body: 400;
+  --type-weight-medium: 500;
+  --type-weight-label: 600;
+  --type-weight-heading: 700;
+  --type-weight-display: 750;
+  --type-leading-heading: 1.35;
+  --type-leading-card: 1.5;
+  --type-leading-body: 1.8;
+  --type-leading-ui: 1.6;
+  --type-tracking-heading: -.025em;
+  --type-tracking-body: -.01em;
+  --type-tracking-ui: -.0125em;
+  font-family: var(--font-sans);
+  font-size: var(--type-body);
+  font-weight: var(--type-weight-body);
+  line-height: var(--type-leading-ui);
+  letter-spacing: var(--type-tracking-body);
+}
+
+.public-site :where(h1, h2, h3, h4) { text-wrap-style: balance; }
+.public-site :where(p, dd) { text-wrap-style: pretty; }
+.public-site :where(time, .tabular-nums) { font-variant-numeric: tabular-nums; letter-spacing: 0; }
+.public-site :where(a[href^="tel:"], a[href^="mailto:"]) { overflow-wrap: anywhere; }
+
+.public-site .type-subsection-title {
+  font-size: var(--type-subsection-title);
+  font-weight: var(--type-weight-heading);
+  line-height: var(--type-leading-heading);
+  letter-spacing: var(--type-tracking-heading);
+}
+.public-site .type-card-title {
+  font-size: var(--type-card-title);
+  font-weight: var(--type-weight-heading);
+  line-height: var(--type-leading-card);
+  letter-spacing: var(--type-tracking-heading);
+}
+.public-site .type-list-title {
+  font-size: var(--type-list-title);
+  font-weight: var(--type-weight-label);
+  line-height: var(--type-leading-card);
+  letter-spacing: var(--type-tracking-ui);
+}
+.public-site .type-reading {
+  font-size: var(--type-reading-body);
+  font-weight: var(--type-weight-body);
+  line-height: var(--type-leading-body);
+  letter-spacing: var(--type-tracking-body);
+}
+.public-site .type-body {
+  font-size: var(--type-body);
+  line-height: var(--type-leading-body);
+  letter-spacing: var(--type-tracking-body);
+}
+.public-site .type-small {
+  font-size: var(--type-small);
+  line-height: var(--type-leading-ui);
+  letter-spacing: var(--type-tracking-body);
+}
+.public-site .type-caption {
+  font-size: var(--type-caption);
+  line-height: var(--type-leading-ui);
+  letter-spacing: 0;
+}
+.public-site .type-nav {
+  font-size: var(--type-nav);
+  font-weight: var(--type-weight-label);
+  line-height: 1.4;
+  letter-spacing: var(--type-tracking-ui);
+}
+.public-site .type-menu-link {
+  font-size: var(--type-small);
+  font-weight: var(--type-weight-medium);
+  line-height: var(--type-leading-ui);
+  letter-spacing: var(--type-tracking-ui);
+}
+.public-site .type-menu-link[aria-current="page"] { font-weight: var(--type-weight-label); }
+.public-site .site-page-content { line-height: var(--type-leading-body); }
+.public-site .site-page-content :where(h2, h3) {
+  font-weight: var(--type-weight-heading);
+  line-height: var(--type-leading-heading);
+  letter-spacing: var(--type-tracking-heading);
+}
+.public-site .site-page-content .type-list-title { font-weight: var(--type-weight-label); line-height: var(--type-leading-card); }
+.public-site .prose-post { font-size: var(--type-reading-body); line-height: 1.85; letter-spacing: var(--type-tracking-body); }
+.public-site .prose-post :is(h2, h3) { margin-top: 1.75em; margin-bottom: .65em; font-weight: var(--type-weight-heading); line-height: var(--type-leading-heading); }
+.public-site .section-kicker { color: var(--color-blue); font-size: var(--type-caption); font-weight: var(--type-weight-label); letter-spacing: .01em; line-height: var(--type-leading-ui); }
+
+/* Paperlogy's real installed weights are 400, 500 and 800. Preserve its
+   signature display style; use Pretendard for the cards' longer text. */
+.public-site .programs-field {
+  --type-weight-heading: 800;
+  --type-weight-label: 500;
+  --type-tracking-heading: -.02em;
+}
+.public-site .program-card { font-family: var(--font-sans); }
+.public-site .program-card-title { font-family: var(--font-program-display, var(--font-sans)); font-weight: 500; }
+.public-site .program-tag { font-size: .875rem; line-height: 1.6; letter-spacing: var(--type-tracking-ui); }
+
+@media (max-width: 599px) {
+  .public-site { --type-subsection-title: 1.375rem; --type-leading-body: 1.75; }
+}
+@media (max-width: 1279px) {
+  .public-site { --type-nav: 1.0625rem; }
+}
