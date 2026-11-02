@@ -1,41 +1,76 @@
 import Link from "next/link";
+import Image from "next/image";
+import { mainMenu } from "@/config/menu";
 import { site } from "@/config/site";
 import { ScrollTopButton } from "./ScrollTopButton";
-import "./Footer.css";
 
 export function Footer() {
+  const business = [
+    `${site.legalName} · 대표 ${site.business.ceo}`,
+    `사업자등록번호 ${site.business.registrationNo}`,
+    `법인등록번호 ${site.business.corporateNo}`,
+    `통신판매업신고 ${site.business.mailOrderNo}`,
+  ];
   return (
-    <footer className="site-footer bg-ink text-on-ink">
-      <div className="site-content-frame footer-content">
-        <div className="footer-main">
-          <section className="footer-business" aria-label="기관 및 사업자 정보">
-            <h2 className="footer-heading">{site.legalName} · 대표 {site.business.ceo}</h2>
-            <dl className="footer-business-info">
-              <div><dt>사업자등록번호</dt><dd>{site.business.registrationNo}</dd></div>
-              <div><dt>법인등록번호</dt><dd>{site.business.corporateNo}</dd></div>
-              <div><dt>통신판매업신고</dt><dd>{site.business.mailOrderNo}</dd></div>
-            </dl>
-          </section>
-
-          <section className="footer-organization" aria-label="기관 연락 정보">
-            <address className="footer-address">
+    <footer className="bg-ink text-on-ink [&_:focus-visible]:outline-on-ink">
+      <div className="container-site pb-7 pt-14">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr] lg:gap-12">
+          <div>
+            <Image src="/logo.png" alt={site.name} width={125} height={40} className="h-10 w-auto" />
+            <p className="mt-6 text-[16px] font-semibold text-on-ink">{site.slogan} · {site.tagline}</p>
+            <address className="mt-4 space-y-1.5 text-[15px] not-italic leading-relaxed text-on-ink-muted">
               <p>{site.address.full}</p>
-              <dl className="footer-contact-list">
-                <div><dt>전화</dt><dd><a href={`tel:${site.contact.phone}`}>{site.contact.phone}</a></dd></div>
-                <div><dt>팩스</dt><dd>{site.contact.fax}</dd></div>
-                <div className="footer-email"><dt>이메일</dt><dd><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></dd></div>
-              </dl>
+              <p>
+                전화 <a href={`tel:${site.contact.phone}`} className="text-on-ink underline decoration-on-ink/35 underline-offset-4 hover:text-on-ink-blue">{site.contact.phone}</a>
+                <span className="mx-2 opacity-40">/</span>팩스 {site.contact.fax}
+              </p>
+              <p>
+                이메일 <a href={`mailto:${site.contact.email}`} className="text-on-ink underline decoration-on-ink/35 underline-offset-4 hover:text-on-ink-blue">{site.contact.email}</a>
+              </p>
             </address>
-          </section>
+          </div>
+
+          <nav aria-label="바로가기">
+            <h2 className="text-[14px] font-semibold text-on-ink-muted">바로가기</h2>
+            <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2.5 text-[16px]">
+              {mainMenu.map((m) => (
+                <li key={m.href}>
+                  <Link href={m.href} className="text-on-ink hover:text-on-ink-blue">
+                    {m.label}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link href="/about/location" className="text-on-ink hover:text-on-ink-blue">오시는 길</Link>
+              </li>
+            </ul>
+          </nav>
+
+          <div>
+            <h2 className="text-[14px] font-semibold text-on-ink-muted">인증 · 지정</h2>
+            <ul className="mt-4 space-y-2.5 text-[15px]">
+              {site.certifications.map((c) => (
+                <li key={c.name} className="flex items-baseline justify-between gap-3 border-b border-on-ink/10 pb-2.5">
+                  <span className="text-on-ink">{c.short}</span>
+                  <span className="text-[13px] text-on-ink-muted">{c.period.split(" ")[0]}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
-        <div className="footer-bottom">
-          <div className="footer-meta">
+        <div className="mt-12 flex flex-col gap-4 border-t border-on-ink/15 pt-6 text-[14px] text-on-ink-muted md:flex-row md:items-center md:justify-between">
+          <p className="flex flex-wrap gap-x-4 gap-y-1 leading-relaxed">
+            {business.map((b) => (
+              <span key={b} className="whitespace-nowrap">{b}</span>
+            ))}
+          </p>
+          <div className="flex shrink-0 items-center gap-4">
             <p>ⓒ {site.legalName}</p>
-            <div className="footer-actions">
-              <Link href="/admin" rel="nofollow">관리자</Link>
-              <ScrollTopButton />
-            </div>
+            <Link href="/admin" rel="nofollow" className="hover:text-on-ink">
+              관리자
+            </Link>
+            <ScrollTopButton />
           </div>
         </div>
       </div>

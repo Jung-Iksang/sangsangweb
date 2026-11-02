@@ -1,8 +1,5 @@
 import type { NextConfig } from "next";
 
-// 이미지 CDN(CloudFront) 도메인. 예: d1234abcd.cloudfront.net 또는 img.imaginemaru.kr
-const cdnDomain = process.env.NEXT_PUBLIC_CDN_DOMAIN;
-
 const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
@@ -16,7 +13,8 @@ const nextConfig: NextConfig = {
 
   images: {
     formats: ["image/avif", "image/webp"],
-    remotePatterns: cdnDomain ? [{ protocol: "https", hostname: cdnDomain }] : [],
+    // 업로드 이미지는 Vercel Blob 공개 URL 에서 서빙 (로컬은 /uploads/* — 같은 출처라 설정 불필요)
+    remotePatterns: [{ protocol: "https", hostname: "*.public.blob.vercel-storage.com" }],
   },
 
   async headers() {
@@ -33,7 +31,7 @@ const nextConfig: NextConfig = {
     const sections = [
       { source: "/about", destination: "/about/greeting" },
       { source: "/education", destination: "/education/afterschool" },
-      { source: "/experience", destination: "/experience/school" },
+      { source: "/experience", destination: "/experience/culture" },
       { source: "/community", destination: "/community/notice" },
     ];
     // v1.0 에서 쓰던 주소 → 기업소개 PDF 기준으로 재구성한 새 주소
@@ -42,8 +40,10 @@ const nextConfig: NextConfig = {
       ["/education/hrd", "/education/instructor"],
       ["/education/drone", "/experience/drone-soccer"],
       ["/education/volunteer", "/career"],
-      ["/experience/creative", "/experience/school"],
-      ["/experience/swai", "/experience/school"],
+      ["/experience/creative", "/career"],
+      ["/experience/swai", "/career/ai-coding"],
+      // v1.7: 4차산업 진로체험 스쿨 → 2026 운영계획 기준 진로·직업체험으로 통합
+      ["/experience/school", "/career"],
       ["/experience/science", "/experience/events"],
     ];
     // 기존 사이트(정적 HTML) 주소 → 새 주소 (검색 노출 유지용 301 — 네이버 권장 상태코드)

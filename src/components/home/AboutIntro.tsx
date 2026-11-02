@@ -36,7 +36,7 @@ export function AboutIntro() {
 
   return (
     <AboutIntroReveal>
-      <div className="site-content-frame about-intro-grid">
+      <div className="container-site about-intro-grid">
 
         {/* =====================================================
             1. 왼쪽 사진

@@ -1,20 +1,7 @@
-import localFont from "next/font/local";
 import { DroneBall } from "@/components/ui/DroneBall";
-import "./Programs.css";
 import { photos } from "@/content/photos.generated";
 import { categoryLabel, programs } from "@/content/programs";
 import { ProgramSlider, type ProgramCard } from "./ProgramSlider";
-
-const programFont = localFont({
-  variable: "--font-program-display",
-  src: [
-    { path: "../../../public/fonts/paperlogy/Paperlogy-4Regular.woff2", weight: "400", style: "normal" },
-    { path: "../../../public/fonts/paperlogy/Paperlogy-5Medium.woff2", weight: "500", style: "normal" },
-    { path: "../../../public/fonts/paperlogy/Paperlogy-8ExtraBold.woff2", weight: "800", style: "normal" },
-  ],
-  display: "swap",
-  preload: false,
-});
 
 export function Programs() {
   const cards: ProgramCard[] = programs.map((program) => ({
@@ -30,7 +17,7 @@ export function Programs() {
   return (
     <section aria-labelledby="programs-title" className="programs-field turf relative isolate overflow-hidden py-12 md:py-16">
       <FieldIllustration />
-      <div className={`site-content-frame relative z-10 ${programFont.className} ${programFont.variable}`}><ProgramSlider cards={cards} /></div>
+      <div className="container-site relative z-10"><ProgramSlider cards={cards} /></div>
     </section>
   );
 }

@@ -10,7 +10,7 @@ const edgeLogoInsets: Record<string, [number, number]> = {
 export function Partners() {
   return (
     <section aria-label="협력 기관" className="border-t border-[#eaeaea] bg-white py-8 md:py-10">
-      <div className="site-content-frame">
+      <div className="container-site">
         <ul className="grid grid-cols-2 items-center gap-x-6 gap-y-6 [--partner-logo-height:3rem] sm:grid-cols-3 md:[--partner-logo-height:3.5rem] lg:grid-cols-6 lg:gap-x-8">
           {partners.map((p) => {
             const [left, right] = edgeLogoInsets[p.src] ?? [0, 0];

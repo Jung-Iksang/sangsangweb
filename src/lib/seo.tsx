@@ -122,7 +122,31 @@ export const articleJsonLd = (a: {
   inLanguage: "ko-KR",
 });
 
-export const courseJsonLd = (c: { name: string; description: string; path: string }) => ({
+export const imageGalleryJsonLd = (g: {
+  title: string;
+  description: string;
+  path: string;
+  datePublished: string;
+  images: { imageUrl: string; width: number; height: number }[];
+}) => ({
+  "@context": "https://schema.org",
+  "@type": "ImageGallery",
+  name: g.title,
+  ...(g.description ? { description: g.description } : {}),
+  url: absoluteUrl(g.path),
+  datePublished: g.datePublished,
+  inLanguage: "ko-KR",
+  publisher: { "@id": absoluteUrl("/#organization") },
+  image: g.images.map((im) => ({
+    "@type": "ImageObject",
+    contentUrl: im.imageUrl.startsWith("http") ? im.imageUrl : absoluteUrl(im.imageUrl),
+    width: im.width,
+    height: im.height,
+    caption: g.title,
+  })),
+});
+
+export const courseJsonLd =(c: { name: string; description: string; path: string }) => ({
   "@context": "https://schema.org",
   "@type": "Course",
   name: c.name,

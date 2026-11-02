@@ -60,7 +60,7 @@ export function GalleryCarousel({ items, dates }: { items: GalleryCard[]; dates:
       onFocusCapture={() => setFocused(true)}
       onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}>
       <div className="news-panel-head">
-        <h2 id="gallery-title"><Link href="/community/gallery">갤러리</Link></h2>
+        <h2 id="gallery-title"><Link href="/community/gallery">포토갤러리</Link></h2>
         <div className="news-controls">
           <button type="button" className="news-control" aria-label="이전 사진" aria-controls="news-gallery-slides" disabled={!canPrev} onClick={() => move("prev")}><NewsControlIcon kind="prev" /></button>
           {!reducedMotion && <button type="button" className="news-control" aria-label={paused ? "갤러리 자동재생 시작" : "갤러리 자동재생 정지"} aria-controls="news-gallery-slides" disabled={!canPlay} onClick={() => setPaused(!paused)}><NewsControlIcon kind={paused ? "play" : "pause"} /></button>}

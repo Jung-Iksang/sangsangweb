@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { SubPage } from "@/components/layout/SubPage";
-import { photos } from "@/content/photos.generated";
+import { photos, type PhotoName } from "@/content/photos.generated";
 import { site } from "@/config/site";
 import { pageMetadata } from "@/lib/seo";
 
@@ -13,10 +13,14 @@ export const metadata = pageMetadata({
   keywords: ["상상마루샵", "백제 문화상품", "교구재", "체험키트", "LED 한지등", "네이버 스마트스토어"],
 });
 
-const products = [
-  { photo: "culture" as const, title: "백제문양 LED 주사위·한지등", desc: "백제 문양을 새긴 LED 조명 만들기 키트" },
-  { photo: "culture-stringart" as const, title: "전통문양 스트링아트", desc: "미륵사지 사리호 문양 스트링아트" },
-  { photo: "culture-hologram" as const, title: "백제문화 홀로그램", desc: "미륵사지 석탑 교육용 홀로그램 콘텐츠" },
+/** 대표 교구 — 사진은 2026 진로·직업체험 운영계획 PDF (cp-*) */
+const products: { photo: PhotoName; title: string; desc: string }[] = [
+  { photo: "cp-baekje-hanji-lamp", title: "백제문양 LED 한지등", desc: "백제 문양을 새긴 LED 한지등 만들기 키트" },
+  { photo: "cp-baekje-led-dice", title: "백제문양 LED 주사위", desc: "5cm 정육면체에 백제 문양을 담은 LED 주사위" },
+  { photo: "cp-k-heritage-led", title: "K-헤리티지 LED 무드등", desc: "경주·전주·공주·부여·익산 문양 LED 무드등" },
+  { photo: "cp-mireuksa-puzzle", title: "미륵사지 입체퍼즐", desc: "미륵사지 스토리텔링 입체퍼즐 키트" },
+  { photo: "cp-string-art", title: "스트링아트", desc: "규칙성과 백제 문양으로 만드는 스트링아트" },
+  { photo: "cp-hologram", title: "문화재 홀로그램", desc: "문화재 홀로그램 프로젝터 만들기 키트" },
 ];
 
 export default function Page() {
@@ -28,7 +32,7 @@ export default function Page() {
           <div>
             <p className="num">{site.store.platform}</p>
             <h2 className="t-h2 mt-2">{site.store.name}</h2>
-            <p className="mt-4 text-[1.03125rem] leading-[1.85] text-body">
+            <p className="mt-4 text-[18px] leading-[1.85] text-body">
               상상마루샵은 숨겨진 백제 문화재 속에서 백제의 정서를 담아낸 전통과 문화를 널리 알리기 위하여, 교육 콘텐츠·교구재 개발에 앞장서고 있습니다.
               국립부여박물관과 국립공주박물관 문화상품점에도 입점해 있습니다.
             </p>
@@ -53,7 +57,7 @@ export default function Page() {
 
         <section aria-labelledby="products">
           <p className="num">01</p>
-          <h2 id="products" className="mb-8 mt-2 text-[1.5rem] font-bold tracking-tight text-ink">대표 상품 · 체험 키트</h2>
+          <h2 id="products" className="mb-8 mt-2 text-[24px] font-bold tracking-tight text-ink">대표 상품 · 체험 키트</h2>
           <ul className="grid gap-x-6 gap-y-10 sm:grid-cols-3">
             {products.map((p) => {
               const img = photos[p.photo];
@@ -62,18 +66,23 @@ export default function Page() {
                   <div className="relative aspect-[4/3] overflow-hidden rounded-md bg-line">
                     <Image src={img.src} alt={p.title} fill sizes="(min-width:640px) 290px, 100vw" className="object-cover" />
                   </div>
-                  <h3 className="mt-4 text-[1rem] font-bold text-ink">{p.title}</h3>
-                  <p className="mt-1 text-[0.875rem] text-muted">{p.desc}</p>
+                  <h3 className="mt-4 text-[17px] font-bold text-ink">{p.title}</h3>
+                  <p className="mt-1 text-[15px] text-muted">{p.desc}</p>
                 </li>
               );
             })}
           </ul>
-          <Link href="/experience/culture" className="btn btn-ghost mt-10 text-[1rem]">
-            문화예술체험 프로그램 보기 <span aria-hidden>→</span>
-          </Link>
+          <div className="mt-10 flex flex-wrap gap-6">
+            <Link href="/career/baekje" className="btn btn-ghost text-[17px]">
+              백제문화유산 진로체험 보기 <span aria-hidden>→</span>
+            </Link>
+            <Link href="/experience/culture" className="btn btn-ghost text-[17px]">
+              문화예술체험 프로그램 보기 <span aria-hidden>→</span>
+            </Link>
+          </div>
         </section>
 
-        <p className="border-t border-line pt-6 text-[0.8125rem] text-muted">
+        <p className="border-t border-line pt-6 text-[14px] text-muted">
           {site.legalName} · 대표 {site.business.ceo} · 통신판매업신고 {site.business.mailOrderNo} · 사업자등록번호 {site.business.registrationNo}
         </p>
       </div>

@@ -11,7 +11,8 @@ import * as schema from "./schema";
 export type Db = PgDatabase<PgQueryResultHKT, typeof schema>;
 
 async function connect(): Promise<Db> {
-  const url = process.env.DATABASE_URL;
+  // Vercel Marketplace 의 Neon 통합은 DATABASE_URL 외에 POSTGRES_URL 이름으로도 주입함
+  const url = process.env.DATABASE_URL || process.env.POSTGRES_URL;
   if (url) {
     const { neon } = await import("@neondatabase/serverless");
     const { drizzle } = await import("drizzle-orm/neon-http");

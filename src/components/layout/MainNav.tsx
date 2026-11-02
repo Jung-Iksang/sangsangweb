@@ -90,7 +90,7 @@ export function NavList({ active }: { active: string | null }) {
               className="pointer-events-auto flex items-center justify-center whitespace-nowrap type-nav text-ink"
             >
               <span
-                className={`relative flex h-full items-center after:absolute after:inset-x-0 after:bottom-0 after:h-[2px] after:origin-left after:bg-green after:transition-transform after:duration-300 ${
+                className={`relative flex h-full items-center after:absolute after:inset-x-0 after:bottom-0 after:h-[2px] after:origin-left after:bg-blue after:transition-transform after:duration-300 ${
                   isActive ? "after:scale-x-100" : "after:scale-x-0 group-hover/item:after:scale-x-100 group-focus-within/item:after:scale-x-100"
                 }`}
               >
@@ -102,7 +102,7 @@ export function NavList({ active }: { active: string | null }) {
                 <li key={child.href}>
                   <Link
                     href={child.href}
-                    className="block text-balance px-2 py-2 text-center type-menu-link text-body decoration-green underline-offset-4 hover:text-ink hover:underline"
+                    className="block text-balance px-2 py-2 text-center type-menu-link text-body decoration-blue underline-offset-4 hover:text-ink hover:underline"
                   >
                     {child.label}
                   </Link>

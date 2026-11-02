@@ -1,7 +1,7 @@
 import "server-only";
-import { and, count, desc, eq } from "drizzle-orm";
+import { and, asc, count, desc, eq, sql } from "drizzle-orm";
 import { getDb } from "@/db";
-import { gallery, posts, type BoardType } from "@/db/schema";
+import { gallery, galleryImages, posts, type BoardType } from "@/db/schema";
 
 /** 관리자 화면용 (캐시 없음 · 비공개 글 포함) */
 export const ADMIN_PER_PAGE = 20;
@@ -49,5 +49,31 @@ export async function adminGetPost(id: number) {
 
 export async function adminListGallery() {
   const db = await getDb();
-  return db.select().from(gallery).orderBy(desc(gallery.createdAt), desc(gallery.id));
+  return db
+    .select({
+      id: gallery.id,
+      title: gallery.title,
+      description: gallery.description,
+      imageUrl: gallery.imageUrl,
+      programSlug: gallery.programSlug,
+      createdAt: gallery.createdAt,
+      imageCount: sql<number>`(select count(*) from ${galleryImages} where ${galleryImages.galleryId} = ${gallery.id})::int + 1`,
+    })
+    .from(gallery)
+    .orderBy(desc(gallery.createdAt), desc(gallery.id));
+}
+
+/** 앨범 + 사진 전체 (대표 사진이 0번) */
+export async function adminGetGalleryAlbum(id: number) {
+  if (!Number.isInteger(id) || id <= 0) return null;
+  const db = await getDb();
+  const [album] = await db.select().from(gallery).where(eq(gallery.id, id));
+  if (!album) return null;
+  const extras = await db
+    .select()
+    .from(galleryImages)
+    .where(eq(galleryImages.galleryId, id))
+    .orderBy(asc(galleryImages.sortOrder), asc(galleryImages.id));
+  const images = [album, ...extras].map((im) => ({ url: im.imageUrl, key: im.storageKey, width: im.width, height: im.height }));
+  return { id: album.id, title: album.title, description: album.description, programSlug: album.programSlug, images };
 }

@@ -17,6 +17,8 @@ mkdirSync(dataDir, { recursive: true });
 const db = await PGlite.create(dataDir);
 await db.exec(readFileSync(path.join(root, "src/db/bootstrap.sql"), "utf8"));
 await seed(db);
+await seedAlbums(db);
+await seedProgramLinks(db);
 
 // drizzle-orm/pg-proxy 규약: method "all" → 행을 값 배열로, "execute" → 객체로
 const server = http.createServer((req, res) => {
@@ -240,4 +242,53 @@ async function seed(pg) {
   console.log(
     "  ▶ 예시 데이터를 입력했습니다 (공지 6 · 보도 5 · 사진 10, 기업소개 자료 기반)",
   );
+}
+
+/** v1.4 앨범: 예시 갤러리에 추가 사진을 붙인다 (gallery_images 가 비어 있고, 예시 사진(/photos/)만 있을 때만) */
+async function seedAlbums(pg) {
+  const { rows: done } = await pg.query("SELECT count(*)::int AS n FROM gallery_images");
+  const { rows: real } = await pg.query("SELECT count(*)::int AS n FROM gallery WHERE image_url NOT LIKE '/photos/%'");
+  if (done[0].n > 0 || real[0].n > 0) return;
+  const extras = {
+    "drone-festival": ["drone-festival-2", "drone-team", "drone-class"],
+    "drone-iksan": ["drone-iksan-2", "drone-jeonju"],
+    "events-festival": ["events-festival-2", "events-festival-3", "events-festival-poster"],
+    "events-kids-2": ["events-kids-1", "events-kids-3"],
+    culture: ["culture-stringart", "culture-hologram"],
+    instructor: ["instructor-lecture"],
+  };
+  const dims = JSON.parse(readFileSync(path.join(root, "src/content/photos.dims.json"), "utf8"));
+  let n = 0;
+  for (const [cover, names] of Object.entries(extras)) {
+    const { rows } = await pg.query("SELECT id FROM gallery WHERE image_url = $1", [`/photos/${cover}.webp`]);
+    if (!rows[0]) continue;
+    for (const [i, name] of names.entries()) {
+      const d = dims[name] ?? { width: 1200, height: 900 };
+      await pg.query(
+        "INSERT INTO gallery_images (gallery_id,image_url,width,height,sort_order) VALUES ($1,$2,$3,$4,$5)",
+        [rows[0].id, `/photos/${name}.webp`, d.width, d.height, i],
+      );
+      n++;
+    }
+  }
+  if (n) console.log(`  ▶ 예시 앨범 사진 ${n}장을 추가했습니다`);
+}
+
+/** v1.7 강사 현장 사진: 예시 앨범 몇 개를 진로·직업체험 프로그램에 연결 (예시 사진만 있고 연결이 하나도 없을 때만) */
+async function seedProgramLinks(pg) {
+  const { rows: linked } = await pg.query("SELECT count(*)::int AS n FROM gallery WHERE program_slug IS NOT NULL");
+  const { rows: real } = await pg.query("SELECT count(*)::int AS n FROM gallery WHERE image_url NOT LIKE '/photos/%'");
+  if (linked[0].n > 0 || real[0].n > 0) return;
+  const links = {
+    "drone-festival": "drone-soccer-class",
+    "drone-iksan": "drone-soccer-class",
+    culture: "baekje-hanji-lamp",
+    "events-kids-2": "science-1",
+  };
+  let n = 0;
+  for (const [cover, slug] of Object.entries(links)) {
+    const r = await pg.query("UPDATE gallery SET program_slug = $1 WHERE image_url = $2", [slug, `/photos/${cover}.webp`]);
+    n += r.affectedRows ?? 0;
+  }
+  if (n) console.log(`  ▶ 예시 앨범 ${n}개를 진로·직업체험 프로그램에 연결했습니다 (현장 사진 확인용)`);
 }

@@ -4,6 +4,7 @@ import { SubPage } from "@/components/layout/SubPage";
 import { getPostsPage, POSTS_PER_PAGE } from "@/lib/data";
 import { boardLabel, formatDate } from "@/lib/format";
 import type { BoardType } from "@/db/schema";
+import { ListMeta } from "./ListMeta";
 import { Pagination } from "./Pagination";
 
 export const boardDescription: Record<BoardType, string> = {
@@ -19,35 +20,43 @@ export async function BoardList({ board, page }: { board: BoardType; page: numbe
 
   return (
     <SubPage path={path} title={boardLabel[board]} description={boardDescription[board]}>
-      <p className="mb-4 text-[0.875rem] text-muted">
-        총 <strong className="text-ink">{data.total}</strong>건{page > 1 && ` · ${page}페이지`}
-      </p>
+      <ListMeta total={data.total} page={page} totalPages={data.totalPages} />
       {data.items.length === 0 ? (
         <p className="border-y border-line py-20 text-center text-muted">등록된 글이 없습니다.</p>
       ) : (
-        <ul className="border-t-2 border-ink">
-          {data.items.map((p, i) => (
-            <li key={p.id} className="border-b border-line">
-              <Link href={`${base}/${p.id}`} className="group flex items-center gap-4 px-2 py-5 md:px-4">
-                <span className="hidden w-10 shrink-0 text-center text-[0.875rem] text-muted sm:block">
+        <table className="w-full table-fixed border-t-2 border-ink text-[17px]">
+          <caption className="sr-only">{boardLabel[board]} 목록</caption>
+          <thead className="bg-cream text-ink">
+            <tr className="h-14 border-b border-line">
+              <th scope="col" className="hidden w-20 font-semibold sm:table-cell">번호</th>
+              <th scope="col" className="font-semibold">제목</th>
+              <th scope="col" className="hidden w-32 font-semibold sm:table-cell">작성일</th>
+              <th scope="col" className="hidden w-20 font-semibold md:table-cell">조회</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.items.map((p, i) => (
+              <tr key={p.id} className="border-b border-line transition-colors hover:bg-cream">
+                <td className="hidden text-center tabular-nums text-muted sm:table-cell">
                   {data.total - (page - 1) * POSTS_PER_PAGE - i}
-                </span>
-                <div className="min-w-0 flex-1">
-                  <h2 className="flex items-center gap-2.5 type-list-title text-ink group-hover:underline group-hover:decoration-line-strong group-hover:underline-offset-4">
-                    <span className="truncate">{p.title}</span>
-                    {p.isNew && (
-                      <span className="shrink-0 text-[0.6875rem] font-bold tracking-wide text-red">NEW</span>
-                    )}
-                  </h2>
-                  {p.excerpt && <p className="type-small mt-1 line-clamp-1 text-muted">{p.excerpt}</p>}
-                </div>
-                <time dateTime={p.createdAt} className="type-small shrink-0 tabular-nums text-muted">
-                  {formatDate(p.createdAt)}
-                </time>
-              </Link>
-            </li>
-          ))}
-        </ul>
+                </td>
+                <td className="px-3 py-[18px] sm:px-5">
+                  <Link href={`${base}/${p.id}`} className="group flex min-w-0 items-center gap-2.5 text-ink">
+                    <span className="truncate group-hover:underline group-hover:decoration-line-strong group-hover:underline-offset-4">{p.title}</span>
+                    {p.isNew && <span className="shrink-0 text-[12px] font-bold tracking-wide text-red">NEW</span>}
+                  </Link>
+                  <time dateTime={p.createdAt} className="mt-1 block text-[14px] tabular-nums text-muted sm:hidden">
+                    {formatDate(p.createdAt)}
+                  </time>
+                </td>
+                <td className="hidden text-center tabular-nums text-muted sm:table-cell">
+                  <time dateTime={p.createdAt}>{formatDate(p.createdAt)}</time>
+                </td>
+                <td className="hidden text-center tabular-nums text-muted md:table-cell">{p.views.toLocaleString("ko-KR")}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
       <Pagination base={base} page={page} totalPages={data.totalPages} />
     </SubPage>

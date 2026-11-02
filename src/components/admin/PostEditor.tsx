@@ -81,7 +81,7 @@ export function PostEditor({ initial }: { initial: Initial }) {
           <select
             value={boardType}
             onChange={(e) => setBoardType(e.target.value as BoardType)}
-            className="h-11 w-full rounded-md border border-line bg-white px-3 outline-none focus:border-green"
+            className="h-11 w-full rounded-md border border-line bg-white px-3 outline-none focus:border-blue"
           >
             <option value="notice">공지사항</option>
             <option value="press">보도자료</option>
@@ -94,7 +94,7 @@ export function PostEditor({ initial }: { initial: Initial }) {
             onChange={(e) => setTitle(e.target.value)}
             maxLength={200}
             placeholder="제목을 입력하세요 (검색 결과에 그대로 노출됩니다)"
-            className="h-11 w-full rounded-md border border-line px-4 outline-none focus:border-green"
+            className="h-11 w-full rounded-md border border-line px-4 outline-none focus:border-blue"
           />
         </label>
       </div>
@@ -123,7 +123,7 @@ export function PostEditor({ initial }: { initial: Initial }) {
 
       <div className="flex flex-wrap items-center justify-between gap-4 rounded-md bg-white p-5 border border-line">
         <label className="flex items-center gap-2 text-[15px] text-ink">
-          <input type="checkbox" checked={isPublished} onChange={(e) => setIsPublished(e.target.checked)} className="h-5 w-5 accent-[var(--color-green)]" />
+          <input type="checkbox" checked={isPublished} onChange={(e) => setIsPublished(e.target.checked)} className="h-5 w-5 accent-[var(--color-blue)]" />
           홈페이지에 공개
         </label>
         <div className="flex gap-2">
@@ -134,7 +134,7 @@ export function PostEditor({ initial }: { initial: Initial }) {
             type="button"
             onClick={submit}
             disabled={pending || uploading || !editor}
-            className="h-11 rounded-btn bg-green px-8 font-bold text-white hover:bg-green-dark disabled:opacity-60"
+            className="h-11 rounded-btn bg-blue px-8 font-bold text-white hover:bg-blue-dark disabled:opacity-60"
           >
             {pending ? "저장 중…" : initial.id ? "수정 완료" : "등록하기"}
           </button>
@@ -166,7 +166,7 @@ function Toolbar({ editor, onImage, uploading }: { editor: Editor | null; onImag
   if (!editor || !s) return <div className="h-12 border-b border-line bg-cream" />;
 
   const btn = (active: boolean) =>
-    `h-9 min-w-9 rounded-lg px-2 text-[14px] font-medium transition ${active ? "bg-green text-white" : "text-body hover:bg-white"}`;
+    `h-9 min-w-9 rounded-lg px-2 text-[14px] font-medium transition ${active ? "bg-blue text-white" : "text-body hover:bg-white"}`;
   const c = () => editor.chain().focus();
 
   return (

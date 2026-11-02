@@ -25,10 +25,10 @@ export default async function AdminPosts({ searchParams }: PageProps<"/admin/pos
           <p className="mt-1 text-muted">총 {total}건</p>
         </div>
         <div className="flex gap-2">
-          <Link href={`/community/${board}`} target="_blank" className="rounded-btn border border-line bg-white px-5 py-2.5 text-[14px] font-bold text-ink hover:border-green">
+          <Link href={`/community/${board}`} target="_blank" className="rounded-btn border border-line bg-white px-5 py-2.5 text-[14px] font-bold text-ink hover:border-blue">
             홈페이지에서 보기
           </Link>
-          <Link href={`/admin/posts/new?board=${board}`} className="rounded-btn bg-green px-5 py-2.5 text-[14px] font-bold text-white hover:bg-green-dark">
+          <Link href={`/admin/posts/new?board=${board}`} className="rounded-btn bg-blue px-5 py-2.5 text-[14px] font-bold text-white hover:bg-blue-dark">
             + 새 글 쓰기
           </Link>
         </div>
@@ -53,7 +53,7 @@ export default async function AdminPosts({ searchParams }: PageProps<"/admin/pos
                   <td className="max-w-0 px-5 py-3.5">
                     <div className="flex items-center gap-2">
                       {!p.isPublished && <span className="shrink-0 rounded bg-brand-red/10 px-1.5 py-0.5 text-[11px] font-bold text-red">비공개</span>}
-                      <Link href={`/admin/posts/${p.id}/edit`} className="truncate text-ink hover:text-green">{p.title}</Link>
+                      <Link href={`/admin/posts/${p.id}/edit`} className="truncate text-ink hover:text-blue">{p.title}</Link>
                     </div>
                   </td>
                   <td className="hidden px-3 text-muted md:table-cell">{formatDate(p.createdAt)}</td>
@@ -74,7 +74,7 @@ export default async function AdminPosts({ searchParams }: PageProps<"/admin/pos
             <Link
               key={n}
               href={`/admin/posts?board=${board}&page=${n}`}
-              className={`flex h-9 min-w-9 items-center justify-center rounded-btn px-3 text-[14px] ${n === page ? "bg-green text-white" : "bg-white text-body border border-line"}`}
+              className={`flex h-9 min-w-9 items-center justify-center rounded-btn px-3 text-[14px] ${n === page ? "bg-blue text-white" : "bg-white text-body border border-line"}`}
             >
               {n}
             </Link>

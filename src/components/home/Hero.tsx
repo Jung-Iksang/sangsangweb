@@ -1,19 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import localFont from "next/font/local";
 import Image from "next/image";
 import Link from "next/link";
 import { photos } from "@/content/photos.generated";
 import { useReducedMotion } from "@/components/ui/useReducedMotion";
 import { site } from "@/config/site";
 import "./Hero.css";
-
-const heroInfoFont = localFont({
-  src: "../../../public/fonts/hakgyoansim/HakgyoansimRikodeoOTFR.otf",
-  display: "swap",
-  preload: false,
-});
 
 const slides = [
   { src: photos["drone-class"].src, caption: "드론 체험 교육", position: "60% center", mobilePosition: "68% center" },
@@ -88,7 +81,7 @@ export function Hero() {
                 className="hero-brand-image"
               />
             </h1>
-            <p className="hero-brand-caption"><span>호기심이 배움으로</span><br />자라는 체험 공간</p>
+            <p className="hero-brand-caption"><strong className="hl">호기심이 배움으로</strong><br />자라는 체험 공간</p>
           </div>
           <div className="hero-characters" aria-hidden="true">
             <Image
@@ -101,13 +94,13 @@ export function Hero() {
           </div>
         </div>
         <div className="hero-info" aria-label="상상마루 교육 안내">
-          <dl className={`hero-infoList ${heroInfoFont.className}`}>
+          <dl className="hero-infoList">
             <div><dt>교육분야</dt><dd>진로·직업체험 · 창의융합교육</dd></div>
             <div><dt>교육문의</dt><dd><a href={`tel:${site.contact.phone}`}>{site.contact.phone}</a></dd></div>
             <div className="hero-location"><dt>위치안내</dt><dd className="hero-address">{site.address.locality} {site.address.street}</dd></div>
           </dl>
           <nav className="hero-quickLinks" aria-label="교육 안내 바로가기">
-            <Link href="/experience/school"><QuickIcon kind="program" />프로그램</Link>
+            <Link href="/career"><QuickIcon kind="program" />프로그램</Link>
             <a href={`tel:${site.contact.phone}`}><QuickIcon kind="phone" />교육문의</a>
             <Link href="/about/location"><QuickIcon kind="map" />오시는 길</Link>
           </nav>

@@ -13,11 +13,11 @@ export function PostRowActions({ id, board, isPublished }: { id: number; board: 
   return (
     <div className="flex justify-end gap-1.5">
       {isPublished && (
-        <Link href={`/community/${board}/${id}`} target="_blank" className={`${btn} hidden hover:border-green hover:text-green sm:inline-block`}>
+        <Link href={`/community/${board}/${id}`} target="_blank" className={`${btn} hidden hover:border-blue hover:text-blue sm:inline-block`}>
           보기
         </Link>
       )}
-      <Link href={`/admin/posts/${id}/edit`} className={`${btn} hover:border-green hover:text-green`}>수정</Link>
+      <Link href={`/admin/posts/${id}/edit`} className={`${btn} hover:border-blue hover:text-blue`}>수정</Link>
       <button
         type="button"
         disabled={pending}

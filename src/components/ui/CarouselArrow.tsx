@@ -15,7 +15,7 @@ export function CarouselArrow({
 }) {
   const color =
     tone === "dark"
-      ? "border-white/35 text-white hover:border-white hover:bg-white hover:text-green"
+      ? "border-white/35 text-white hover:border-white hover:bg-white hover:text-blue"
       : "border-line-strong text-ink hover:border-ink hover:bg-ink hover:text-on-ink";
   return (
     <button

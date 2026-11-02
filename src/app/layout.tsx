@@ -46,7 +46,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="ko" data-scroll-behavior="smooth">
       <head>
-        {/* Pretendard Variable (OFL) 자체 호스팅 · 동적 서브셋 — 화면에 쓰인 글자 범위만 내려받음.
+        {/* Paperlogy (OFL) 자체 호스팅 — 본문·제목 글꼴. 본문(500)·제목(700) 은 미리 받음 */}
+        <link rel="preload" href="/fonts/paperlogy/Paperlogy-500.subset.woff2" as="font" type="font/woff2" crossOrigin="" />
+        <link rel="preload" href="/fonts/paperlogy/Paperlogy-700.subset.woff2" as="font" type="font/woff2" crossOrigin="" />
+        {/* eslint-disable-next-line @next/next/no-css-tags */}
+        <link rel="stylesheet" href="/fonts/paperlogy/paperlogy.css" />
+        {/* Pretendard Variable (OFL) — Paperlogy 서브셋(완성형 2,350자)에 없는 글자 폴백. 동적 서브셋이라 쓰인 범위만 내려받음.
             unicode-range 서브셋 92개는 next/font 가 지원하지 않아 public 의 CSS 를 직접 연결 */}
         {/* eslint-disable-next-line @next/next/no-css-tags */}
         <link rel="stylesheet" href="/fonts/pretendard/pretendard.css" />

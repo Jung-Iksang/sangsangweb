@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const links = [
   { no: "01", name: "교육활동", desc: "방과후마을학교 · 늘봄 · 강사양성", href: "/education/afterschool" },
-  { no: "02", name: "체험활동", desc: "진로체험 스쿨 · 문화예술 · 드론축구", href: "/experience/school" },
+  { no: "02", name: "체험활동", desc: "문화예술 · 드론축구 · 대회·행사", href: "/experience/culture" },
   { no: "03", name: "진로·직업체험", desc: "교육부 인증 교육기부 진로체험기관", href: "/career" },
   { no: "04", name: "상상마루샵", desc: "백제문양 체험 키트 · 교구", href: "/store" },
 ];
@@ -20,10 +20,10 @@ export function QuickLinks() {
             <Link href={l.href} className="group flex h-full items-center gap-4 px-4 py-6 transition-colors hover:bg-cream lg:px-7 lg:py-7">
               <span className="min-w-0 flex-1">
                 <span className="num block">{l.no}</span>
-                <span className="mt-1.5 block text-[1rem] font-bold text-ink">{l.name}</span>
-                <span className="mt-1 block truncate text-[0.8125rem] text-muted">{l.desc}</span>
+                <span className="mt-1.5 block text-[17px] font-bold text-ink">{l.name}</span>
+                <span className="mt-1 block truncate text-[14px] text-muted">{l.desc}</span>
               </span>
-              <span aria-hidden className="text-[1.125rem] text-muted transition-transform group-hover:translate-x-1 group-hover:text-green">
+              <span aria-hidden className="text-[18px] text-muted transition-transform group-hover:translate-x-1 group-hover:text-blue">
                 →
               </span>
             </Link>

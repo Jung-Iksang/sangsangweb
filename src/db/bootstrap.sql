@@ -24,3 +24,17 @@ CREATE TABLE IF NOT EXISTS gallery (
   created_at timestamptz NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS gallery_created_idx ON gallery (created_at);
+-- 앨범의 대표 사진 외 나머지 사진 (v1.4)
+CREATE TABLE IF NOT EXISTS gallery_images (
+  id serial PRIMARY KEY,
+  gallery_id integer NOT NULL REFERENCES gallery(id) ON DELETE CASCADE,
+  image_url text NOT NULL,
+  storage_key text,
+  width integer NOT NULL,
+  height integer NOT NULL,
+  sort_order integer NOT NULL DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS gallery_images_album_idx ON gallery_images (gallery_id, sort_order);
+-- 앨범을 진로·직업체험 프로그램에 연결 (강사 현장 사진, v1.7)
+ALTER TABLE gallery ADD COLUMN IF NOT EXISTS program_slug varchar(80);
+CREATE INDEX IF NOT EXISTS gallery_program_idx ON gallery (program_slug, created_at);

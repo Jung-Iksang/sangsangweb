@@ -108,7 +108,7 @@ export function MobileMenu() {
                       <ul className="min-h-0" inert={!isOpen}>
                         {item.children.map((child) => (
                           <li key={child.href}>
-                            <Link href={child.href} onClick={close} className="block py-2.5 pl-9 type-menu-link text-body hover:text-green">
+                            <Link href={child.href} onClick={close} className="block py-2.5 pl-9 type-menu-link text-body hover:text-blue">
                               {child.label}
                             </Link>
                           </li>

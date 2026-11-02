@@ -21,4 +21,4 @@ for (const s of statements) {
   await sql.query(s);
   console.log("✓", s.split("\n")[0]);
 }
-console.log("완료: posts, gallery 테이블 준비됨");
+console.log("완료: posts, gallery(program_slug 포함), gallery_images 테이블 준비됨");

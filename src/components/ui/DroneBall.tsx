@@ -3,7 +3,7 @@ export function DroneBall({ ref, className = "h-full w-full drop-shadow-[0_2px_3
   return (
     <svg ref={ref} viewBox="0 0 32 32" className={className} fill="none" stroke="white" strokeLinecap="round">
       {/* 케이지 */}
-      <circle cx="16" cy="16" r="14.5" strokeWidth="2" className="fill-green-dark" />
+      <circle cx="16" cy="16" r="14.5" strokeWidth="2" className="fill-turf-dark" />
       <ellipse cx="16" cy="16" rx="14.5" ry="5.5" strokeWidth="1" strokeOpacity="0.55" />
       <ellipse cx="16" cy="16" rx="5.5" ry="14.5" strokeWidth="1" strokeOpacity="0.55" />
       {/* 드론: 팔 X + 몸체 + 프로펠러 4개 */}

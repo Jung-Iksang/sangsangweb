@@ -5,8 +5,12 @@ import path from "node:path";
 
 /**
  * 이미지 저장소
- * - S3 환경변수가 있으면: 브라우저 → S3 직접 업로드 (presigned PUT URL), CloudFront 로 서빙
+ * - BLOB_READ_WRITE_TOKEN 이 있으면(Vercel): 브라우저 → Vercel Blob 직접 업로드(client upload, 토큰은 /api/admin/upload 가 발급)
+ *   Vercel 서버 함수는 요청 본문 4.5MB 제한이 있어 서버를 거치지 않는다. 공개 URL 은 *.public.blob.vercel-storage.com
  * - 없으면(로컬 개발): .data/uploads 에 저장, /uploads/* 로 서빙
+ *
+ * DB 에는 imageUrl(표시용) 과 storageKey(삭제용) 를 함께 저장한다.
+ * storageKey 는 Blob 이면 Blob URL, 로컬이면 folder/YYYY/MM/uuid.ext 키.
  */
 export const ALLOWED_TYPES: Record<string, string> = {
   "image/jpeg": "jpg",
@@ -20,31 +24,8 @@ export type UploadFolder = (typeof UPLOAD_FOLDERS)[number];
 
 export const LOCAL_UPLOAD_DIR = path.join(process.cwd(), ".data", "uploads");
 
-export function isS3Configured() {
-  return Boolean(
-    process.env.S3_BUCKET && process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY,
-  );
-}
-
-async function s3Client() {
-  const { S3Client } = await import("@aws-sdk/client-s3");
-  return new S3Client({
-    region: process.env.AWS_REGION || "ap-northeast-2",
-    credentials: {
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-    },
-  });
-}
-
-export function publicUrlForKey(key: string) {
-  if (isS3Configured()) {
-    const cdn = process.env.NEXT_PUBLIC_CDN_DOMAIN;
-    if (cdn) return `https://${cdn}/${key}`;
-    const region = process.env.AWS_REGION || "ap-northeast-2";
-    return `https://${process.env.S3_BUCKET}.s3.${region}.amazonaws.com/${key}`;
-  }
-  return `/uploads/${key}`;
+export function isBlobConfigured() {
+  return Boolean(process.env.BLOB_READ_WRITE_TOKEN);
 }
 
 export function newKey(folder: UploadFolder, contentType: string) {
@@ -54,28 +35,37 @@ export function newKey(folder: UploadFolder, contentType: string) {
   return `${folder}/${ym}/${randomUUID()}.${ext}`;
 }
 
-export type UploadTarget = { key: string; uploadUrl: string; publicUrl: string; headers: Record<string, string> };
-
-export async function createUploadTarget(folder: UploadFolder, contentType: string): Promise<UploadTarget> {
-  const key = newKey(folder, contentType);
-  const headers = { "Content-Type": contentType };
-  if (isS3Configured()) {
-    const { PutObjectCommand } = await import("@aws-sdk/client-s3");
-    const { getSignedUrl } = await import("@aws-sdk/s3-request-presigner");
-    const client = await s3Client();
-    const uploadUrl = await getSignedUrl(
-      client,
-      new PutObjectCommand({ Bucket: process.env.S3_BUCKET!, Key: key, ContentType: contentType }),
-      { expiresIn: 300 },
-    );
-    return { key, uploadUrl, publicUrl: publicUrlForKey(key), headers };
-  }
-  return { key, uploadUrl: `/api/admin/upload/local?key=${encodeURIComponent(key)}`, publicUrl: publicUrlForKey(key), headers };
-}
-
-/** 로컬 키 검증: folder/YYYY/MM/uuid.ext 형식만 허용 (경로 조작 방지) */
+/** 키 검증: folder/YYYY/MM/uuid.ext 형식만 허용 (경로 조작 방지) */
 export function isSafeKey(key: string) {
   return /^(gallery|posts)\/\d{4}\/\d{2}\/[0-9a-f-]{36}\.(jpg|png|webp|gif)$/.test(key);
+}
+
+/** Vercel Blob 공개 URL 인지 */
+export function isBlobUrl(url: string) {
+  try {
+    const u = new URL(url);
+    return u.protocol === "https:" && u.hostname.endsWith(".public.blob.vercel-storage.com");
+  } catch {
+    return false;
+  }
+}
+
+export type StoredImage = { imageUrl: string; storageKey: string };
+
+/**
+ * 브라우저가 올린 결과({ key, url })를 DB 에 저장할 값으로 바꾼다. 검증 실패 시 null.
+ * - Blob: url 이 우리 Blob 호스트이고 경로가 key 와 같아야 함 (다른 곳의 URL 을 끼워 넣지 못하게)
+ * - 로컬: url 은 무시하고 키로 /uploads 경로를 만든다
+ */
+export function resolveUpload(input: { key?: unknown; url?: unknown }): StoredImage | null {
+  const key = input.key;
+  if (typeof key !== "string" || !isSafeKey(key)) return null;
+  if (isBlobConfigured()) {
+    const url = input.url;
+    if (typeof url !== "string" || !isBlobUrl(url) || new URL(url).pathname !== `/${key}`) return null;
+    return { imageUrl: url, storageKey: url };
+  }
+  return { imageUrl: `/uploads/${key}`, storageKey: key };
 }
 
 export async function writeLocalObject(key: string, data: Uint8Array) {
@@ -84,24 +74,25 @@ export async function writeLocalObject(key: string, data: Uint8Array) {
   await writeFile(file, data);
 }
 
-/** 저장소에서 삭제 (실패해도 DB 삭제는 진행) */
-export async function deleteObject(key: string | null | undefined) {
-  if (!key || !isSafeKey(key)) return;
+/** 저장소에서 삭제 — storageKey(Blob URL 또는 로컬 키). 실패해도 DB 삭제는 진행 */
+export async function deleteObject(ref: string | null | undefined) {
+  if (!ref) return;
   try {
-    if (isS3Configured()) {
-      const { DeleteObjectCommand } = await import("@aws-sdk/client-s3");
-      const client = await s3Client();
-      await client.send(new DeleteObjectCommand({ Bucket: process.env.S3_BUCKET!, Key: key }));
-    } else {
-      await unlink(path.join(LOCAL_UPLOAD_DIR, key));
+    if (isBlobUrl(ref)) {
+      if (!isBlobConfigured()) return;
+      const { del } = await import("@vercel/blob");
+      await del(ref);
+    } else if (isSafeKey(ref)) {
+      await unlink(path.join(LOCAL_UPLOAD_DIR, ref));
     }
   } catch (err) {
-    console.error("[storage] delete failed", key, err);
+    console.error("[storage] delete failed", ref, err);
   }
 }
 
-/** 공개 URL → 저장소 키 (본문 이미지 정리용) */
+/** 본문 <img src> → storageKey (게시글 저장·삭제 시 안 쓰는 이미지 정리용). 우리 저장소 것이 아니면 null */
 export function keyFromUrl(url: string) {
-  const m = url.match(/((?:gallery|posts)\/\d{4}\/\d{2}\/[0-9a-f-]{36}\.(?:jpg|png|webp|gif))$/);
+  if (isBlobUrl(url)) return url;
+  const m = url.match(/^\/uploads\/((?:gallery|posts)\/\d{4}\/\d{2}\/[0-9a-f-]{36}\.(?:jpg|png|webp|gif))$/);
   return m?.[1] ?? null;
 }

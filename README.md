@@ -1,10 +1,10 @@
 # 상상마루 홈페이지
 
 유한회사 상상마루(전북 익산 진로·직업체험 교육 기관) 공식 홈페이지입니다.
-기존 정적 HTML + PHP(미리넷 호스팅) 사이트를 **Next.js 16 + Vercel + Neon Postgres + AWS S3/CloudFront** 로 새로 만들었습니다.
+기존 정적 HTML + PHP(미리넷 호스팅) 사이트를 **Next.js 16 + Vercel(호스팅 · Neon Postgres · Blob 사진 저장소)** 로 새로 만들었습니다. 가입·결제는 Vercel 한 곳입니다.
 
-> **현재 버전: v1.3 — 한 겹 히어로 · 유동 폭 · 메가메뉴 · 프로그램 슬라이더**
-> 회사 정보·사진은 기업소개 PDF/PPT 기준(v1.1), 디자인은 크림 바탕·로고 초록 주색·번호 매긴 섹션(v1.2). v1.3 에서 화면 폭 대응, 헤더 메가메뉴, 메인 첫 화면과 프로그램 섹션을 다듬었습니다. 운영 인프라(Neon·S3·Vercel) 연결은 아직입니다.
+> **현재 버전: v1.8 — 흰 바탕 + 블루 · Paperlogy · 2단 헤더·사진 캐러셀 히어로 · 진로·직업체험 82개 프로그램**
+> 회사 정보·사진은 기업소개 PDF/PPT 기준(v1.1), 디자인은 크림 바탕·로고 초록 주색·번호 매긴 섹션(v1.2). v1.3 에서 화면 폭 대응, 헤더 메가메뉴, 메인 첫 화면과 프로그램 섹션을 다듬었고, v1.4 에서 글꼴을 Paperlogy 로 바꾸고 서브페이지·공지사항·포토갤러리를 isedu.kr 레이아웃 느낌으로 다시 짰습니다(갤러리는 여러 장 앨범). v1.6 에서 AWS 를 빼고 Vercel 하나(호스팅·Neon·Blob)로 묶었습니다. v1.7 에서 진로·직업체험을 2026 운영계획(안) PDF 기준 9개 분야 82개 프로그램으로 바꾸고, 강사가 관리자 화면에서 올린 현장 사진이 프로그램별로 쌓이게 했습니다. v1.8 에서 PR #3 의 블루 디자인(2단 헤더, 사진 캐러셀 히어로, 소개 통계, 연혁 타임라인)을 받아들이고 서브페이지 틀·진로체험·사진은 v1.7 것을 유지했습니다. 운영 연결(Vercel 팀 생성·도메인)은 아직입니다.
 > 남은 작업은 [로드맵](#로드맵--남은-작업)을 보세요. 변경 이력은 [CHANGELOG.md](CHANGELOG.md).
 
 - 클라이언트 최우선 요구: **구글·네이버 검색 노출(SEO)**
@@ -35,12 +35,12 @@
 | 영역 | 사용 기술 | 비고 |
 |---|---|---|
 | 프레임워크 | Next.js 16.4 (App Router, **Cache Components**), React 19 | 학습 자료와 API가 다름 → 아래 [주의사항](#주의사항) |
-| 스타일 | Tailwind CSS 4 + 디자인 토큰(`src/app/globals.css`) | 폰트 Pretendard Variable 동적 서브셋 자체 호스팅 |
+| 스타일 | Tailwind CSS 4 + 디자인 토큰(`src/app/globals.css`) | 폰트 Paperlogy(본문·제목, 완성형 서브셋) + Pretendard Variable(폴백) 자체 호스팅 |
 | DB | Postgres — 운영 Neon / 로컬 PGlite | ORM: Drizzle |
-| 이미지 | AWS S3 + CloudFront — 로컬은 `.data/uploads` | 브라우저 → S3 직접 업로드(presigned URL) |
+| 이미지 | Vercel Blob — 로컬은 `.data/uploads` | 브라우저 → Blob 직접 업로드(client upload, `@vercel/blob`) |
 | 인증 | 단일 관리자, 환경변수 + JWT 쿠키(jose) | 일반 회원 기능 없음 |
 | 에디터 | Tiptap 3 | 게시글 본문 |
-| 호스팅 | Vercel | 월 비용 예상: Vercel Pro $20 + S3 $1~3 + Neon $0 |
+| 호스팅 | Vercel (Neon·Blob 도 Vercel Marketplace 에서 생성 → 청구서 하나) | 월 비용 예상: Vercel Pro $20 + Blob $1 미만 + Neon $0 |
 
 ---
 
@@ -58,9 +58,9 @@ npm run dev
 
 - 사이트: http://localhost:3000 / 관리자: http://localhost:3000/admin
 - `npm run dev` 는 **로컬 DB 서버(PGlite) + Next 개발 서버**를 함께 띄웁니다.
-  - 첫 실행 시 `.data/pglite` 에 테이블을 만들고 예시 데이터(공지 6 · 보도 5 · 사진 10)를 넣습니다.
+  - 첫 실행 시 `.data/pglite` 에 테이블을 만들고 예시 데이터(공지 6 · 보도 5 · 앨범 10, 일부 앨범은 사진 2~4장)를 넣습니다.
   - 초기화하려면 서버를 끄고 `.data/` 폴더를 지우면 됩니다.
-- S3 환경변수가 비어 있으면 업로드 이미지는 `.data/uploads` 에 저장되고 `/uploads/*` 로 서빙됩니다.
+- `BLOB_READ_WRITE_TOKEN` 이 비어 있으면 업로드 이미지는 `.data/uploads` 에 저장되고 `/uploads/*` 로 서빙됩니다.
 - 운영 DB(Neon)에 붙어서 개발하려면 `.env.local` 에 `DATABASE_URL` 을 넣고 `npm run dev:remote`.
 
 ---
@@ -73,7 +73,7 @@ src/
 │   ├── (site)/                  공개 페이지 (헤더·푸터 포함)
 │   │   ├── page.tsx             메인
 │   │   ├── about/               인사말·연혁·조직·인증·오시는 길
-│   │   ├── career/              진로·직업체험 (교육기부 진로체험 인증기관)
+│   │   ├── career/              진로·직업체험 — 전체(/career) · 분야별(/career/[theme])
 │   │   ├── education/[slug]/    교육활동 5종 (content/programs.ts)
 │   │   ├── experience/[slug]/   체험활동 4종
 │   │   ├── community/[board]/   공지(notice)·보도(press) 목록 / page/[page] / [id]
@@ -89,13 +89,14 @@ src/
 ├── actions/          Server Actions — admin.ts(관리자 쓰기), public.ts(조회수)
 ├── components/       layout/ home/ community/ admin/ ui/ ProgramPage.tsx
 ├── config/           site.ts(회사정보·SEO 기본값) · menu.ts(상단 메뉴)
-├── content/          정적 콘텐츠 — programs.ts · about.ts · career.ts · photos.generated.ts(사진 목록, 자동 생성)
+├── content/          정적 콘텐츠 — programs.ts · career-programs.ts · about.ts · career.ts · photos.generated.ts(사진 목록, 자동 생성)
 ├── db/               schema.ts(Drizzle) · bootstrap.sql(테이블 DDL) · index.ts(연결)
 ├── lib/              data.ts(공개 조회·캐시) · admin-data.ts · auth.ts · session-token.ts
-│                     storage.ts(S3/로컬) · upload-client.ts · seo.tsx · html.ts · format.ts
+│                     storage.ts(Blob/로컬) · upload-client.ts · seo.tsx · html.ts · format.ts
 └── proxy.ts          /admin 접근 1차 보호 (Next 16 의 middleware)
-scripts/              local-db.mjs · db-init.mjs · hash-password.mjs · import-photos.mjs · fetch-pretendard.mjs
-public/fonts/pretendard/  Pretendard Variable 동적 서브셋 (OFL)
+scripts/              local-db.mjs · db-init.mjs · hash-password.mjs · import-photos.mjs · extract-pdf-images.swift · fetch-pretendard.mjs
+public/fonts/paperlogy/   Paperlogy 400~800 서브셋 (OFL, `npm run fetch-paperlogy`)
+public/fonts/pretendard/  Pretendard Variable 동적 서브셋 (OFL, 폴백)
 docs/DEPLOY.md        운영 배포 절차
 old/                  기존 사이트 보관본
 ```
@@ -110,9 +111,9 @@ old/                  기존 사이트 보관본
                   │   └ src/lib/data.ts  ("use cache" + cacheTag("posts"|"gallery"))  │──▶ Neon Postgres
  관리자 ────────▶ │ /admin: 매 요청 서버 렌더링 (proxy.ts + requireAdmin)              │
                   │   └ src/actions/admin.ts (Server Actions) → updateTag() 로 즉시 반영│
-                  │ /api/admin/upload → S3 presigned PUT URL 발급                      │
+                  │ /api/admin/upload → 저장 키 발급 + Blob 클라이언트 업로드 토큰      │
                   └──────────────────────────────────────────────────────────────────┘
- 관리자 브라우저 ── (이미지 리사이즈 → WebP) ──PUT──▶ S3 ──▶ CloudFront ──▶ 방문자
+ 관리자 브라우저 ── (이미지 리사이즈 → WebP) ──직접 업로드──▶ Vercel Blob ──▶ 방문자
 ```
 
 ### 읽기 경로 (공개)
@@ -127,11 +128,11 @@ old/                  기존 사이트 보관본
 
 ### 이미지 업로드
 1. 관리자 브라우저가 이미지를 최대 2000px, WebP 로 줄임 (`src/lib/upload-client.ts`)
-2. `POST /api/admin/upload` → 업로드 대상 URL 발급 (`src/lib/storage.ts`)
-   - S3 설정 시: presigned PUT URL (5분 유효), 공개 URL 은 CloudFront 도메인
-   - 미설정 시: `/api/admin/upload/local` 로 받아 `.data/uploads` 에 저장
-3. 브라우저가 해당 URL 로 직접 PUT → Vercel 함수 용량 제한(4.5MB)을 우회
-4. 글·사진 삭제 시 저장소 파일도 삭제, 글 수정 시 본문에서 빠진 이미지도 삭제
+2. `POST /api/admin/upload` → 저장 키(`folder/YYYY/MM/uuid.ext`) 발급 (`src/lib/storage.ts`)
+   - Blob 설정 시: `@vercel/blob/client` 의 `upload()` 가 같은 주소로 토큰을 요청 → `handleUpload` 가 키·형식·크기 검증 후 발급 → 브라우저가 Blob 에 직접 업로드 (Vercel 함수 본문 4.5MB 제한 우회)
+   - 미설정 시: `/api/admin/upload/local` 로 PUT 해 `.data/uploads` 에 저장
+3. 서버 액션은 `resolveUpload({ key, url })` 로 검증(우리 Blob 호스트 + 키와 같은 경로만) 후 `imageUrl`·`storageKey`(Blob URL) 저장
+4. 글·사진 삭제 시 `deleteObject(storageKey)` 로 Blob 파일도 삭제, 글 수정 시 본문에서 빠진 이미지도 삭제
 
 ### 인증
 - `ADMIN_ID` + `ADMIN_PASSWORD_HASH`(bcrypt, base64) 비교 → HS256 JWT 를 httpOnly 쿠키(`smaru_admin`, 7일)로 발급
@@ -172,10 +173,32 @@ old/                  기존 사이트 보관본
 | id | serial PK | |
 | title | varchar(255) | 이미지 alt 로도 사용 (SEO) |
 | description | varchar(500) | |
-| image_url | text | CloudFront URL (로컬은 `/uploads/...`) |
-| storage_key | text null | 저장소 키 (삭제 시 사용) |
+| image_url | text | Blob 공개 URL (로컬은 `/uploads/...`) |
+| storage_key | text null | 삭제용 — Blob 이면 URL, 로컬이면 키 |
 | width / height | int | |
+| program_slug | varchar(80) null | 연결된 진로·직업체험 프로그램 (`career-programs.ts` 의 slug) — 강사 현장 사진 (v1.7) |
 | created_at | timestamptz | |
+
+`gallery` 한 행이 **앨범** 하나이고, 위 `image_url`·`storage_key`·`width/height` 가 **대표 사진**입니다(메인·목록·OG). 나머지 사진은 아래 테이블에 순서대로 들어갑니다.
+
+### `gallery_images` — 앨범의 나머지 사진 (v1.4)
+| 컬럼 | 타입 | 설명 |
+|---|---|---|
+| id | serial PK | |
+| gallery_id | int FK → gallery.id | `ON DELETE CASCADE` |
+| image_url / storage_key | text / text null | |
+| width / height | int | |
+| sort_order | int | 상세 페이지 표시 순서 (대표 사진 다음부터 0, 1, 2 …) |
+
+운영 DB 반영: `npm run db:init` 다시 실행(멱등 — 기존 테이블은 그대로, `gallery_images` 만 생김). 기존 갤러리 행은 사진 1장짜리 앨범이 됩니다.
+
+v1.7: `npm run db:init` 을 한 번 더 실행하면 `gallery.program_slug` 컬럼과 `gallery_program_idx` 인덱스가 추가됩니다(멱등). 로컬은 `npm run dev` 가 시작할 때 자동 반영합니다.
+
+### 강사 현장 사진 (v1.7)
+강사는 공유 관리자 계정으로 `/admin/gallery` 에서 새 앨범을 만들 때 **연결 프로그램**을 고릅니다. 그러면
+- 진로·직업체험 분야 페이지(`/career/<분야>`)의 해당 프로그램 아래 **현장 사진**에 최신순으로 쌓이고(프로그램당 최근 12장, `FIELD_PHOTOS_PER_PROGRAM`)
+- 커뮤니티 포토갤러리에도 같은 앨범이 올라가며 목록·상세에 프로그램 이름과 링크가 붙습니다.
+- 앨범 사진 관리 화면(`/admin/gallery/[id]`)에서 연결을 바꾸거나 해제할 수 있습니다. 공유 계정이라 올린 사람은 기록되지 않습니다.
 
 ---
 
@@ -235,11 +258,8 @@ export async function saveSomething(input: {...}): Promise<ActionResult> {
 | 이름 | 필수 | 설명 |
 |---|---|---|
 | `NEXT_PUBLIC_SITE_URL` | 운영 | `https://imaginemaru.kr` — canonical·sitemap·OG 기준 |
-| `DATABASE_URL` | 운영 | Neon 연결 문자열. 비우면 로컬 DB(`npm run dev`) 사용 |
-| `AWS_REGION` | 운영 | `ap-northeast-2` |
-| `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` | 운영 | S3 PutObject/DeleteObject 권한만 가진 IAM 키 |
-| `S3_BUCKET` | 운영 | 버킷 이름 |
-| `NEXT_PUBLIC_CDN_DOMAIN` | 운영 | CloudFront 도메인 (`https://` 제외) |
+| `DATABASE_URL` (또는 `POSTGRES_URL`) | 운영 | Neon 연결 문자열 — Vercel Marketplace 통합이 자동 주입. 비우면 로컬 DB(`npm run dev`) 사용 |
+| `BLOB_READ_WRITE_TOKEN` | 운영 | Vercel Blob 스토어 연결 시 자동 주입. 비우면 `.data/uploads` 로컬 저장 |
 | `ADMIN_ID` | 필수 | 관리자 아이디 |
 | `ADMIN_PASSWORD_HASH` | 필수 | `npm run hash-password -- '비번'` 출력값 |
 | `AUTH_SECRET` | 필수 | 32자 이상 임의 문자열 |
@@ -258,9 +278,10 @@ export async function saveSomething(input: {...}): Promise<ActionResult> {
 | `npm run db:local` | 로컬 DB 서버만 실행 |
 | `npm run build` / `npm start` | 운영 빌드 / 실행 (DB 없이도 빌드 가능 — 빈 데이터로 생성) |
 | `npm run lint` / `npm run typecheck` | 코드 검사 |
+| `npm test` | `scripts/*.test.mjs` (연혁 정렬 등) |
 | `npm run db:init` | 운영 DB 에 테이블 생성 (`DATABASE_URL` 필요, 여러 번 실행해도 안전) |
 | `npm run hash-password -- '비번'` | 관리자 비밀번호 해시 생성 |
-| `npm run import-photos -- <폴더>` | PPT 원본 이미지 → `public/photos/*.webp` 변환 (아래 참고) |
+| `npm run import-photos -- --ppt <폴더> --pdf <폴더>` | PPT·PDF 원본 이미지 → `public/photos/*.webp` 변환 (아래 참고) |
 
 로컬 DB 로 운영 빌드 확인: `node scripts/local-db.mjs --run next build` → `node scripts/local-db.mjs --run next start`
 
@@ -268,34 +289,37 @@ export async function saveSomething(input: {...}): Promise<ActionResult> {
 
 ## 콘텐츠 수정 위치
 
-회사 정보의 출처는 **[유한회사 상상마루] 2024 기업소개 PDF/PPT** 입니다 (저장소 루트에 두되 git 제외). `old/` 의 예전 문구는 실제 정보가 아니므로 참고하지 마세요.
+회사 정보의 출처는 **[유한회사 상상마루] 2024 기업소개 PDF/PPT**, 진로·직업체험 프로그램은 **2026년 진로·진학·직업체험(특강) 프로그램 운영 계획(안)·요약 PDF** 입니다 (저장소 루트에 두되 git 제외). `old/` 의 예전 문구는 실제 정보가 아니므로 참고하지 마세요.
 
 | 바꿀 것 | 파일 |
 |---|---|
 | 상단 메뉴 구성 | `src/config/menu.ts` |
 | 회사 정보·연락처·주소·인증 목록·스토어 주소·SEO 기본 문구 | `src/config/site.ts` |
-| 교육활동 5종·체험활동 4종 (표·사진·섹션 포함, 메인 카드의 대상·운영 `card`) | `src/content/programs.ts` |
+| 교육활동 5종·체험활동 3종 (표·사진·섹션 포함, 메인 카드의 대상·운영 `card`) | `src/content/programs.ts` |
+| 진로·직업체험 9개 분야·82개 프로그램(내용·운영 형태·대표 분야) — 메뉴·메인 카드·사이트맵에 자동 반영 | `src/content/career-programs.ts` |
 | 인사말·연혁·조직도·MOU·교통안내·협력기관 로고 | `src/content/about.ts` |
-| 진로체험 6개 스쿨·인증·사진 카드 | `src/content/career.ts` |
+| 진로체험기관 인증 목록 | `src/content/career.ts` |
 | 메인 히어로(사진 3장·캡션)·바로가기·섹션 문구 | `src/components/home/*` (`Hero.tsx`, `QuickLinks.tsx` …) |
 | 색상·라운드·폰트·버튼·타입 스케일 | `src/app/globals.css` 의 `@theme` 와 `@utility` (규칙은 아래 디자인 절) |
 | 공지·보도자료·포토갤러리 | 관리자 페이지 `/admin` |
 
 ### 사진 교체·추가
-사진은 PPT 원본에서 추출해 `public/photos/*.webp` 로 변환했고, 코드는 `photos["이름"]` 으로 참조합니다(타입 체크됨).
+사진은 PPT·PDF 원본에서 추출해 `public/photos/*.webp` 로 변환했고, 코드는 `photos["이름"]` 으로 참조합니다(타입 체크됨). 변환 결과는 커밋되어 있으니 사진을 바꿀 때만 아래를 실행합니다.
 1. PPT 이미지 꺼내기: `unzip -o -q "[유한회사 상상마루] 2024_기업소개_PPT_New.pptx" "ppt/media/*" -d /tmp/smaru-ppt`
-2. `scripts/import-photos.mjs` 의 `map` 에 `"새이름": ["imageNN.jpg", 최대px]` 추가
-3. `npm run import-photos -- /tmp/smaru-ppt/ppt/media` → `public/photos/` 와 `src/content/photos.generated.ts` 갱신
-4. 콘텐츠 파일에서 `image: "새이름"` 또는 `photos: [{ name: "새이름", alt: "..." }]` 로 사용
+2. PDF 이미지 꺼내기 (macOS 전용, Xcode 명령줄 도구의 swift 사용):
+   `swift scripts/extract-pdf-images.swift "<운영계획(안).pdf>" /tmp/smaru-pdf/plan` · `swift scripts/extract-pdf-images.swift "<요약.pdf>" /tmp/smaru-pdf/summary`
+   — 파일 이름은 `pNN-iMM`(쪽 · 위→아래 순서), `manifest.json` 에 페이지 위치가 함께 기록됩니다.
+3. `scripts/import-photos.mjs` 에 추가: 회사 사진은 `pptMap` 에 `"새이름": ["imageNN.jpg", 최대px]`, 진로·직업체험 사진은 `pdfMap` 에 `"<프로그램 slug>": ["plan/p13-i02", …]`(첫 장 = 대표 `cp-<slug>`, 나머지 `cp-<slug>-2` …)
+4. `npm run import-photos -- --ppt /tmp/smaru-ppt/ppt/media --pdf /tmp/smaru-pdf` → `public/photos/` 와 `src/content/photos.generated.ts` 갱신
+5. 콘텐츠 파일에서 `image: "새이름"` 또는 `photos: [{ name: "새이름", alt: "..." }]` 로 사용 (진로·직업체험 `cp-*` 사진은 `programPhotos()` 가 자동으로 찾음)
 
 새 원본 사진(PPT 밖)은 같은 폴더에 넣고 2~3 단계를 따르면 됩니다. 활동 사진이 계속 쌓이는 경우는 관리자 포토갤러리를 쓰세요.
 
 ## 로드맵 / 남은 작업
 
 ### 운영 연결 (다음 단계)
-- [ ] Neon 프로젝트 생성 → `npm run db:init` — **neon-http 연결은 실제 Neon 으로 아직 검증 안 됨**
-- [ ] S3 버킷·CORS·CloudFront·IAM 설정 — **presigned 업로드는 실제 S3 로 아직 검증 안 됨** (로컬 저장소 경로만 검증)
-- [ ] Vercel 배포 · 환경변수 · Pro 플랜 · 도메인(imaginemaru.kr) 연결
+- [ ] 클라이언트 명의 Vercel 팀(Pro) 생성 → 프로젝트 Import → Storage 에서 Neon(Vercel-managed)·Blob 연결 → `npm run db:init` — **neon-http 연결·Blob 클라이언트 업로드는 실제 Vercel 환경에서 아직 검증 안 됨** (로컬 저장소 경로만 검증)
+- [ ] 도메인(imaginemaru.kr) 연결
 - [ ] 네이버 서치어드바이저 / 구글 서치콘솔 등록, sitemap·RSS 제출
 - [ ] 미리넷 DB·관리자 비밀번호 교체 (예전 커밋 기록에 남아 있음) 후 호스팅 해지
 - 절차: [docs/DEPLOY.md](docs/DEPLOY.md)
@@ -308,6 +332,7 @@ export async function saveSomething(input: {...}): Promise<ActionResult> {
 - [ ] 오시는 길 지도: 네이버 지도 퍼가기 iframe 삽입 (`src/app/(site)/about/location/page.tsx`)
 - [ ] PPT 사진 중 화질 낮은 것(800px 안팎) 원본 확보 시 교체
 - [ ] 상단 메뉴 변경 시 `menu.ts` 반영
+- [ ] 게시판·갤러리 검색 (v1.4 표 레이아웃에 검색창 자리만 비워 둠 — 레퍼런스 isedu.kr 은 제목 검색 제공)
 
 ### 백엔드 개선 후보
 - [ ] **프로그램 신청/문의 폼** — 현재 각 프로그램의 "신청 문의" 는 전화·메일 링크. DB 저장 + 관리자 목록 + 이메일 알림(예: Resend) 추가 후보
@@ -326,27 +351,34 @@ export async function saveSomething(input: {...}): Promise<ActionResult> {
 
 ---
 
-## 디자인 규칙 (v1.3)
+## 디자인 규칙 (v1.8)
 
-웜 크림 에디토리얼 — 기업소개 PPT 표지의 크림색 바탕, 로고의 초록을 주색으로, 노랑은 형광펜 밑줄로만 씁니다.
+화이트 + 블루 — 흰 바탕에 블루가 주색, 노랑은 형광펜 밑줄, 빨강은 NEW·에러로만 씁니다. 드론축구장 띠(메인 02)만 잔디 초록(`turf`).
+v1.8 은 PR #3(블루 디자인)을 받아들이고, 서브페이지 틀·진로·직업체험·사진은 v1.7 것을 유지했습니다. 글꼴은 **Paperlogy** 하나(본문 500 · 강조 600 · 제목 700 · 큰 숫자 800, 완성형 서브셋 — 없는 글자만 Pretendard 폴백).
 
 | 토큰 | 값 | 용도 |
 |---|---|---|
-| `paper` / `cream` | #FBFAF7 / #F6F3EC | 기본 바탕 / 교차 띠·상단 타이틀 |
-| `ink` / `body` / `muted` | #1F1E1C / #44423D / #6F6B63 | 제목·푸터 바탕 / 본문 / 보조 |
-| `line` / `line-strong` | #E3DED3 / #CFC9BC | 가는 선 / 테두리 |
-| `green` | #2F6B23 | 링크·활성·주 버튼·섹션 번호 |
-| `hl` (노랑) | #F5B800 55% | 제목 속 핵심 단어 형광펜 |
-| `red` | #B8323D | NEW 표시·에러 |
+| `paper` / `cream` | #FFFFFF / #F3F6FB | 기본 바탕 / 교차 띠·표 머리·hover (연한 청회색) |
+| `ink` / `body` / `muted` | #172F4E / #3C5069 / #5E7086 | 제목·푸터 바탕 / 본문 / 보조 (흰 바탕 5.0:1) |
+| `line` / `line-strong` | #DCE4EF / #BBCBDC | 가는 선 / 테두리 |
+| `blue` / `blue-dark` | #215EAC / #184981 | 링크·활성·주 버튼·섹션 번호 (흰 글자 6.3:1) / hover |
+| `blue-soft` / `blue-mist` | #EEF4FC / #DBE7F6 | 히어로 바탕·호기심 충전소 카드 / 사진 자리·장식 원 |
+| `navy` | #142D4E | `grad-brand` 끝, 깊은 포인트 |
+| `turf` / `turf-dark` | #2F6B23 / #275A1D | 드론축구장 띠 전용 |
+| `grad-brand` | blue → navy (135deg) | 서브페이지 사이드메뉴 섹션 블록 (흰 글자) |
+| `grad-band` | blue-soft → blue-mist | 서브 타이틀 띠 |
+| `hl` (노랑) | #F5B800 55% | 핵심 단어 형광펜 |
+| `red` | #C23A45 | NEW 표시·에러 |
 
-- 버튼은 `btn btn-primary|btn-outline|btn-ghost` (모서리 8px), 섹션 머리는 `SectionHead` (초록 띠 위에서는 `tone="dark"`, 캐러셀 화살표는 `actions` 슬롯)
-- 폭: `container-site` 는 창 폭을 따라 넓어짐(최대 1680px, 좌우 여백 `clamp(20px, 5.2vw, 80px)` — 1440px 에서 75px). 서브페이지 제목 띠·본문은 `container-read`(최대 1320px)로 읽기 폭 유지
-- 헤더: 높이 85px(CSS 변수 `--header-h` — sticky 위치도 이 값 사용), 로고 46px, 1차 메뉴 칸 폭 `clamp(104px, 10.4vw, 150px)`·글자 가운데. 주 메뉴에 마우스·포커스가 들어오면 모든 하위 메뉴가 각 칸 아래로 한꺼번에 펼쳐지는 메가메뉴(`MainNav.tsx`, 여닫기는 JS 상태 — 나갈 때 150ms 지연). 1024~1439px 에서 문의 버튼은 아이콘만
-- 메인 첫 화면: 한 겹 히어로(왼쪽 크림 글 / 오른쪽 사진 1장이 7초마다 교차 페이드, 오른쪽 아래 고정 위치의 사진 고르기 막대·일시정지 버튼) + 바로가기 4칸. 사진 위 글자는 작은 캡션 라벨뿐
-- 02 프로그램: 일러스트 드론축구장 띠(`turf` 체크무늬 잔디 + 풀잎 · 그물 펜스 · 경기장 선 · 링 골대 · 나는 드론축구공 `ui/DroneBall`, 모바일은 잔디·풀잎만) 위 흰 카드 슬라이더(사진 3:2, 분류 라벨, 대상·운영 2줄, 키워드 태그 2개). 끊김 없이 계속 흐름(초당 약 36px, 무한 루프, 마우스를 올리면 멈추고 떼면 바로 다시 흐름, 일시정지 버튼 — `embla-carousel-auto-scroll`), 아래 흰 막대를 누르거나 좌우로 끌어 이동(현재 위치는 굴러가는 드론축구공 손잡이, 마우스를 올리면 공 양옆 ‹ › · 칸 눈금 · 프로그램 이름)
-- 쓰지 않는 것: 알약 모양(`rounded-full`) 칩·버튼, 그라데이션 박스, 대문자 영문 소제목, 제목 옆 세로 막대, 카드 기본 그림자, 사진 위 글자 오버레이(캡션 라벨 제외)
-- hover 떠오름: 메인 사진 카드(프로그램·진로체험·포토갤러리)만 마우스를 올리면 6px 위로 + 옅은 그림자(`shadow-lift`). '동작 줄이기' 설정이면 움직이지 않음
-- 명도 대비는 크림 바탕 기준 모두 4.5:1 이상으로 맞춰 두었습니다. 새 색을 넣을 때도 확인하세요.
+- 임의 hex 금지 — 컴포넌트 CSS(`Hero.css`·`AboutIntro.css`·`HistoryTimeline.css` …)도 `var(--color-*)` 만. 예외는 네이버/카카오 지도·스토어 버튼 브랜드색
+- 글자 체계: `src/styles/typography.css` 의 `--type-*` 변수·`.type-*` 클래스(공개 페이지 `.public-site` 범위). 공개 사이트 보조 글자 최소 13px, 누르는 것 16~18px
+- 폭: `container-site` = 헤더·히어로·메인 섹션 공통(최대 1430px, 좌우 30px, 800px 미만 15px). 서브페이지 본문은 `container-read`(최대 1320px)
+- 헤더: 2단 — 위 블루 안내 줄(기관명·슬로건 | 공지사항·오시는 길·교육문의 전화) + 아래 로고·주 메뉴. `--header-h` 는 `Header.css` 가 두 줄 높이로 계산(sticky·앵커 위치에 사용). 메가메뉴는 `MainNav.tsx`
+- 메인: 히어로(왼쪽 사진 캐러셀 3장 + 오른쪽 위 "호기심 충전소" 카드 — 캘리그라피·아이·드론·로봇 일러스트 `public/illustrations/hero-future-learning-v1.png` / 오른쪽 아래 안내 카드 + 바로가기 3칸) → 상상마루 소개(사진 + 연혁·통계, `ScrollReveal`) → 진로·직업체험 대표 6개 분야 → 02 드론축구장 프로그램 슬라이더 → 공지사항 | 포토갤러리 → 협력기관
+- 서브페이지 틀(`SubPage`, v1.7 유지): `grad-band` 타이틀 띠 가운데 제목 + 브레드크럼, 띠 위로 떠 있는 메뉴 카드(`grad-brand` 섹션명 블록 + 흰 메뉴 카드, 활성은 블루). 상세 글은 `bandTitle` + 본문 `DetailHead` h1, 하단 `목록` + `PrevNext`
+- 연혁(`/about/history`): `HistoryTimeline` — 연도 세로 타임라인
+- 쓰지 않는 것: 알약 모양(`rounded-full`) 칩·버튼, `grad-brand`·`grad-band` 외 그라데이션, 대문자 영문 소제목, 제목 옆 세로 막대, 카드 기본 그림자(서브페이지 메뉴 카드만 예외), 사진 위 큰 글자 오버레이(작은 캡션 라벨만), Paperlogy 외 글꼴(`localFont` 포함)
+- hover 떠오름: 메인 사진 카드(프로그램·진로체험·포토갤러리)만 6px 위로 + `shadow-lift`. '동작 줄이기' 설정이면 움직이지 않음
 
 ## 주의사항
 
