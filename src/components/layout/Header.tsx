@@ -26,18 +26,21 @@ export function Header() {
           </nav>
         </div>
       </div>
-      <div className="site-header-frame site-navigation-row flex items-center justify-between gap-6">
-        <Suspense
-          fallback={
-            <Link href="/" className="flex shrink-0 items-center" aria-label={`${site.name} 홈`}>
+      {/* 로고 | 주 메뉴(화면 가운데) | 모바일 메뉴 버튼 — 양옆 칸 폭을 같게 해 메뉴가 가운데 오도록 */}
+      <div className="site-header-frame site-navigation-row grid grid-cols-[1fr_auto_1fr] grid-rows-[var(--navigation-header-h)] items-center gap-6">
+        <div className="justify-self-start">
+          <Suspense
+            fallback={
+              <Link href="/" className="flex shrink-0 items-center" aria-label={`${site.name} 홈`}>
+                <Image src="/logo.png" alt={site.name} width={150} height={48} loading="eager" className="site-brand-logo object-contain" />
+              </Link>
+            }
+          >
+            <LogoLink label={`${site.name} 홈`}>
               <Image src="/logo.png" alt={site.name} width={150} height={48} loading="eager" className="site-brand-logo object-contain" />
-            </Link>
-          }
-        >
-          <LogoLink label={`${site.name} 홈`}>
-            <Image src="/logo.png" alt={site.name} width={150} height={48} loading="eager" className="site-brand-logo object-contain" />
-          </LogoLink>
-        </Suspense>
+            </LogoLink>
+          </Suspense>
+        </div>
 
         <nav aria-label="주 메뉴" className="site-main-nav hidden h-full xl:block">
           <Suspense fallback={<NavList active={null} />}>
@@ -45,7 +48,9 @@ export function Header() {
           </Suspense>
         </nav>
 
-        <MobileMenu />
+        <div className="col-start-3 justify-self-end">
+          <MobileMenu />
+        </div>
       </div>
     </header>
   );
