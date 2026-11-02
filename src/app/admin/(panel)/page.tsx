@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { adminRecentPosts, adminStats } from "@/lib/admin-data";
 import { boardLabel, formatDate } from "@/lib/format";
-import { isS3Configured } from "@/lib/storage";
+import { isBlobConfigured } from "@/lib/storage";
 import { requireAdmin } from "@/lib/auth";
 
 // 관리자 화면: 매 요청 서버 렌더링 (DB 최신값 · 로그인 확인)
@@ -15,11 +15,11 @@ export default async function Dashboard() {
   const cards = [
     { label: "공지사항", value: stats.notice, href: "/admin/posts?board=notice" },
     { label: "보도자료", value: stats.press, href: "/admin/posts?board=press" },
-    { label: "갤러리 사진", value: stats.photos, href: "/admin/gallery" },
+    { label: "갤러리 앨범", value: stats.photos, href: "/admin/gallery" },
   ];
   const warnings = [
     !process.env.DATABASE_URL && "DATABASE_URL 미설정 — 로컬 개발용 내장 DB를 사용 중입니다.",
-    !isS3Configured() && "S3 미설정 — 업로드 이미지가 로컬(.data/uploads)에 저장됩니다.",
+    !isBlobConfigured() && "Vercel Blob 미설정 — 업로드 이미지가 로컬(.data/uploads)에 저장됩니다.",
   ].filter(Boolean) as string[];
 
   return (
@@ -31,7 +31,7 @@ export default async function Dashboard() {
         </div>
         <div className="flex gap-2">
           <Link href="/admin/posts/new?board=notice" className="rounded-btn bg-green px-5 py-2.5 text-[14px] font-bold text-white hover:bg-green-dark">+ 새 글 쓰기</Link>
-          <Link href="/admin/gallery" className="rounded-btn border border-line bg-white px-5 py-2.5 text-[14px] font-bold text-ink hover:border-green">+ 사진 올리기</Link>
+          <Link href="/admin/gallery" className="rounded-btn border border-line bg-white px-5 py-2.5 text-[14px] font-bold text-ink hover:border-green">+ 앨범 올리기</Link>
         </div>
       </div>
 

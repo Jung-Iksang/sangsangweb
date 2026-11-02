@@ -1,38 +1,40 @@
 @import "tailwindcss";
 
-/* ───────── 디자인 토큰 — 웜 크림 에디토리얼 (v1.3) ─────────
-   크림·종이 바탕은 기업소개 PPT 표지 색, 초록·노랑·빨강은 상상마루 로고 큐브 색.
-   규칙: 알약(rounded-full) 칩·버튼, 그라데이션 박스, 대문자 영문 소제목, 제목 옆 세로 막대 금지.
-   명도 대비는 크림(#F6F3EC) 바탕 기준 모두 4.5:1 이상 (README 디자인 절 참고). */
+/* ───────── 디자인 토큰 — 화이트 + 키위 그린 (v1.5 · Paperlogy) ─────────
+   흰 바탕에 로고 라임을 한 단계 진하게 한 초록이 주색, 노랑·산호는 포인트 (레이아웃·색 구조는 isedu.kr 참고).
+   규칙: 알약(rounded-full) 칩·버튼, 대문자 영문 소제목, 제목 옆 세로 막대 금지.
+   그라데이션은 아래 grad-kiwi(사이드메뉴 블록)·grad-band(타이틀 띠·히어로) 두 유틸리티로만.
+   명도 대비는 흰 바탕 기준 글자 4.5:1 이상, grad-kiwi 위 큰 흰 글자 3:1 이상 (README 디자인 절 참고). */
 @theme {
-  --font-sans: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-sans: Paperlogy, "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
 
-  /* 바탕 */
-  --color-cream: #f6f3ec;
-  --color-paper: #fbfaf7;
+  /* 바탕 — cream 은 교차 띠·표 머리·hover 용 연회색 */
+  --color-cream: #f5f6f4;
+  --color-paper: #ffffff;
   --color-white: #ffffff;
 
   /* 글자·선 */
   --color-ink: #1f1e1c;
-  --color-body: #44423d;
-  --color-muted: #6f6b63;
-  --color-line: #e3ded3;
-  --color-line-strong: #cfc9bc;
+  --color-body: #474e58;
+  --color-muted: #6b6b6b;
+  --color-line: #e5e5e5;
+  --color-line-strong: #cfcfcf;
 
   /* 브랜드 */
-  --color-green: #2f6b23;
-  --color-green-dark: #275a1d;
-  --color-green-soft: #e6efdf;
+  --color-green: #357f20;
+  --color-green-dark: #2a6a19;
+  --color-green-soft: #eef7e6;
+  --color-teal: #27825f;
   --color-yellow: #f5b800;
   --color-yellow-ink: #8a6400;
-  --color-red: #b8323d;
+  --color-red: #c23a45;
   /* 로고 원색 — 점·장식 전용 (글자색 금지) */
   --color-brand-green: #7abd47;
   --color-brand-yellow: #f5b800;
   --color-brand-red: #d64550;
 
   /* 먹색(푸터) 바탕 전용 */
-  --color-on-ink: #f6f3ec;
+  --color-on-ink: #f5f6f4;
   --color-on-ink-muted: #b8b3a8;
   --color-on-ink-green: #9bd36a;
 
@@ -69,37 +71,47 @@
   padding-inline: clamp(20px, 5.2vw, 80px);
 }
 
-/* 타입 스케일 — Pretendard 굵기와 음수 자간으로 위계 */
+/* 그라데이션 — 이 두 곳 말고는 임의 hex·그라데이션 금지 */
+/* 키위: 진한 라임 → 청록. 흰 24px 굵은 글자 기준 시작 3.05:1 · 끝 4.7:1 */
+@utility grad-kiwi {
+  background-image: linear-gradient(135deg, #55a633 0%, var(--color-teal) 100%);
+}
+/* 띠: 연두 → 민트 틴트 (타이틀 띠·히어로 왼쪽 패널) */
+@utility grad-band {
+  background-image: linear-gradient(135deg, var(--color-green-soft) 0%, #e8f3ee 100%);
+}
+
+/* 타입 스케일 — Paperlogy 는 글자 폭이 넓어 굵기 700·자간 약하게 */
 @utility t-display {
   font-size: clamp(2.25rem, 1.4rem + 3vw, 3.5rem);
-  line-height: 1.12;
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   color: var(--color-ink);
 }
 @utility t-h1 {
   font-size: clamp(2rem, 1.5rem + 1.8vw, 2.75rem);
-  line-height: 1.15;
-  font-weight: 800;
-  letter-spacing: -0.025em;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.015em;
   color: var(--color-ink);
 }
 @utility t-h2 {
   font-size: clamp(1.625rem, 1.3rem + 1.2vw, 2.125rem);
-  line-height: 1.22;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--color-ink);
-}
-@utility t-h3 {
-  font-size: 1.375rem;
-  line-height: 1.3;
+  line-height: 1.25;
   font-weight: 700;
   letter-spacing: -0.01em;
   color: var(--color-ink);
 }
+@utility t-h3 {
+  font-size: 1.5rem;
+  line-height: 1.35;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--color-ink);
+}
 @utility t-lead {
-  font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  font-size: clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem);
   line-height: 1.7;
   font-weight: 500;
   color: var(--color-body);
@@ -116,7 +128,7 @@
 /* 섹션 번호 (01, 02 …) */
 @utility num {
   font-variant-numeric: tabular-nums;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--color-green);
@@ -128,19 +140,19 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  height: 3rem;
-  padding-inline: 1.375rem;
+  height: 3.25rem;
+  padding-inline: 1.5rem;
   border-radius: var(--radius-btn);
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 600;
   letter-spacing: -0.01em;
   white-space: nowrap;
   transition: background-color 0.2s, border-color 0.2s, color 0.2s;
 }
 @utility btn-sm {
-  height: 2.5rem;
-  padding-inline: 1rem;
-  font-size: 14px;
+  height: 2.75rem;
+  padding-inline: 1.125rem;
+  font-size: 15px;
 }
 @utility btn-primary {
   background: var(--color-green);
@@ -188,7 +200,7 @@
 
 /* 텍스트 링크 (전체보기 등) */
 @utility link-more {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--color-ink);
   text-decoration: underline;
@@ -222,7 +234,9 @@
     background: var(--color-paper);
     color: var(--color-body);
     font-family: var(--font-sans);
-    letter-spacing: -0.01em;
+    font-weight: 500;
+    line-height: 1.65;
+    letter-spacing: 0;
     word-break: keep-all;
     overflow-wrap: anywhere;
     overflow-x: clip;
@@ -238,12 +252,12 @@
 
 /* 게시글 본문 (관리자 에디터 HTML) */
 .prose-post {
-  font-size: 1.0625rem;
-  line-height: 1.85;
+  font-size: 1.125rem;
+  line-height: 1.8;
   color: var(--color-body);
 }
 .prose-post > * + * { margin-top: 1em; }
-.prose-post h2 { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; color: var(--color-ink); margin-top: 1.8em; }
+.prose-post h2 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-ink); margin-top: 1.8em; }
 .prose-post h3 { font-size: 1.25rem; font-weight: 700; color: var(--color-ink); margin-top: 1.5em; }
 .prose-post a { color: var(--color-green); text-decoration: underline; text-underline-offset: 3px; }
 .prose-post ul { list-style: disc; padding-left: 1.4em; }

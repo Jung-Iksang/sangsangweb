@@ -1,105 +1,81 @@
-# 배포 가이드 (Vercel + Neon + AWS S3/CloudFront)
+# 배포 가이드 (Vercel 하나로 — 호스팅 + Neon DB + Blob 사진 저장소)
 
 상상마루 홈페이지를 운영 환경에 올리는 순서입니다. 처음 한 번만 하면 되고, 이후에는 `main` 브랜치에 push 하면 Vercel 이 자동 배포합니다.
+**가입·결제는 Vercel 한 곳**입니다. DB(Neon)와 사진 저장소(Blob)는 Vercel 안에서 만들고 Vercel 청구서에 합산됩니다.
 
 | 구성 | 역할 | 예상 비용(월) |
 |---|---|---|
-| Vercel Pro | Next.js 호스팅 · 도메인 · HTTPS | $20 (Hobby 무료 플랜은 상업용 사용 불가) |
-| Neon (Free) | Postgres DB — 게시글·갤러리 정보 | $0 (0.5GB까지) |
-| AWS S3 + CloudFront | 업로드 이미지 저장·전송 | $1~3 |
+| Vercel Pro | Next.js 호스팅 · 도메인 · HTTPS · CDN | $20 (팀 멤버 1명당. Hobby 무료 플랜은 상업용 사용 불가) |
+| Neon (Vercel Marketplace, Free) | Postgres DB — 게시글·갤러리 정보 | $0 (0.5GB까지. 5분 유휴 후 잠들어 관리자 첫 진입만 1초쯤 늦음) |
+| Vercel Blob | 업로드 사진 저장·전송 | $1 안쪽 (저장 GB당 $0.023, 전송 GB당 $0.05) |
+
+> 사이트가 여러 개(상상마루 외 2개)라도 **같은 팀에 프로젝트만 추가**하면 됩니다. 추가 요금 없음. 사이트마다 DB·Blob 스토어는 따로 만드세요.
+> 결제는 해외 카드 결제라 **세금계산서는 발행되지 않고** 인보이스(영수증)만 받을 수 있습니다.
 
 ---
 
-## 1. Neon (DB)
+## 1. Vercel 팀 만들기 (클라이언트 명의)
 
-1. https://neon.tech 가입 → **Create project** (Region: `AWS Asia Pacific (Seoul)` 또는 가장 가까운 곳).
-   - Vercel 대시보드 → Storage → **Neon** 연동으로 만들면 `DATABASE_URL` 이 자동 등록됩니다.
-2. **Connection string** 복사 (`postgresql://...neon.tech/neondb?sslmode=require`).
-3. 테이블 생성 (둘 중 하나, 여러 번 실행해도 안전):
-   - 로컬에서: `DATABASE_URL='복사한주소' npm run db:init`
-   - 또는 Neon 콘솔 **SQL Editor** 에 `src/db/bootstrap.sql` 내용을 붙여넣고 실행.
+1. https://vercel.com 가입 (GitHub 계정 연결 권장) → **Create Team** → 팀 이름 예: `sangsangmaru`
+2. Settings → **Billing** → **Pro** 로 전환, 사업자 카드 등록
+3. Settings → **Members** → 개발사 계정 초대 (Member 권한)
 
-## 2. AWS S3 + CloudFront (이미지)
+## 2. 프로젝트 만들기
 
-### 2-1. S3 버킷
-- 리전 `ap-northeast-2 (서울)`, 이름 예: `sangsangmaru-images`
-- **퍼블릭 액세스 차단: 모두 켜둠** (CloudFront 로만 공개)
-- 버킷 → 권한 → **CORS** (관리자 브라우저에서 직접 업로드하기 위함):
+1. 팀 대시보드 → **Add New → Project** → GitHub 저장소 `sangsangweb` Import (Framework: Next.js 자동 인식)
+2. 일단 **Deploy** — 환경변수가 없어서 DB 없는 상태로 빌드만 되고, 아래 3~4 를 마친 뒤 Redeploy 합니다.
 
-```json
-[
-  {
-    "AllowedOrigins": ["https://imaginemaru.kr", "https://www.imaginemaru.kr", "http://localhost:3000"],
-    "AllowedMethods": ["PUT"],
-    "AllowedHeaders": ["Content-Type"],
-    "MaxAgeSeconds": 3000
-  }
-]
-```
+## 3. DB · 사진 저장소 연결 (프로젝트 → Storage 탭)
 
-### 2-2. CloudFront
-- 원본: 위 S3 버킷, **Origin access control(OAC)** 생성 후 안내에 따라 버킷 정책 업데이트
-- 캐시 정책: `CachingOptimized`
-- 배포 후 도메인(예: `d1abcd2efgh3.cloudfront.net`)을 `NEXT_PUBLIC_CDN_DOMAIN` 에 사용
-- (선택) `img.imaginemaru.kr` 같은 커스텀 도메인 연결 시 ACM 인증서(us-east-1) 필요
+1. **Create Database → Neon (Postgres)** → **Vercel-managed** 선택(Neon 가입 없이 Vercel 이 계정을 만들어 주고 결제 합산) → Region `Singapore (ap-southeast-1)` 또는 가장 가까운 곳 → Free 플랜 → 프로젝트에 Connect
+   - `DATABASE_URL`·`POSTGRES_URL` 등이 자동으로 환경변수에 들어갑니다(코드는 둘 다 인식).
+2. **Create → Blob** → 스토어 이름 예: `sangsangmaru-images` → 프로젝트에 Connect
+   - `BLOB_READ_WRITE_TOKEN` 이 자동으로 들어갑니다.
 
-### 2-3. IAM 사용자 (업로드 전용 키)
-IAM → 사용자 생성 → 아래 인라인 정책만 부여 → **액세스 키** 발급
+## 4. 나머지 환경변수 (Settings → Environment Variables, Production · Preview 모두)
 
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": ["s3:PutObject", "s3:DeleteObject"],
-      "Resource": "arn:aws:s3:::sangsangmaru-images/*"
-    }
-  ]
-}
-```
-
-## 3. 관리자 비밀번호 / 세션 키
+로컬에서 먼저 값을 만듭니다.
 
 ```bash
 npm run hash-password -- '관리자비밀번호(10자 이상)'   # → ADMIN_PASSWORD_HASH 값
 openssl rand -base64 32                                # → AUTH_SECRET 값
 ```
 
-## 4. Vercel
-
-1. https://vercel.com → **Add New Project** → GitHub 저장소 `sangsangweb` 선택 (Framework: Next.js 자동 인식)
-2. **Environment Variables** (Production · Preview 모두):
-
 | 이름 | 값 |
 |---|---|
 | `NEXT_PUBLIC_SITE_URL` | `https://imaginemaru.kr` |
-| `DATABASE_URL` | Neon 연결 문자열 |
-| `AWS_REGION` | `ap-northeast-2` |
-| `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` | 2-3 에서 발급한 키 |
-| `S3_BUCKET` | `sangsangmaru-images` |
-| `NEXT_PUBLIC_CDN_DOMAIN` | CloudFront 도메인 (https:// 제외) |
 | `ADMIN_ID` | 관리자 아이디 |
-| `ADMIN_PASSWORD_HASH` | 3 에서 만든 값 |
-| `AUTH_SECRET` | 3 에서 만든 값 |
-| `NAVER_SITE_VERIFICATION` | (6 에서 받은 값, 나중에 추가 가능) |
-| `GOOGLE_SITE_VERIFICATION` | (6 에서 받은 값, 나중에 추가 가능) |
+| `ADMIN_PASSWORD_HASH` | 위에서 만든 값 |
+| `AUTH_SECRET` | 위에서 만든 값 |
+| `NAVER_SITE_VERIFICATION` | (7 에서 받은 값, 나중에 추가 가능) |
+| `GOOGLE_SITE_VERIFICATION` | (7 에서 받은 값, 나중에 추가 가능) |
 
-3. **Deploy** → 발급된 `*.vercel.app` 주소에서 동작 확인
-4. 오픈 시 **Settings → Plan → Pro** 로 전환 (클라이언트 사이트는 상업용)
+## 5. 테이블 만들기 (한 번만, 여러 번 실행해도 안전)
+
+Storage → Neon → `.env.local` 탭에서 `DATABASE_URL` 값을 복사한 뒤 로컬에서:
+
+```bash
+DATABASE_URL='복사한주소' npm run db:init
+```
+
+(또는 Neon 콘솔 SQL Editor 에 `src/db/bootstrap.sql` 내용을 붙여넣고 실행)
+
+그다음 Deployments → 최신 배포 → **Redeploy** → `*.vercel.app` 주소에서 `/admin` 로그인·글 작성·사진 업로드가 되는지 확인합니다.
+
+> v1.7 이상으로 업데이트할 때는 `npm run db:init` 을 한 번 더 실행하세요(멱등). 강사 현장 사진용 `gallery.program_slug` 컬럼이 추가됩니다. 실행 전 배포하면 포토갤러리·진로·직업체험 분야 페이지가 오류를 냅니다.
 
 > `NEXT_PUBLIC_*` 값이나 검증 코드를 바꾼 뒤에는 **Redeploy** 해야 반영됩니다.
 
-## 5. 도메인 연결 (imaginemaru.kr)
+## 6. 도메인 연결 (imaginemaru.kr)
 
-1. Vercel → Project → **Settings → Domains** → `imaginemaru.kr`, `www.imaginemaru.kr` 추가 (www → apex 리디렉트 권장)
+1. 프로젝트 → **Settings → Domains** → `imaginemaru.kr`, `www.imaginemaru.kr` 추가 (www → apex 리디렉트 권장)
 2. 도메인 등록처(가비아/후이즈 등) DNS 관리에서 Vercel 이 안내하는 레코드 입력
    - `@` → A 레코드 (Vercel 안내 IP)
    - `www` → CNAME `cname.vercel-dns.com`
 3. HTTPS 인증서는 자동 발급
 4. 새 사이트 정상 동작 확인 후 미리넷 호스팅 해지 (기존 주소 `/pages/*.html` 는 새 주소로 301 리디렉트되도록 설정되어 있음)
 
-## 6. 검색엔진 등록 (가장 중요)
+## 7. 검색엔진 등록 (가장 중요)
 
 ### 네이버 서치어드바이저 — https://searchadvisor.naver.com
 1. 웹마스터 도구 → 사이트 등록 → `https://imaginemaru.kr`
@@ -118,12 +94,17 @@ openssl rand -base64 32                                # → AUTH_SECRET 값
 ### 다음(카카오) — https://register.search.daum.net
 - 사이트 등록 신청 (URL만 입력)
 
-## 7. 배포 후 점검 체크리스트
+## 8. 배포 후 점검 체크리스트
 
 - [ ] `https://imaginemaru.kr/robots.txt` 에 `Disallow: /admin`, Sitemap 주소 표시
 - [ ] `https://imaginemaru.kr/sitemap.xml`, `/rss.xml` 정상
 - [ ] 페이지 소스 보기에서 `<title>`, `description`, `og:image`, `canonical`, `naver-site-verification` 확인
 - [ ] `/admin` 로그인 → 글 작성(이미지 포함) → 홈·목록·상세에 즉시 반영
-- [ ] 갤러리 사진 업로드 → 이미지 주소가 CloudFront 도메인인지 확인
+- [ ] 갤러리 앨범 업로드 → 이미지 주소가 `*.public.blob.vercel-storage.com` 인지 확인 → 앨범 삭제 시 Storage → Blob 에서 파일도 사라지는지 확인
 - [ ] 카카오톡/페이스북에 주소 공유 시 미리보기 이미지 표시
 - [ ] 옛 주소(예: `/pages/about/history.html`)가 새 주소로 301 이동
+
+## 나중에 생각할 것
+
+- **Neon 잠듦이 거슬리면**: Storage → Neon → 플랜을 Launch(월 $19) 로 올리면 항상 깨어 있음
+- **사진이 많이 쌓이면**: Blob 사용량은 Vercel 대시보드 Usage 에서 확인. 1만 장(약 5GB)이어도 월 $1 미만

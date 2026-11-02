@@ -126,16 +126,16 @@ export function Hero() {
           2. 배경 그라데이션
          ===================================================== */}
 
-      {/* 왼쪽 그라데이션 */}
+      {/* 가운데 그라데이션 — 가운데 정렬한 글자 뒤를 어둡게, 가장자리는 사진이 보이게 */}
 
       <div
         className="
           pointer-events-none
           absolute inset-0
-          bg-gradient-to-r
-          from-[#08131c]/80
-          via-[#08131c]/55
-          to-[#08131c]/10
+          bg-radial-[ellipse_70%_65%_at_50%_42%]
+          from-[#08131c]/75
+          via-[#08131c]/50
+          to-[#08131c]/15
         "
       />
 
@@ -180,14 +180,15 @@ export function Hero() {
 
         {/* 상단 콘텐츠 - 전체 10px 위로 이동 */}
 
-<div className="relative -top-[10px] max-w-[850px]">
+<div className="relative -top-[10px] mx-auto flex max-w-[850px] flex-col items-center text-center">
 
           {/* ===============================================
               소제목
              =============================================== */}
 
-          <div className="mb-7 flex items-center gap-4">
+          <div className="mb-7 flex items-center justify-center gap-4">
             <span
+              aria-hidden
               className="
                 h-[2px] w-9
                 bg-[#9de18a]
@@ -207,6 +208,13 @@ export function Hero() {
             >
               상상이 경험이 되는 곳
             </span>
+            <span
+              aria-hidden
+              className="
+                h-[2px] w-9
+                bg-[#9de18a]
+              "
+            />
           </div>
 
           {/* ===============================================
@@ -263,6 +271,7 @@ export function Hero() {
               mt-10
               flex flex-wrap
               items-center
+              justify-center
               gap-3
               sm:gap-4
             "
@@ -270,7 +279,7 @@ export function Hero() {
             {/* 프로그램 둘러보기 */}
 
             <Link
-              href="/experience/school"
+              href="/career"
               className="
                 inline-flex
                 min-h-[52px]

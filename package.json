@@ -1,6 +1,6 @@
 {
   "name": "sangsangmaru-web",
-  "version": "1.4.0",
+  "version": "1.7.0",
   "private": true,
   "scripts": {
     "dev": "node scripts/local-db.mjs --run next dev",
@@ -13,17 +13,18 @@
     "db:push": "drizzle-kit push",
     "hash-password": "node scripts/hash-password.mjs",
     "db:init": "node scripts/db-init.mjs",
-    "import-photos": "node scripts/import-photos.mjs"
+    "import-photos": "node scripts/import-photos.mjs",
+    "fetch-paperlogy": "node scripts/fetch-paperlogy.mjs",
+    "fetch-pretendard": "node scripts/fetch-pretendard.mjs"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.1158.0",
-    "@aws-sdk/s3-request-presigner": "^3.1158.0",
     "@electric-sql/pglite": "^0.5.12",
     "@neondatabase/serverless": "^1.2.0",
     "@tiptap/extension-image": "^3.32.0",
     "@tiptap/pm": "^3.32.0",
     "@tiptap/react": "^3.32.0",
     "@tiptap/starter-kit": "^3.32.0",
+    "@vercel/blob": "^2.8.2",
     "bcryptjs": "^3.0.3",
     "drizzle-orm": "^0.45.4",
     "embla-carousel-auto-scroll": "^8.6.0",

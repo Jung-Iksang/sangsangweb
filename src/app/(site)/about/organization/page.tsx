@@ -19,13 +19,13 @@ export default function Page() {
       <div className="space-y-20">
         <Block no="01" id="org" title="조직도">
           <div className="flex flex-col items-center">
-            <div className="rounded-sm bg-ink px-12 py-4 text-[17px] font-bold text-on-ink">{organization.ceo}</div>
+            <div className="rounded-sm bg-ink px-12 py-4 text-[18px] font-bold text-on-ink">{organization.ceo}</div>
             <div aria-hidden className="h-7 w-px bg-line-strong" />
-            <div className="rounded-sm border border-green bg-white px-6 py-3 text-[15px] font-bold text-green">{organization.lab}</div>
+            <div className="rounded-sm border border-green bg-white px-6 py-3 text-[16px] font-bold text-green">{organization.lab}</div>
             <div aria-hidden className="h-7 w-px bg-line-strong" />
             <ul className="grid w-full grid-cols-2 gap-3 border-t border-line-strong pt-7 sm:grid-cols-3 lg:grid-cols-5">
               {organization.teams.map((t) => (
-                <li key={t} className="rounded-sm border border-line bg-white px-3 py-3.5 text-center text-[15px] font-semibold text-ink">
+                <li key={t} className="rounded-sm border border-line bg-white px-3 py-3.5 text-center text-[16px] font-semibold text-ink">
                   {t}
                 </li>
               ))}
@@ -43,13 +43,13 @@ export default function Page() {
                     <Image src={img.src} alt={`${c.name} 인증서`} fill sizes="(min-width:1024px) 280px, 50vw" className="object-contain p-4" />
                   </div>
                   <p className="num mt-4">{c.period}</p>
-                  <h3 className="mt-1 text-[17px] font-bold text-ink">{c.name}</h3>
-                  <p className="mt-1 text-[13.5px] text-muted">{c.issuer}</p>
+                  <h3 className="mt-1 text-[18px] font-bold text-ink">{c.name}</h3>
+                  <p className="mt-1 text-[15px] text-muted">{c.issuer}</p>
                 </li>
               );
             })}
           </ul>
-          <p className="mt-8 border-t border-line pt-6 text-[14px] leading-relaxed text-muted">
+          <p className="mt-8 border-t border-line pt-6 text-[15px] leading-relaxed text-muted">
             이 밖에 중소기업(소상공인) 확인, 통신판매업 신고({site.business.mailOrderNo}), 출판사 신고, 소프트웨어사업자 신고를 마쳤습니다.
           </p>
         </Block>
@@ -59,11 +59,11 @@ export default function Page() {
             {mous.items.map((m) => (
               <li key={m.partner} className="flex items-center justify-between border-b border-line py-4">
                 <span className="font-bold text-ink">{m.partner}</span>
-                <span className="text-[14px] text-muted">{m.kind}</span>
+                <span className="text-[15px] text-muted">{m.kind}</span>
               </li>
             ))}
           </ul>
-          <p className="mt-5 text-[14px] text-muted">대학·기관·기업과 총 {mous.total}건의 협약을 맺고 함께 교육 프로그램을 운영합니다.</p>
+          <p className="mt-5 text-[15px] text-muted">대학·기관·기업과 총 {mous.total}건의 협약을 맺고 함께 교육 프로그램을 운영합니다.</p>
         </Block>
 
         <Block no="04" id="info" title="기관 정보">

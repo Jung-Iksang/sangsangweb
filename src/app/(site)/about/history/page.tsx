@@ -19,7 +19,7 @@ export default function Page() {
             <h2 className={`text-[32px] font-extrabold tabular-nums tracking-tight md:text-[36px] ${i === 0 ? "text-green" : "text-ink"}`}>{h.year}</h2>
             <ul className="space-y-2.5 md:pt-2.5">
               {h.items.map((it) => (
-                <li key={it} className="flex gap-3 text-[16px] leading-relaxed text-body">
+                <li key={it} className="flex gap-3 text-[17px] leading-relaxed text-body">
                   <span aria-hidden className="mt-[11px] h-1 w-1 shrink-0 rounded-full bg-line-strong" />
                   {it}
                 </li>

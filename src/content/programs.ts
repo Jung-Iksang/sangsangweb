@@ -1,9 +1,9 @@
 /**
  * 교육활동·체험활동 프로그램 콘텐츠 — 출처: [유한회사 상상마루] 2024 기업소개 PDF
+ * (진로·직업체험 프로그램은 src/content/career-programs.ts — 2026 운영계획 PDF)
  * (사업영역 5쪽, 사업소개 17~23쪽, 드론축구단 24~25쪽, 대회·행사 26~33쪽, 강사양성 34~35쪽)
  * 문의 전화·이메일은 src/config/site.ts 값을 사용합니다.
  */
-import { careerSchools } from "./career";
 import type { PhotoName } from "./photos.generated";
 
 export type ProgramCategory = "education" | "experience";
@@ -281,52 +281,6 @@ export const programs: Program[] = [
     keywords: ["민간자격증", "드론교육지도사", "로봇코딩지도사", "진로직업상담사", "AI교육지도사", "늘봄교육지도사", "민간자격 등록대행"],
   },
   {
-    slug: "school",
-    category: "experience",
-    title: "4차산업혁명 진로체험 스쿨",
-    card: { target: "초·중·고 · 학교·기관", period: "6개 스쿨 · 교육부 인증" },
-    summary:
-      "세상을 바꾸는 미래기술을 직접 체험하는 6개 스쿨 — 드론·3D프린터·코딩·VR/AR·로봇·IoT. 교육부 인증 교육기부 진로체험기관이 학교로 찾아가거나 창의공학실에서 운영합니다.",
-    intro: [
-      "4차산업혁명 진로체험 스쿨은 '세상을 바꾸는 미래기술' 여섯 가지를 직접 만들고 조종하며 그 분야의 직업 세계를 알아보는 체험 프로그램입니다.",
-      "교육부 인증 교육기부 진로체험기관으로서 학교·기관을 찾아가는 수업과 상상마루 창의공학실 체험을 모두 운영하며, 미디어 콘텐츠 크리에이터 과정도 함께 진행합니다.",
-    ],
-    highlights: [
-      { k: "6개 스쿨", v: "드론 · 3D프린터 · 코딩 · VR/AR · 로봇 · IoT" },
-      { k: "교육부 인증", v: "교육기부 진로체험기관" },
-      { k: "+1", v: "미디어 콘텐츠 크리에이터 과정" },
-    ],
-    featuresTitle: "체험 방식",
-    features: [
-      "학교·기관을 찾아가는 진로체험 수업과 창의공학실 체험",
-      "만들기·조종·시연으로 끝나는 메이커 방식의 체험",
-      "체험 후 민간자격 과정, 대회(드론축구·창의융합축전)로 연계",
-      "지역 기반 미디어 크리에이터 양성 — 관광상품 연구, 디지털 미디어 콘텐츠 개발, 창업 체험 지원",
-    ],
-    targets: ["초등학생", "중학생", "고등학생", "학교 · 지역아동센터 · 기관"],
-    sections: [
-      {
-        title: "세상을 바꾸는 미래기술 — 6개 스쿨",
-        items: careerSchools.map((s) => ({ label: `${s.no} ${s.name}`, value: `${s.desc} #${s.tags.join(" #")}` })),
-      },
-      {
-        title: "미디어 콘텐츠 크리에이터 과정",
-        items: [
-          { label: "지역 기반 크리에이터", value: "관광상품 연구개발, 소외지역 메이커 문화확산, 디지털 미디어 콘텐츠 개발" },
-          { label: "확장", value: "지역 커뮤니티 활성화, 창업 및 창업체험 지원" },
-        ],
-      },
-    ],
-    photos: [
-      { name: "career-robot", alt: "로봇 코딩 실습" },
-      { name: "drone-class", alt: "드론 수업" },
-      { name: "career-maker", alt: "3D펜 메이커 활동" },
-    ],
-    ctaLabel: "진로체험 신청 문의",
-    image: "school",
-    keywords: ["4차산업 진로체험", "드론 체험", "3D프린터 체험", "코딩 체험", "VR 체험", "로봇 체험", "IoT 체험", "찾아가는 진로체험"],
-  },
-  {
     slug: "culture",
     category: "experience",
     title: "문화예술체험",
@@ -360,13 +314,19 @@ export const programs: Program[] = [
       },
     ],
     photos: [
-      { name: "culture-stringart", alt: "전통문양 스트링아트 작품" },
-      { name: "culture-hologram", alt: "미륵사지 석탑 홀로그램 콘텐츠" },
-      { name: "store", alt: "네이버 스마트스토어 상상마루샵" },
+      { name: "cp-baekje-led-dice", alt: "백제문양 LED 주사위" },
+      { name: "cp-k-heritage-led", alt: "K-헤리티지 LED 무드등" },
+      { name: "cp-string-art", alt: "스트링아트 작품" },
+      { name: "cp-wind-chime", alt: "백제 문양 나무 풍경" },
+      { name: "cp-mireuksa-puzzle", alt: "미륵사지 입체퍼즐" },
+      { name: "cp-hologram", alt: "문화재 홀로그램 프로젝터" },
     ],
-    links: [{ label: "상상마루샵에서 교구 보기", href: "/store" }],
+    links: [
+      { label: "백제문화유산 진로체험 12종 보기", href: "/career/baekje" },
+      { label: "상상마루샵에서 교구 보기", href: "/store" },
+    ],
     ctaLabel: "체험 프로그램 문의",
-    image: "culture",
+    image: "cp-baekje-hanji-lamp",
     keywords: ["문화예술체험", "백제문양", "LED 한지등 만들기", "스트링아트", "익산 문화체험", "백제 문화상품"],
   },
   {

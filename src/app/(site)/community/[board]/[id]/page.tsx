@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SubPage } from "@/components/layout/SubPage";
+import { DetailHead } from "@/components/community/DetailHead";
+import { PrevNext } from "@/components/community/PrevNext";
 import { ViewCounter } from "@/components/community/ViewCounter";
 import { BOARD_TYPES, type BoardType } from "@/db/schema";
 import { getPost, getPostIndex } from "@/lib/data";
-import { boardLabel, formatDate } from "@/lib/format";
+import { boardLabel } from "@/lib/format";
 import { articleJsonLd, JsonLd, pageMetadata } from "@/lib/seo";
 
 // 검색엔진에 완성된 HTML·정확한 404 상태를 주기 위해 URL 값을 기다려 서버에서 완전히 렌더링
@@ -44,7 +46,7 @@ export default async function Page({ params }: PageProps<"/community/[board]/[id
   const base = `/community/${post.boardType}`;
   const path = `${base}/${post.id}`;
   return (
-    <SubPage path={path} title={post.title}>
+    <SubPage path={path} title={post.title} bandTitle={boardLabel[post.boardType]}>
       <JsonLd
         data={articleJsonLd({
           title: post.title,
@@ -57,37 +59,15 @@ export default async function Page({ params }: PageProps<"/community/[board]/[id
       />
       <ViewCounter id={post.id} />
       <article>
-        <header className="flex flex-wrap items-center gap-3 border-b-2 border-ink pb-4 text-[14px] text-muted">
-          <Link href={base} className="num hover:underline">
-            {boardLabel[post.boardType]}
-          </Link>
-          <span aria-hidden className="text-line-strong">/</span>
-          <time dateTime={post.createdAt} className="tabular-nums">{formatDate(post.createdAt)}</time>
-        </header>
-        <div className="prose-post py-10" dangerouslySetInnerHTML={{ __html: post.content }} />
+        <DetailHead title={post.title} createdAt={post.createdAt} views={post.views} />
+        <div className="prose-post border-b border-line px-1 py-10 md:px-4" dangerouslySetInnerHTML={{ __html: post.content }} />
       </article>
-      <nav aria-label="이전·다음 글" className="border-y border-line text-[15px]">
-        <Neighbor label="다음 글" item={post.next} base={base} />
-        <Neighbor label="이전 글" item={post.prev} base={base} />
-      </nav>
-      <div className="mt-8 flex justify-center">
-        <Link href={base} className="btn btn-outline px-10">
-          목록으로
+      <div className="mt-10 flex justify-center">
+        <Link href={base} className="btn btn-dark px-10">
+          목록
         </Link>
       </div>
+      <PrevNext prev={post.prev} next={post.next} base={base} />
     </SubPage>
-  );
-}
-
-function Neighbor({ label, item, base }: { label: string; item: { id: number; title: string } | null; base: string }) {
-  return (
-    <div className="flex items-center gap-4 border-b border-line px-2 py-4 last:border-b-0">
-      <span className="w-16 shrink-0 font-bold text-muted">{label}</span>
-      {item ? (
-        <Link href={`${base}/${item.id}`} className="truncate text-body hover:text-green">{item.title}</Link>
-      ) : (
-        <span className="text-muted/70">{label}이 없습니다.</span>
-      )}
-    </div>
   );
 }

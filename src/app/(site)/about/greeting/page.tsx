@@ -17,7 +17,7 @@ export default function Page() {
   return (
     <SubPage path="/about/greeting" title="인사말" description={`${site.slogan}, ${site.tagline} ${site.name}입니다.`}>
       <div className="grid gap-14 lg:grid-cols-[1fr_280px]">
-        <div className="text-[17px] leading-[1.9] text-body">
+        <div className="text-[18px] leading-[1.9] text-body">
           <p className="t-h2 !leading-snug">{greeting.lead}</p>
           <div className="mt-8 space-y-5">
             {greeting.body.map((t) => (
@@ -29,7 +29,7 @@ export default function Page() {
             <blockquote className="text-[22px] font-bold leading-relaxed tracking-tight text-ink">
               “<span className="hl">{greeting.quote.text}</span>”
             </blockquote>
-            <figcaption className="mt-4 text-[13.5px] text-muted">
+            <figcaption className="mt-4 text-[15px] text-muted">
               {greeting.quote.by} · <span lang="en">{greeting.quote.en}</span>
             </figcaption>
           </figure>
