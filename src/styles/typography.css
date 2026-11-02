@@ -1,5 +1,6 @@
-/* Public-site typography: sizes use rem so browser zoom and user scaling work.
-   Headings carry hierarchy through size and spacing, rather than excess weight. */
+/* 공개 페이지 글자 체계 — rem 단위라 브라우저 확대에 따라감.
+   글꼴은 Paperlogy 하나(400/500/600/700/800 서브셋, public/fonts/paperlogy/paperlogy.css),
+   Pretendard 는 서브셋에 없는 글자 폴백. 본문 500 · 라벨 600 · 제목 700 · 큰 숫자 800 */
 .public-site {
   --type-page-title: clamp(2rem, 1.5rem + 1.5vw, 2.625rem);
   --type-section-title: clamp(1.875rem, 1.4rem + 1.25vw, 2.375rem);
@@ -14,11 +15,11 @@
   --type-small: .9375rem;
   --type-caption: .8125rem;
   --type-nav: 1.25rem;
-  --type-weight-body: 400;
+  --type-weight-body: 500;
   --type-weight-medium: 500;
   --type-weight-label: 600;
   --type-weight-heading: 700;
-  --type-weight-display: 750;
+  --type-weight-display: 800;
   --type-leading-heading: 1.35;
   --type-leading-card: 1.5;
   --type-leading-body: 1.8;
@@ -101,15 +102,7 @@
 .public-site .prose-post :is(h2, h3) { margin-top: 1.75em; margin-bottom: .65em; font-weight: var(--type-weight-heading); line-height: var(--type-leading-heading); }
 .public-site .section-kicker { color: var(--color-blue); font-size: var(--type-caption); font-weight: var(--type-weight-label); letter-spacing: .01em; line-height: var(--type-leading-ui); }
 
-/* Paperlogy's real installed weights are 400, 500 and 800. Preserve its
-   signature display style; use Pretendard for the cards' longer text. */
-.public-site .programs-field {
-  --type-weight-heading: 800;
-  --type-weight-label: 500;
-  --type-tracking-heading: -.02em;
-}
-.public-site .program-card { font-family: var(--font-sans); }
-.public-site .program-card-title { font-family: var(--font-program-display, var(--font-sans)); font-weight: 500; }
+.public-site .program-card-title { font-weight: 700; }
 .public-site .program-tag { font-size: .875rem; line-height: 1.6; letter-spacing: var(--type-tracking-ui); }
 
 @media (max-width: 599px) {

@@ -171,7 +171,7 @@ export function ProgramSlider({ cards }: { cards: ProgramCard[] }) {
                 type="button"
                 onClick={() => setPaused((p) => !p)}
                 aria-label={paused ? "프로그램 자동 흐름 재생" : "프로그램 자동 흐름 일시정지"}
-                className="flex h-11 w-11 items-center justify-center rounded-btn border border-white/35 text-white transition-colors hover:border-white hover:bg-white hover:text-navy"
+                className="flex h-11 w-11 items-center justify-center rounded-btn border border-white/35 text-white transition-colors hover:border-white hover:bg-white hover:text-turf-dark"
               >
                 {paused ? (
                   <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="currentColor" aria-hidden>
@@ -304,7 +304,7 @@ export function ProgramSlider({ cards }: { cards: ProgramCard[] }) {
           >
             {/* 흰 테두리 + 진한 초록 선: 흰 막대 위·초록 바탕 위 어디서든 보이게 */}
             <path d="M6 2 2 6l4 4" stroke="white" strokeWidth={4.5} />
-            <path d="M6 2 2 6l4 4" strokeWidth={2} className="stroke-green-dark" />
+            <path d="M6 2 2 6l4 4" strokeWidth={2} className="stroke-turf-dark" />
           </svg>
           <svg
             viewBox="0 0 8 12"
@@ -315,7 +315,7 @@ export function ProgramSlider({ cards }: { cards: ProgramCard[] }) {
           >
             {/* 흰 테두리 + 진한 초록 선: 흰 막대 위·초록 바탕 위 어디서든 보이게 */}
             <path d="M2 2l4 4-4 4" stroke="white" strokeWidth={4.5} />
-            <path d="M2 2l4 4-4 4" strokeWidth={2} className="stroke-green-dark" />
+            <path d="M2 2l4 4-4 4" strokeWidth={2} className="stroke-turf-dark" />
           </svg>
         </span>
         {cards.map((c, i) => (
@@ -352,7 +352,7 @@ export function ProgramSlider({ cards }: { cards: ProgramCard[] }) {
             {/* 가리킨 칸의 프로그램 이름 (양 끝 칸은 막대 안쪽으로 정렬) */}
             <span
               aria-hidden
-              className={`pointer-events-none absolute bottom-full mb-0.5 translate-y-1 whitespace-nowrap rounded-sm bg-white px-2 py-1 text-[0.75rem] font-semibold text-green opacity-0 transition-[opacity,translate] duration-150 group-hover/seg:translate-y-0 group-hover/seg:opacity-100 group-focus-visible/seg:translate-y-0 group-focus-visible/seg:opacity-100 ${
+              className={`pointer-events-none absolute bottom-full mb-0.5 translate-y-1 whitespace-nowrap rounded-sm bg-white px-2 py-1 text-[0.75rem] font-semibold text-turf opacity-0 transition-[opacity,translate] duration-150 group-hover/seg:translate-y-0 group-hover/seg:opacity-100 group-focus-visible/seg:translate-y-0 group-focus-visible/seg:opacity-100 ${
                 i === 0 ? "left-0" : i === n - 1 ? "right-0" : "left-1/2 -translate-x-1/2"
               }`}
             >

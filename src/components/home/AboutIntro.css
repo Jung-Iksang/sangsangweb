@@ -1,29 +1,29 @@
-.about-intro { overflow: hidden; background: #fff; color: #333; padding-block: clamp(3.5rem, 6vw, 5rem); }
+.about-intro { overflow: hidden; background: var(--color-white); color: var(--color-body); padding-block: clamp(3.5rem, 6vw, 5rem); }
 .about-intro-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: clamp(2rem, 5vw, 4.5rem); }
 .about-intro-visual, .about-intro-copy { position: relative; min-width: 0; }
 .about-intro-visual { padding: 0 1rem 1rem 0; }
-.about-intro-backdrop { position: absolute; inset: 1.25rem 0 0 1.25rem; border-radius: .75rem; background: #f1f1f1; }
-.about-intro-photo { position: relative; overflow: hidden; border-radius: .75rem; background: #f1f1f1; }
+.about-intro-backdrop { position: absolute; inset: 1.25rem 0 0 1.25rem; border-radius: .75rem; background: var(--color-cream); }
+.about-intro-photo { position: relative; overflow: hidden; border-radius: .75rem; background: var(--color-cream); }
 .about-intro-photo img { display: block; width: 100%; height: auto; }
-.about-intro-title { display: flex; align-items: center; gap: 1.25rem; color: #111; font-size: clamp(1.5rem, calc(1.2rem + .5vw), 1.75rem); font-weight: 600; line-height: 1.35; letter-spacing: -.025em; }
+.about-intro-title { display: flex; align-items: center; gap: 1.25rem; color: var(--color-ink); font-size: clamp(1.5rem, calc(1.2rem + .5vw), 1.75rem); font-weight: 600; line-height: 1.35; letter-spacing: -.025em; }
 .about-intro-title span { flex-shrink: 0; }
-.about-intro-title::after { content: ""; flex: 1; min-width: 2rem; border-top: 1px solid #d9d9d9; }
-.about-intro-lead { margin-top: 1.5rem; color: #111; font-size: clamp(2.625rem, calc(1.4rem + 1.7vw), 3rem); font-weight: 750; line-height: 1.25; letter-spacing: -.04em; }
-.about-intro-description { margin-top: 1.75rem; color: #333; font-size: 1.0625rem; font-weight: 400; line-height: 1.8; letter-spacing: -.01em; }
+.about-intro-title::after { content: ""; flex: 1; min-width: 2rem; border-top: 1px solid var(--color-line); }
+.about-intro-lead { margin-top: 1.5rem; color: var(--color-ink); font-size: clamp(2.625rem, calc(1.4rem + 1.7vw), 3rem); font-weight: 750; line-height: 1.25; letter-spacing: -.04em; }
+.about-intro-description { margin-top: 1.75rem; color: var(--color-body); font-size: 1.0625rem; font-weight: 400; line-height: 1.8; letter-spacing: -.01em; }
 .about-intro-description p + p { margin-top: 1rem; }
-.about-intro-stats { margin-top: 2rem; border-top: 1px solid #d9d9d9; padding-top: 1.75rem; }
+.about-intro-stats { margin-top: 2rem; border-top: 1px solid var(--color-line); padding-top: 1.75rem; }
 .about-intro-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; }
 .about-intro-facts > div { display: flex; flex-direction: column; min-width: 0; gap: .625rem; padding-inline: clamp(.875rem, 1.5vw, 1.5rem); }
 .about-intro-facts > div:first-child { padding-left: 0; }
 .about-intro-facts > div:last-child { padding-right: 0; }
 /* Preserve the original divider and spacing, trimming only past the photo's bottom. */
-.about-intro-facts > div + div { position: relative; border-left: 1px solid transparent; background: linear-gradient(#d9d9d9, #d9d9d9) left top / 1px var(--about-divider-height, 100%) no-repeat; background-origin: border-box; }
+.about-intro-facts > div + div { position: relative; border-left: 1px solid transparent; background: linear-gradient(var(--color-line), var(--color-line)) left top / 1px var(--about-divider-height, 100%) no-repeat; background-origin: border-box; }
 @media (min-width: 600px) {
-  .about-intro-facts > div + div::before { content: ""; position: absolute; left: -1px; bottom: 100%; width: 1px; height: calc(1.75rem + 1px); background: #d9d9d9; pointer-events: none; }
+  .about-intro-facts > div + div::before { content: ""; position: absolute; left: -1px; bottom: 100%; width: 1px; height: calc(1.75rem + 1px); background: var(--color-line); pointer-events: none; }
 }
-.about-intro-facts dt, .about-intro-history-text { color: #666; font-size: clamp(.875rem, calc(.8rem + .2vw), .9375rem); font-weight: 400; line-height: 1.7; letter-spacing: -.01em; }
-.about-intro-facts .about-intro-value { order: -1; display: flex; align-items: baseline; gap: .375rem; color: #111; font-size: clamp(2.5rem, calc(1.9rem + 1vw), 3rem); font-weight: 750; letter-spacing: -.035em; line-height: 1.1; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.about-intro-unit { color: #666; font-size: .875rem; font-weight: 500; letter-spacing: normal; }
+.about-intro-facts dt, .about-intro-history-text { color: var(--color-muted); font-size: clamp(.875rem, calc(.8rem + .2vw), .9375rem); font-weight: 400; line-height: 1.7; letter-spacing: -.01em; }
+.about-intro-facts .about-intro-value { order: -1; display: flex; align-items: baseline; gap: .375rem; color: var(--color-ink); font-size: clamp(2.5rem, calc(1.9rem + 1vw), 3rem); font-weight: 750; letter-spacing: -.035em; line-height: 1.1; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.about-intro-unit { color: var(--color-muted); font-size: .875rem; font-weight: 500; letter-spacing: normal; }
 /* Reserve enough space for the longest existing milestone while years cycle. */
 .about-intro-history-text { display: grid; align-content: start; min-height: 7em; }
 @media (prefers-reduced-motion: no-preference) {
@@ -43,7 +43,7 @@
   .about-intro-description { margin-top: 1.5rem; font-size: 1rem; line-height: 1.8; }
   .about-intro-stats { margin-top: 1.75rem; padding-top: 1.5rem; }
   .about-intro-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 1.25rem; }
-  .about-intro-facts > .about-intro-year { grid-column: 1 / -1; padding: 0 0 1.25rem; border-bottom: 1px solid #d9d9d9; }
+  .about-intro-facts > .about-intro-year { grid-column: 1 / -1; padding: 0 0 1.25rem; border-bottom: 1px solid var(--color-line); }
   .about-intro-facts > div:nth-child(2) { border-left: 0; background: none; padding-left: 0; }
   .about-intro-facts > div:last-child { padding-left: 1.25rem; }
   .about-intro-facts .about-intro-value { font-size: 2.5rem; }

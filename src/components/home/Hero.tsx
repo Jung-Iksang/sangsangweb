@@ -1,19 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import localFont from "next/font/local";
 import Image from "next/image";
 import Link from "next/link";
 import { photos } from "@/content/photos.generated";
 import { useReducedMotion } from "@/components/ui/useReducedMotion";
 import { site } from "@/config/site";
 import "./Hero.css";
-
-const heroInfoFont = localFont({
-  src: "../../../public/fonts/hakgyoansim/HakgyoansimRikodeoOTFR.otf",
-  display: "swap",
-  preload: false,
-});
 
 const slides = [
   { src: photos["drone-class"].src, caption: "드론 체험 교육", position: "60% center", mobilePosition: "68% center" },
@@ -101,7 +94,7 @@ export function Hero() {
           </div>
         </div>
         <div className="hero-info" aria-label="상상마루 교육 안내">
-          <dl className={`hero-infoList ${heroInfoFont.className}`}>
+          <dl className="hero-infoList">
             <div><dt>교육분야</dt><dd>진로·직업체험 · 창의융합교육</dd></div>
             <div><dt>교육문의</dt><dd><a href={`tel:${site.contact.phone}`}>{site.contact.phone}</a></dd></div>
             <div className="hero-location"><dt>위치안내</dt><dd className="hero-address">{site.address.locality} {site.address.street}</dd></div>

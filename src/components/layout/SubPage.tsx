@@ -91,7 +91,7 @@ export function SubPage({ path, title, bandTitle, description, children }: Props
         {hasMenu && section?.children && (
           <aside className="relative z-10 -mt-[196px] hidden lg:block">
             <nav aria-label={`${section.label} 메뉴`} className="sticky top-[calc(var(--header-h)+24px)]">
-              <h2 className="-ml-4 mr-5 flex h-[168px] justify-center rounded-[44px_14px_14px_14px] grad-kiwi pt-12 text-[24px] font-bold text-white">
+              <h2 className="-ml-4 mr-5 flex h-[168px] justify-center rounded-[44px_14px_14px_14px] grad-brand pt-12 text-[24px] font-bold text-white">
                 {section.label}
               </h2>
               <ul className="relative -mt-[64px] rounded-[16px_16px_32px_16px] bg-white px-6 pb-5 pt-3 shadow-dropdown">
