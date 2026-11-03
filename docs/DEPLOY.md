@@ -14,6 +14,17 @@
 
 ---
 
+## 0. GitHub 저장소 (클라이언트 명의)
+
+배포 기준 저장소는 클라이언트 계정의 **`chojinuk/sangsangmaru`**(비공개)입니다. 개발사 계정은 collaborator 로 초대되어 있습니다(완료).
+저장소 주인(클라이언트)이 한 번 해 줄 것:
+
+1. 저장소 → **Settings → Branches → Add branch ruleset**(또는 Branch protection rule) → 대상 `main`
+2. **Require a pull request before merging** 켜기 (승인 수는 0 이어도 됨 — 직접 push 만 막는 용도)
+3. **Block force pushes** 켜기
+
+> collaborator 권한으로는 이 설정을 바꿀 수 없어 저장소 주인이 해야 합니다. 브랜치 사용 규칙은 README 의 "브랜치 · 배포 규칙" 절.
+
 ## 1. Vercel 팀 만들기 (클라이언트 명의)
 
 1. https://vercel.com 가입 (GitHub 계정 연결 권장) → **Create Team** → 팀 이름 예: `sangsangmaru`
@@ -22,7 +33,8 @@
 
 ## 2. 프로젝트 만들기
 
-1. 팀 대시보드 → **Add New → Project** → GitHub 저장소 `sangsangweb` Import (Framework: Next.js 자동 인식)
+1. 팀 대시보드 → **Add New → Project** → GitHub 저장소 `chojinuk/sangsangmaru` Import (Framework: Next.js 자동 인식). GitHub 연결은 **클라이언트 GitHub 계정**으로 (Vercel GitHub App 에 이 저장소 접근 허용)
+   — Production Branch 는 `main`(기본값). 그 밖의 브랜치·PR 은 자동으로 Preview 배포
 2. 일단 **Deploy** — 환경변수가 없어서 DB 없는 상태로 빌드만 되고, 아래 3~4 를 마친 뒤 Redeploy 합니다.
 
 ## 3. DB · 사진 저장소 연결 (프로젝트 → Storage 탭)
