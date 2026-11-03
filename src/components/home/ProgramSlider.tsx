@@ -352,7 +352,7 @@ export function ProgramSlider({ cards }: { cards: ProgramCard[] }) {
             {/* 가리킨 칸의 프로그램 이름 (양 끝 칸은 막대 안쪽으로 정렬) */}
             <span
               aria-hidden
-              className={`pointer-events-none absolute bottom-full mb-0.5 translate-y-1 whitespace-nowrap rounded-sm bg-white px-2 py-1 text-[0.75rem] font-semibold text-turf opacity-0 transition-[opacity,translate] duration-150 group-hover/seg:translate-y-0 group-hover/seg:opacity-100 group-focus-visible/seg:translate-y-0 group-focus-visible/seg:opacity-100 ${
+              className={`pointer-events-none absolute bottom-full mb-0.5 translate-y-1 whitespace-nowrap rounded-sm bg-white px-2 py-1 text-[0.8125rem] font-semibold text-turf opacity-0 transition-[opacity,translate] duration-150 group-hover/seg:translate-y-0 group-hover/seg:opacity-100 group-focus-visible/seg:translate-y-0 group-focus-visible/seg:opacity-100 ${
                 i === 0 ? "left-0" : i === n - 1 ? "right-0" : "left-1/2 -translate-x-1/2"
               }`}
             >

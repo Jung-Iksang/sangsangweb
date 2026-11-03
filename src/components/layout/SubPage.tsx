@@ -68,11 +68,12 @@ export function SubPage({ path, title, bandTitle, description, children }: Props
 
       {hasMenu && section?.children && (
         <nav aria-label={`${section.label} 하위 메뉴`} className="sticky top-[var(--header-h)] z-30 border-b border-line bg-paper lg:hidden">
-          <ul className="container-site flex gap-6 overflow-x-auto [scrollbar-width:none]">
+          {/* 넘치면 오른쪽 끝을 흐리게 해 옆으로 더 있다는 것을 보여 줌 (끝까지 밀면 pr-10 여백이라 가려지지 않음) */}
+          <ul className="container-site flex snap-x snap-proximity gap-6 overflow-x-auto pr-10 [mask-image:linear-gradient(90deg,black_calc(100%-2.5rem),transparent)] [scrollbar-width:none]">
             {section.children.map((c) => {
               const active = c.href === activeHref;
               return (
-                <li key={c.href} className="shrink-0">
+                <li key={c.href} className="shrink-0 snap-start">
                   <Link
                     href={c.href}
                     aria-current={active ? "page" : undefined}

@@ -43,7 +43,7 @@ export async function BoardList({ board, page }: { board: BoardType; page: numbe
                 <td className="px-3 py-[18px] sm:px-5">
                   <Link href={`${base}/${p.id}`} className="group flex min-w-0 items-center gap-2.5 text-ink">
                     <span className="truncate group-hover:underline group-hover:decoration-line-strong group-hover:underline-offset-4">{p.title}</span>
-                    {p.isNew && <span className="shrink-0 text-[12px] font-bold tracking-wide text-red">NEW</span>}
+                    {p.isNew && <span className="shrink-0 text-[13px] font-bold tracking-wide text-red">NEW</span>}
                   </Link>
                   <time dateTime={p.createdAt} className="mt-1 block text-[14px] tabular-nums text-muted sm:hidden">
                     {formatDate(p.createdAt)}
